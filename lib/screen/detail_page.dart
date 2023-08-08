@@ -32,11 +32,14 @@ class _DetailPageState extends State<DetailPage> {
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
           child: Text(
             "Menu",
-            style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         SizedBox(
           height: 40.0,

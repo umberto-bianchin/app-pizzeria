@@ -16,30 +16,25 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: SizedBox(
         height: 100.0,
-        width: width - 40.0,
         child: Stack(
           children: [
-            //let have the clok for the pizza items....
             Padding(
               padding: const EdgeInsets.only(left: 50.0),
               child: Container(
-                padding: const EdgeInsets.only(left: 70.0, right: 20.0),
+                padding: const EdgeInsets.only(left: 70.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     color: Colors.white),
-                height: 100.0,
-                width: width - 90.0,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -57,11 +52,24 @@ class MenuItem extends StatelessWidget {
                         )
                       ],
                     ),
-                    Text("\$$price",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                    Column(
+                      children: [
+                        Text(
+                          "€$price",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                              fontSize: 15.0),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.add_shopping_cart,
                             color: Colors.green,
-                            fontSize: 15.0))
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),

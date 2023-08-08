@@ -28,8 +28,6 @@ class _HomeState extends State<Home> {
           SizedBox(
             height: 10.0,
           ),
-
-          //Inizio Categorie
           Padding(
             padding: EdgeInsets.all(
               20.0,
@@ -41,8 +39,6 @@ class _HomeState extends State<Home> {
                 )),
           ),
           CategoriesTabs(),
-          //Fine Categorie
-
           Padding(
             padding: EdgeInsets.only(
               left: 20,
