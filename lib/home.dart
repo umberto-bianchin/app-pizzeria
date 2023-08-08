@@ -65,6 +65,7 @@ class _HomeState extends State<Home> {
                 child: Text("Categorie",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     )),
               ),
               CategoriesTabs(),
@@ -73,11 +74,12 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: EdgeInsets.only(
                   left: 20,
-                  top: 20,
+                  top: 40,
                 ),
                 child: Text("Dove Siamo?",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     )),
               ),
               Maps(),
@@ -89,23 +91,26 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
         items: [
           const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: Colors.green,
-              ),
-              label: ""),
+            icon: Icon(
+              Icons.home,
+              color: Colors.green,
+            ),
+            label: "Home",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_basket,
-                color: Colors.grey[400],
-              ),
-              label: ""),
+            icon: Icon(
+              Icons.shopping_basket,
+              color: Colors.grey[400],
+            ),
+            label: "Ordine",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-                color: Colors.grey[400],
-              ),
-              label: ""),
+            icon: Icon(
+              Icons.person,
+              color: Colors.grey[400],
+            ),
+            label: "Utente",
+          ),
         ],
       ),
     );

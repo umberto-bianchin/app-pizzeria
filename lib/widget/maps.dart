@@ -13,11 +13,16 @@ class Maps extends StatefulWidget {
 
 class _MapsState extends State<Maps> {
   late GoogleMapController mapController;
-
   final LatLng _center = const LatLng(klatitude, klongitude);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
   }
 
   final List<Marker> _markers = [
@@ -33,18 +38,32 @@ class _MapsState extends State<Maps> {
 
   @override
   Widget build(BuildContext context) {
+    final initialCameraPosition = CameraPosition(
+      target: _center,
+      zoom: 14.0,
+    );
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: SizedBox(
         height: 300,
         child: GoogleMap(
+          mapToolbarEnabled: false,
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
+          initialCameraPosition: initialCameraPosition,
           markers: _markers.toSet(),
-          onTap: (argument) {},
+          onTap: (argument) {
+            mapController.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: argument,
+                  zoom: 14.0,
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
