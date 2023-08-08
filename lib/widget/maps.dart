@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 
 const double klatitude = 45.406435;
 const double klongitude = 11.876761;
@@ -40,30 +42,43 @@ class _MapsState extends State<Maps> {
   Widget build(BuildContext context) {
     final initialCameraPosition = CameraPosition(
       target: _center,
-      zoom: 14.0,
+      zoom: 17.0,
     );
 
     return Padding(
       padding: const EdgeInsets.all(20),
       child: SizedBox(
         height: 300,
-        child: GoogleMap(
-          mapToolbarEnabled: false,
-          myLocationButtonEnabled: false,
-          zoomControlsEnabled: false,
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: initialCameraPosition,
-          markers: _markers.toSet(),
-          onTap: (argument) {
-            mapController.animateCamera(
-              CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: argument,
-                  zoom: 14.0,
-                ),
-              ),
-            );
-          },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: GoogleMap(
+              mapType: MapType.normal,
+              gestureRecognizers: {
+                Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer())
+              },
+              zoomControlsEnabled: false,
+              mapToolbarEnabled: true,
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: initialCameraPosition,
+              markers: _markers.toSet(),
+              onTap: (argument) {
+                mapController.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: argument,
+                      zoom: 17.0,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
