@@ -23,7 +23,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final PageController _pageController = PageController();
-  int _currentPageIndex = 0;
 
   @override
   void dispose() {
@@ -33,22 +32,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final navBar = NavBar(pageController: _pageController);
     return Scaffold(
       body: SafeArea(
         child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          allowImplicitScrolling: false,
           controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentPageIndex = index;
-            });
-          },
           children: const <Widget>[
             Home(),
             DetailPage(),
           ],
         ),
       ),
-      bottomNavigationBar: NavBar(pageController: _pageController),
+      bottomNavigationBar: navBar,
     );
   }
 }

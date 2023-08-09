@@ -58,6 +58,7 @@ class _MapsState extends State<Maps> {
             ),
             child: GoogleMap(
               mapType: MapType.normal,
+              myLocationButtonEnabled: false,
               gestureRecognizers: {
                 Factory<OneSequenceGestureRecognizer>(
                     () => EagerGestureRecognizer())
@@ -67,16 +68,6 @@ class _MapsState extends State<Maps> {
               onMapCreated: _onMapCreated,
               initialCameraPosition: initialCameraPosition,
               markers: _markers.toSet(),
-              onTap: (argument) {
-                mapController.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: argument,
-                      zoom: 17.0,
-                    ),
-                  ),
-                );
-              },
             ),
           ),
         ),

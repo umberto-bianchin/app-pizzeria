@@ -22,56 +22,53 @@ class MenuItem extends StatelessWidget {
         height: 100.0,
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 50.0),
-              child: Container(
-                padding: const EdgeInsets.only(left: 70.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: Colors.white),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          pizza,
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                          ),
+            Container(
+              padding: const EdgeInsets.only(left: 120.0, right: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  color: Colors.white),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        pizza,
+                        style: const TextStyle(
+                          fontSize: 18.0,
                         ),
-                        const SizedBox(
-                          height: 8.0,
+                      ),
+                      const SizedBox(
+                        height: 4.0,
+                      ),
+                      Text(
+                        ingredients,
+                        style: const TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "€$price",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                            fontSize: 15.0),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.add_shopping_cart,
+                          color: Colors.green,
                         ),
-                        Text(
-                          ingredients,
-                          style: const TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "€$price",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                              fontSize: 15.0),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.add_shopping_cart,
-                            color: Colors.green,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
             Positioned(

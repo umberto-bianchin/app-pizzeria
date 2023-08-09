@@ -26,10 +26,11 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 10.0),
+          padding: EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 10.0),
           child: Text(
             "Menu",
             style: TextStyle(
@@ -45,6 +46,7 @@ class _DetailPageState extends State<DetailPage> {
           height: 40.0,
           child: ListView(
             scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: 15, right: 10),
             children: [
               for (Pair pair in listCategories)
                 category(
@@ -60,10 +62,11 @@ class _DetailPageState extends State<DetailPage> {
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
-          child: Column(
-            children: [
+        Container(
+          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+          child: ListView(
+            shrinkWrap: true,
+            children: const [
               MenuItem(
                   pizzaImage: "assets/images/classic.png",
                   pizza: "Classic",
@@ -94,7 +97,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget category(
       Color colore, String menu, String menuImage, Color menuColor, int index) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0),
+      padding: const EdgeInsets.only(left: 10.0),
       child: InkWell(
         child: Container(
           alignment: Alignment.center,

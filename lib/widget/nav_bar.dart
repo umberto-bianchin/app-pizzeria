@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key, required this.pageController});
-
   final PageController pageController;
+
   @override
   State<NavBar> createState() => _NavBarState();
 }
@@ -18,7 +18,7 @@ class _NavBarState extends State<NavBar> {
 
   int _selectedIndex = 0;
 
-  void _selectPage(int index) {
+  void selectPageState(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -31,7 +31,14 @@ class _NavBarState extends State<NavBar> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 229, 228, 228),
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 229, 228, 228),
+              Color.fromARGB(255, 243, 243, 243)
+            ],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+          ),
           borderRadius: BorderRadius.all(Radius.circular(24))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -45,7 +52,7 @@ class _NavBarState extends State<NavBar> {
 
   Widget buildNavBarItem(IconData icon, String name, int index) {
     return Material(
-      color: const Color.fromARGB(255, 229, 228, 228),
+      color: Colors.transparent,
       child: Container(
         decoration: const BoxDecoration(color: Colors.transparent),
         child: Center(
@@ -74,7 +81,7 @@ class _NavBarState extends State<NavBar> {
               ),
             ),
             onTap: () {
-              _selectPage(index);
+              selectPageState(index);
               widget.pageController.animateToPage(
                 index,
                 duration: const Duration(milliseconds: 300),
