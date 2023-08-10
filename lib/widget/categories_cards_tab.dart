@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 class CategoriesTabs extends StatelessWidget {
   const CategoriesTabs({
     super.key,
+    required this.onTap,
   });
+
+  final void Function(int index, {Categories selectedCategory}) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +23,17 @@ class CategoriesTabs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           FoodCard(width, capitalize(Categories.pizza.name),
-              "assets/images/pizza.png"),
-          FoodCard(width, capitalize(Categories.kebab.name),
-              "assets/images/mexican.png"),
+              "assets/images/pizza.png", onTap,
+              category: Categories.pizza),
+          FoodCard(width, capitalize(Categories.panari.name),
+              "assets/images/mexican.png", onTap,
+              category: Categories.panari),
           FoodCard(width, capitalize(Categories.panini.name),
-              "assets/images/burger.png"),
+              "assets/images/burger.png", onTap,
+              category: Categories.panini),
           FoodCard(width, capitalize(Categories.bibite.name),
-              "assets/images/drink.png")
+              "assets/images/drink.png", onTap,
+              category: Categories.bibite)
         ],
       ),
     );

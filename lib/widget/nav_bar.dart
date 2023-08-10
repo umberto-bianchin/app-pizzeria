@@ -1,28 +1,17 @@
 import 'package:flutter/material.dart';
 
-class NavBar extends StatefulWidget {
-  const NavBar({super.key, required this.pageController});
-  final PageController pageController;
+class NavBar extends StatelessWidget {
+  NavBar({super.key, required this.onChangePage, required this.selectedIndex});
 
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
+  final void Function(int index) onChangePage;
+  final int selectedIndex;
 
-class _NavBarState extends State<NavBar> {
   final List<Pair> pairList = [
     Pair(Icons.home, "Home"),
     Pair(Icons.menu_book_rounded, "Menu"),
     Pair(Icons.shopping_basket, "Carrello"),
     Pair(Icons.person, "Utente"),
   ];
-
-  int _selectedIndex = 0;
-
-  void selectPageState(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,25 +57,20 @@ class _NavBarState extends State<NavBar> {
                 children: [
                   Icon(
                     icon,
-                    color: index == _selectedIndex ? Colors.red : Colors.black,
+                    color: index == selectedIndex ? Colors.red : Colors.black,
                   ),
                   Text(
                     name,
                     style: TextStyle(
                       color:
-                          index == _selectedIndex ? Colors.red : Colors.black,
+                          index == selectedIndex ? Colors.red : Colors.black,
                     ),
                   ),
                 ],
               ),
             ),
             onTap: () {
-              selectPageState(index);
-              widget.pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
+              onChangePage(index);
             },
           ),
         ),

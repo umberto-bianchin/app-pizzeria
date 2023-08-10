@@ -4,13 +4,13 @@ import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 class MenuItem extends StatelessWidget {
   const MenuItem(
       {super.key,
-      required this.pizzaImage,
+      required this.image,
       required this.name,
       required this.ingredients,
       required this.price,
       required this.category});
 
-  final String pizzaImage;
+  final String image;
   final String name;
   final List<String> ingredients;
   final double price;
@@ -62,35 +62,30 @@ class MenuItem extends StatelessWidget {
                             builder: (context) {
                               return SimpleDialog(
                                 alignment: Alignment.center,
-                                title: Text(
-                                  name,
-                                  textAlign: TextAlign.center,
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      name,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    IconButton(
+                                        icon: const Icon(Icons.close),
+                                        color: const Color(0xFF1F91E7),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        })
+                                  ],
                                 ),
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                    padding: const EdgeInsets.only(
+                                        left: 25, right: 20, bottom: 20),
                                     child: Text(
                                       ingredients.join(", "),
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'Ok',
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
                                 ],
                               );
                             });
@@ -122,7 +117,7 @@ class MenuItem extends StatelessWidget {
             Positioned(
               left: 0.0,
               child: Image(
-                image: AssetImage(pizzaImage),
+                image: AssetImage(image),
                 height: 100.0,
                 width: 100.0,
               ),

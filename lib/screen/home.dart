@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/suggested_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/categories_cards_tab.dart';
@@ -5,7 +6,9 @@ import 'package:app_pizzeria/widget/introduction_banner.dart';
 import 'package:app_pizzeria/widget/position_map.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home({super.key, required this.onSelectCategory});
+
+  final void Function(int index, {Categories? selectedCategory}) onSelectCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +19,15 @@ class Home extends StatelessWidget {
       height: height,
       width: width,
       child: ListView(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             height: 40.0,
           ),
-          IntroductionPizzeria(),
-          SizedBox(
+          const IntroductionPizzeria(),
+          const SizedBox(
             height: 10.0,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text("Categorie",
                 style: TextStyle(
@@ -32,11 +35,11 @@ class Home extends StatelessWidget {
                   fontSize: 20,
                 )),
           ),
-          CategoriesTabs(),
-          SizedBox(
+          CategoriesTabs(onTap: onSelectCategory),
+          const SizedBox(
             height: 15.0,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text("Suggeriti",
                 style: TextStyle(
@@ -44,8 +47,8 @@ class Home extends StatelessWidget {
                   fontSize: 20,
                 )),
           ),
-          SuggestedTabs(),
-          Padding(
+          const SuggestedTabs(),
+          const Padding(
             padding: EdgeInsets.only(
               left: 20,
               top: 40,
@@ -56,7 +59,7 @@ class Home extends StatelessWidget {
                   fontSize: 20,
                 )),
           ),
-          Maps(),
+          const Maps(),
         ],
       ),
     );

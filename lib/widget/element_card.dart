@@ -1,11 +1,14 @@
+import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 
 class FoodCard extends StatelessWidget {
-  const FoodCard(this.width, this.title, this.image, {super.key});
+  const FoodCard(this.width, this.title, this.image, this.action,{super.key, this.category});
 
   final double width;
   final String title;
   final String image;
+  final void Function(int index, {Categories selectedCategory}) action;
+  final Categories? category;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,14 @@ class FoodCard extends StatelessWidget {
               ),
             ],
           ),
-          onTap: () {},
+          onTap: () {
+
+            if(category == null){
+            action(1);}
+            else {
+              action(1, selectedCategory: category!);
+            }
+          },
         ),
       ),
     );

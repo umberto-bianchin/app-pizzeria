@@ -1,4 +1,5 @@
 import 'package:app_pizzeria/screen/menu.dart';
+import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/screen/home.dart';
@@ -23,6 +24,24 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final PageController _pageController = PageController();
+  int _selectedPage = 0;
+
+  MenuPage menuPage = const MenuPage();
+
+  void changePage(int index, {Categories? selectedCategory}) {
+    setState(() {
+      _selectedPage = index;
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+
+      if (selectedCategory != null) {
+        menuPage = MenuPage(selectedCategory: selectedCategory);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -32,20 +51,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final navBar = NavBar(pageController: _pageController);
     return Scaffold(
       body: SafeArea(
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           allowImplicitScrolling: false,
           controller: _pageController,
-          children: const <Widget>[
-            Home(),
-            DetailPage(),
-          ],
+          children: <Widget>[Home(onSelectCategory: changePage), menuPage],
         ),
       ),
-      bottomNavigationBar: navBar,
+      bottomNavigationBar:
+          NavBar(onChangePage: changePage, selectedIndex: _selectedPage),
     );
   }
 }

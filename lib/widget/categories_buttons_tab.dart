@@ -4,12 +4,14 @@ enum Categories {
   pizza,
   bibite,
   panini,
-  kebab,
+  panari,
 }
 
 class CategoriesButton extends StatefulWidget {
-  const CategoriesButton(this.onCategorychange, {super.key});
+  const CategoriesButton(this.initialCategory, this.onCategorychange,
+      {super.key});
 
+  final Categories initialCategory;
   final Function(Categories) onCategorychange;
 
   @override
@@ -19,12 +21,18 @@ class CategoriesButton extends StatefulWidget {
 class _CategoriesButtonState extends State<CategoriesButton> {
   List<Pair> listCategories = [
     Pair("pizza.png", Categories.pizza),
+    Pair("mexican.png", Categories.panari),
     Pair("burger.png", Categories.panini),
-    Pair("mexican.png", Categories.kebab),
     Pair("drink.png", Categories.bibite),
   ];
 
-  Categories _selected = Categories.pizza;
+  Categories? _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = widget.initialCategory;
+  }
 
   void _selectCategory(Categories category) {
     widget.onCategorychange(category);

@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/element_card.dart';
 
@@ -8,6 +9,8 @@ class SuggestedTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void action(int index, {Categories? selectedCategory}) {}
+
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(
@@ -17,10 +20,10 @@ class SuggestedTabs extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15, right: 15),
         scrollDirection: Axis.horizontal,
         children: [
-          FoodCard(width, "Mexican", "assets/images/mexicanPizza.png"),
-          FoodCard(width, "Vegetarian", "assets/images/veg.png"),
-          FoodCard(width, "Americana", "assets/images/americana.png"),
-          FoodCard(width, "Classic", "assets/images/classic.png")
+          FoodCard(width, "Margherita", "assets/images/classic.png", action),
+          FoodCard(width, "Diavola", "assets/images/americana.png", action),
+          FoodCard(
+              width, "Vegetariana", "assets/images/mexicanPizza.png", action),
         ],
       ),
     );

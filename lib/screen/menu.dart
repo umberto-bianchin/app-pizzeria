@@ -3,20 +3,34 @@ import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/search_result.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key, this.selectedCategory});
+  final Categories? selectedCategory;
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
-  Categories currentCategory = Categories.pizza;
-  SearchResult result = const SearchResult(name: "");
+class _MenuPageState extends State<MenuPage> {
+  Categories? currentCategory;
+  SearchResult? result;
 
-  void changeCategory(Categories catogry) {
+  @override
+  void initState() {
+    super.initState();
+    currentCategory = widget.selectedCategory == null
+        ? Categories.pizza
+        : widget.selectedCategory!;
+    result = SearchResult(name: "", category: widget.selectedCategory!);
+  }
+
+  void changeCategory(Categories category) {
     setState(() {
-      currentCategory = catogry;
+      currentCategory = category;
+      result = SearchResult(
+        name: "",
+        category: currentCategory!,
+      );
     });
   }
 
@@ -62,7 +76,7 @@ class _DetailPageState extends State<DetailPage> {
         const SizedBox(
           height: 40,
         ),
-        CategoriesButton(changeCategory),
+        CategoriesButton(currentCategory!, changeCategory),
         const SizedBox(
           height: 10,
         ),
@@ -111,7 +125,10 @@ class _DetailPageState extends State<DetailPage> {
                               hintText: "Cerca quello che vuoi ordinare",
                               onChanged: (value) {
                                 setState(() {
-                                  result = SearchResult(name: value);
+                                  result = SearchResult(
+                                    name: value,
+                                    category: currentCategory!,
+                                  );
                                 });
                               },
                             ),
@@ -127,7 +144,7 @@ class _DetailPageState extends State<DetailPage> {
                         ],
                       ),
                       Expanded(
-                        child: result,
+                        child: result!,
                       ),
                     ],
                   ),
@@ -137,7 +154,10 @@ class _DetailPageState extends State<DetailPage> {
       },
     ).whenComplete(() {
       setState(() {
-        result = const SearchResult(name: "");
+        result = SearchResult(
+          name: "",
+          category: currentCategory!,
+        );
       });
     });
   }
