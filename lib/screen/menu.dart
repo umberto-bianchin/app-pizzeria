@@ -5,7 +5,7 @@ import 'package:app_pizzeria/widget/search_result.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key, this.selectedCategory});
-  final Categories? selectedCategory;
+  final Categories? selectedCategory; 
 
   @override
   State<MenuPage> createState() => _MenuPageState();

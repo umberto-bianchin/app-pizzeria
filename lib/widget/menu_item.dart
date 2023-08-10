@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/item_cart_add.dart';
 
 class MenuItem extends StatelessWidget {
   const MenuItem(
@@ -103,7 +104,38 @@ class MenuItem extends StatelessWidget {
                             fontSize: 15.0),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  alignment: Alignment.center,
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        name,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      IconButton(
+                                          icon: const Icon(Icons.close),
+                                          color: const Color(0xFF1F91E7),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          }),
+                                    ],
+                                  ),
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 25, right: 20, bottom: 20),
+                                      child: ItemCart(menuItem: this),
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
                         icon: const Icon(
                           Icons.add_shopping_cart,
                           color: Colors.green,
