@@ -13,7 +13,7 @@ class SearchResult extends StatelessWidget {
       children: items
           .where((element) =>
               element.name.toLowerCase().contains(name.toLowerCase()) ||
-              element.ingredients.toLowerCase().contains(name.toLowerCase()))
+              element.ingredients.contains(name.toLowerCase()))
           .toList(),
     );
   }

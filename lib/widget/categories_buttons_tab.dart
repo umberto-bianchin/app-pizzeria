@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-enum Categories { pizza, bibite, panini, kebab }
+enum Categories {
+  pizza,
+  bibite,
+  panini,
+  kebab,
+}
 
 class CategoriesButton extends StatefulWidget {
   const CategoriesButton(this.onCategorychange, {super.key});
@@ -34,7 +39,7 @@ class _CategoriesButtonState extends State<CategoriesButton> {
       height: 40.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.only(left: 15, right: 10),
+        padding: const EdgeInsets.only(right: 10),
         children: [
           for (Pair pair in listCategories)
             category(
@@ -72,10 +77,12 @@ class _CategoriesButtonState extends State<CategoriesButton> {
               const SizedBox(
                 width: 5.0,
               ),
-              Text(capitalize(nameCat.name),
-                  style: TextStyle(
-                    color: menuColor,
-                  ))
+              Text(
+                capitalize(nameCat.name),
+                style: TextStyle(
+                  color: menuColor,
+                ),
+              )
             ],
           ),
         ),

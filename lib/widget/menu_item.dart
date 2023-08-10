@@ -12,8 +12,8 @@ class MenuItem extends StatelessWidget {
 
   final String pizzaImage;
   final String name;
-  final String ingredients;
-  final String price;
+  final List<String> ingredients;
+  final double price;
   final Categories category;
 
   @override
@@ -25,37 +25,83 @@ class MenuItem extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.only(left: 120.0, right: 10),
+              padding: const EdgeInsets.only(left: 115.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                        ),
+                  Expanded(
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 4.0,
+                          ),
+                          Text(
+                            ingredients.join(", "),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                            style: const TextStyle(color: Colors.grey),
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 4.0,
-                      ),
-                      Text(
-                        ingredients,
-                        style: const TextStyle(color: Colors.grey),
-                      )
-                    ],
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SimpleDialog(
+                                alignment: Alignment.center,
+                                title: Text(
+                                  name,
+                                  textAlign: TextAlign.center,
+                                ),
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Text(
+                                      ingredients.join(", "),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          'Ok',
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                      },
+                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "€$price",
+                        "€${price.toStringAsFixed(2)}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -74,12 +120,13 @@ class MenuItem extends StatelessWidget {
               ),
             ),
             Positioned(
-                left: 0.0,
-                child: Image(
-                  image: AssetImage(pizzaImage),
-                  height: 100.0,
-                  width: 100.0,
-                ))
+              left: 0.0,
+              child: Image(
+                image: AssetImage(pizzaImage),
+                height: 100.0,
+                width: 100.0,
+              ),
+            )
           ],
         ),
       ),

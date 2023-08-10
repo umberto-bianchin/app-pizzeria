@@ -63,9 +63,12 @@ class _DetailPageState extends State<DetailPage> {
           height: 40,
         ),
         CategoriesButton(changeCategory),
+        const SizedBox(
+          height: 10,
+        ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 20.0, 0.0),
             child: ListView(
               shrinkWrap: true,
               children: items
@@ -94,7 +97,7 @@ class _DetailPageState extends State<DetailPage> {
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     children: [
                       Row(
@@ -102,15 +105,9 @@ class _DetailPageState extends State<DetailPage> {
                           Expanded(
                             child: SearchBar(
                               leading: const Padding(
-                                padding: EdgeInsets.all(5.0),
+                                padding: EdgeInsets.all(10.0),
                                 child: Icon(Icons.search),
                               ),
-                              trailing: [
-                                IconButton(
-                                  icon: const Icon(Icons.filter_list),
-                                  onPressed: () {},
-                                ),
-                              ],
                               hintText: "Cerca quello che vuoi ordinare",
                               onChanged: (value) {
                                 setState(() {
