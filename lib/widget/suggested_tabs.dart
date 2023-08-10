@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_pizzeria/widget/food_card.dart';
+import 'package:app_pizzeria/widget/element_card.dart';
 
 class SuggestedTabs extends StatelessWidget {
   const SuggestedTabs({
@@ -14,6 +14,7 @@ class SuggestedTabs extends StatelessWidget {
       height: 140.0,
       width: width,
       child: ListView(
+        padding: const EdgeInsets.only(left: 15, right: 15),
         scrollDirection: Axis.horizontal,
         children: [
           FoodCard(width, "Mexican", "assets/images/mexicanPizza.png"),

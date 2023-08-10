@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 
 class MenuItem extends StatelessWidget {
-  const MenuItem({
-    super.key,
-    required this.pizzaImage,
-    required this.pizza,
-    required this.ingredients,
-    required this.price,
-  });
+  const MenuItem(
+      {super.key,
+      required this.pizzaImage,
+      required this.pizza,
+      required this.ingredients,
+      required this.price,
+      required this.category});
 
   final String pizzaImage;
   final String pizza;
   final String ingredients;
   final String price;
+  final Categories category;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,9 @@ class MenuItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(left: 120.0, right: 10),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: Colors.white),
+                borderRadius: BorderRadius.circular(15.0),
+                //color: Colors.white
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

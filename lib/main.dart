@@ -1,4 +1,4 @@
-import 'package:app_pizzeria/screen/detail_page.dart';
+import 'package:app_pizzeria/screen/menu.dart';
 import 'package:app_pizzeria/widget/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/screen/home.dart';

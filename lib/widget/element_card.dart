@@ -10,7 +10,7 @@ class FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.only(left: 8, bottom: 8, top: 8, right: 4),
         child: Container(
           width: width / 4,
           decoration: BoxDecoration(
@@ -18,15 +18,15 @@ class FoodCard extends StatelessWidget {
             boxShadow: const [
               BoxShadow(
                 color: Colors.black38,
-                blurRadius: 3.0,
+                blurRadius: 2.0,
                 spreadRadius: 0.0,
                 offset: Offset(1.0, 1.0),
               )
             ],
             gradient: const LinearGradient(
               colors: [
-                Color.fromARGB(255, 229, 228, 228),
-                Color.fromARGB(255, 243, 243, 243)
+                Color.fromARGB(255, 250, 250, 250),
+                Color.fromARGB(255, 239, 239, 239)
               ],
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
