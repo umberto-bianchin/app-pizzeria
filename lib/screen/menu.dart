@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/data/menu_items_list.dart';
-import 'package:flutter/material.dart';
+import 'package:app_pizzeria/widget/search_result.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -11,6 +12,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   Categories currentCategory = Categories.pizza;
+  SearchResult result = const SearchResult(name: "");
 
   void changeCategory(Categories catogry) {
     setState(() {
@@ -78,74 +80,68 @@ class _DetailPageState extends State<DetailPage> {
 
   void _showModal(context) {
     showModalBottomSheet(
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
-        ),
-        context: context,
-        builder: (context) {
-          //3
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return DraggableScrollableSheet(
-                expand: false,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(children: [
-                      Row(children: [
-                        Expanded(
-                            child: TextField(
-                                //controller: textController,
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(8),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    borderSide: const BorderSide(),
-                                  ),
-                                  prefixIcon: const Icon(Icons.search),
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+      ),
+      context: context,
+      builder: (context) {
+        //3
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+          return DraggableScrollableSheet(
+              expand: false,
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SearchBar(
+                              leading: const Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: Icon(Icons.search),
+                              ),
+                              trailing: [
+                                IconButton(
+                                  icon: const Icon(Icons.filter_list),
+                                  onPressed: () {},
                                 ),
-                                onChanged: (value) {
-                                  //4
-                                })),
-                        IconButton(
-                            icon: const Icon(Icons.close),
-                            color: const Color(0xFF1F91E7),
-                            onPressed: () {
-                              setState(() {
-                                Navigator.of(context).pop();
-                              });
-                            }),
-                      ]),
-                    ]),
-                  );
-                });
-          });
+                              ],
+                              hintText: "Cerca quello che vuoi ordinare",
+                              onChanged: (value) {
+                                setState(() {
+                                  result = SearchResult(name: value);
+                                });
+                              },
+                            ),
+                          ),
+                          IconButton(
+                              icon: const Icon(Icons.close),
+                              color: const Color(0xFF1F91E7),
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.of(context).pop();
+                                });
+                              }),
+                        ],
+                      ),
+                      Expanded(
+                        child: result,
+                      ),
+                    ],
+                  ),
+                );
+              });
         });
+      },
+    ).whenComplete(() {
+      setState(() {
+        result = const SearchResult(name: "");
+      });
+    });
   }
 }
-
-/**Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
-          child: SearchBar(
-            leading: const Padding(
-              padding: EdgeInsets.all(5.0),
-              child: Icon(Icons.search),
-            ),
-            trailing: [
-              IconButton(
-                icon: const Icon(Icons.filter_list),
-                onPressed: () {},
-              ),
-            ],
-            hintText: "Cerca quello che vuoi ordinare",
-            onTap: () {},
-            onChanged: (value) {
-              print(value);
-            },
-          ),
-        ), */
-
-
-        

@@ -11,7 +11,7 @@ class SuggestedTabs extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(
-      height: 140.0,
+      height: 160.0,
       width: width,
       child: ListView(
         padding: const EdgeInsets.only(left: 15, right: 15),

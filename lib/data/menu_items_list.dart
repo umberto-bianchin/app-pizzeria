@@ -4,28 +4,28 @@ import 'package:app_pizzeria/widget/menu_item.dart';
 const items = [
   MenuItem(
     pizzaImage: "assets/images/classic.png",
-    pizza: "Classic",
+    name: "Classic",
     ingredients: "Tamota sauce, cheese",
     price: "6.99",
     category: Categories.pizza,
   ),
   MenuItem(
     pizzaImage: "assets/images/americana.png",
-    pizza: "Americana",
+    name: "Americana",
     ingredients: "Base + Peperani",
     price: "7.99",
     category: Categories.pizza,
   ),
   MenuItem(
     pizzaImage: "assets/images/veg.png",
-    pizza: "Vegetarian",
+    name: "Vegetarian",
     ingredients: "Tamota,Onion and Corn",
     price: "4.99",
     category: Categories.pizza,
   ),
   MenuItem(
     pizzaImage: "assets/images/mexicanPizza.png",
-    pizza: "Mexican",
+    name: "Mexican",
     ingredients: "Mushroom + Chillies",
     price: "6.99",
     category: Categories.pizza,

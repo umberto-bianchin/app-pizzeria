@@ -5,13 +5,13 @@ class MenuItem extends StatelessWidget {
   const MenuItem(
       {super.key,
       required this.pizzaImage,
-      required this.pizza,
+      required this.name,
       required this.ingredients,
       required this.price,
       required this.category});
 
   final String pizzaImage;
-  final String pizza;
+  final String name;
   final String ingredients;
   final String price;
   final Categories category;
@@ -28,7 +28,6 @@ class MenuItem extends StatelessWidget {
               padding: const EdgeInsets.only(left: 120.0, right: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
-                //color: Colors.white
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +37,7 @@ class MenuItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        pizza,
+                        name,
                         style: const TextStyle(
                           fontSize: 18.0,
                         ),

@@ -9,33 +9,18 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 8, bottom: 8, top: 8, right: 4),
-        child: Container(
-          width: width / 4,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black38,
-                blurRadius: 2.0,
-                spreadRadius: 0.0,
-                offset: Offset(1.0, 1.0),
-              )
-            ],
-            gradient: const LinearGradient(
-              colors: [
-                Color.fromARGB(255, 250, 250, 250),
-                Color.fromARGB(255, 239, 239, 239)
-              ],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-            ),
-          ),
+    return Container(
+      padding: const EdgeInsets.only(left: 8, bottom: 8, top: 8, right: 4),
+      width: width / 3,
+      child: Card(
+        child: InkWell(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 10.0,
+              ),
               Text(
                 title,
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -46,10 +31,15 @@ class FoodCard extends StatelessWidget {
               Image(
                 image: AssetImage(image),
                 height: 80.0,
-                width: 80.0,
-              )
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
             ],
           ),
-        ));
+          onTap: () {},
+        ),
+      ),
+    );
   }
 }
