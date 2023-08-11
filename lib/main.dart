@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   final PageController _pageController = PageController();
   int _selectedPage = 0;
 
-  MenuPage menuPage = const MenuPage();
+  MenuPage menuPage = const MenuPage(selectedCategory: Categories.pizza);
 
   void changePage(int index, {Categories? selectedCategory}) {
     setState(() {
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           physics: const NeverScrollableScrollPhysics(),
           allowImplicitScrolling: false,
           controller: _pageController,
-          children: <Widget>[Home(onSelectCategory: changePage), menuPage],
+          children: [Home(onSelectCategory: changePage), menuPage],
         ),
       ),
       bottomNavigationBar:

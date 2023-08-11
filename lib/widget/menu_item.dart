@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/item_cart_add.dart';
@@ -13,7 +14,7 @@ class MenuItem extends StatelessWidget {
 
   final String image;
   final String name;
-  final List<String> ingredients;
+  final List<Ingredients> ingredients;
   final double price;
   final Categories category;
 
@@ -50,7 +51,9 @@ class MenuItem extends StatelessWidget {
                             height: 4.0,
                           ),
                           Text(
-                            ingredients.join(", "),
+                            ingredients
+                                .map((ingr) => toStringIngredients(ingr))
+                                .join(', '),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
                             style: const TextStyle(color: Colors.grey),
@@ -83,9 +86,10 @@ class MenuItem extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         left: 25, right: 20, bottom: 20),
-                                    child: Text(
-                                      ingredients.join(", "),
-                                    ),
+                                    child: Text(ingredients
+                                        .map(
+                                            (ingr) => toStringIngredients(ingr))
+                                        .join(', ')),
                                   ),
                                 ],
                               );

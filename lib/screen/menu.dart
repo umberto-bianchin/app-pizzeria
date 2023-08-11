@@ -4,24 +4,22 @@ import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/search_result.dart';
 
 class MenuPage extends StatefulWidget {
-  const MenuPage({super.key, this.selectedCategory});
-  final Categories? selectedCategory; 
+  const MenuPage({super.key, required this.selectedCategory});
+  final Categories selectedCategory;
 
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
 
 class _MenuPageState extends State<MenuPage> {
-  Categories? currentCategory;
+  Categories currentCategory = Categories.pizza;
   SearchResult? result;
 
   @override
   void initState() {
     super.initState();
-    currentCategory = widget.selectedCategory == null
-        ? Categories.pizza
-        : widget.selectedCategory!;
-    result = SearchResult(name: "", category: widget.selectedCategory!);
+    result = SearchResult(name: "", category: currentCategory);
+    currentCategory = widget.selectedCategory;
   }
 
   void changeCategory(Categories category) {
@@ -29,7 +27,7 @@ class _MenuPageState extends State<MenuPage> {
       currentCategory = category;
       result = SearchResult(
         name: "",
-        category: currentCategory!,
+        category: currentCategory,
       );
     });
   }
@@ -76,7 +74,7 @@ class _MenuPageState extends State<MenuPage> {
         const SizedBox(
           height: 40,
         ),
-        CategoriesButton(currentCategory!, changeCategory),
+        CategoriesButton(currentCategory, changeCategory),
         const SizedBox(
           height: 10,
         ),
@@ -127,7 +125,7 @@ class _MenuPageState extends State<MenuPage> {
                                 setState(() {
                                   result = SearchResult(
                                     name: value,
-                                    category: currentCategory!,
+                                    category: currentCategory,
                                   );
                                 });
                               },
@@ -156,7 +154,7 @@ class _MenuPageState extends State<MenuPage> {
       setState(() {
         result = SearchResult(
           name: "",
-          category: currentCategory!,
+          category: currentCategory,
         );
       });
     });
