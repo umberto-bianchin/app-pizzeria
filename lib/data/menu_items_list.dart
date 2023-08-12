@@ -5,132 +5,182 @@ import 'package:flutter/material.dart';
 
 var items = [
   MenuItem(
-      dataItem: DataItem(
-          key: UniqueKey(),
-          image: "assets/images/classic.png",
-          name: "Margherita",
-          ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
-          initialPrice: 6.99,
-          category: Categories.pizza)),
+    dataItem: DataItem(
+        key: UniqueKey(),
+        image: "assets/images/classic.png",
+        name: "Margherita",
+        ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
+        initialPrice: 6.99,
+        category: Categories.pizza),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/americana.png",
-    name: "Diavola",
-    ingredients: [
-      Ingredients.pomodoro,
-      Ingredients.mozzarella,
-      Ingredients.salamino_piccante
-    ],
-    initialPrice: 7.99,
-    category: Categories.pizza,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/americana.png",
+      name: "Diavola",
+      ingredients: [
+        Ingredients.pomodoro,
+        Ingredients.mozzarella,
+        Ingredients.salamino_piccante
+      ],
+      initialPrice: 7.99,
+      category: Categories.pizza,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/veg.png",
-    name: "Vegetariana",
-    ingredients: [
-      Ingredients.pomodoro,
-      Ingredients.mozzarella,
-      Ingredients.verdure_al_forno
-    ],
-    initialPrice: 4.99,
-    category: Categories.pizza,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/veg.png",
+      name: "Vegetariana",
+      ingredients: [
+        Ingredients.pomodoro,
+        Ingredients.mozzarella,
+        Ingredients.verdure_al_forno
+      ],
+      initialPrice: 4.99,
+      category: Categories.pizza,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/mexicanPizza.png",
-    name: "Prosciutto e Funghi",
-    ingredients: [
-      Ingredients.pomodoro,
-      Ingredients.mozzarella,
-      Ingredients.cotto,
-      Ingredients.funghi
-    ],
-    initialPrice: 6.99,
-    category: Categories.pizza,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/mexicanPizza.png",
+      name: "Prosciutto e Funghi",
+      ingredients: [
+        Ingredients.pomodoro,
+        Ingredients.mozzarella,
+        Ingredients.cotto,
+        Ingredients.funghi
+      ],
+      initialPrice: 6.99,
+      category: Categories.pizza,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/mexicanPizza.png",
-    name: "Bea",
-    ingredients: [
-      Ingredients.pomodoro,
-      Ingredients.mozzarella,
-      Ingredients.cotto,
-      Ingredients.salsiccia,
-      Ingredients.salamino,
-      Ingredients.piselli,
-      Ingredients.peperoni,
-      Ingredients.gorgonzola,
-      Ingredients.grana
-    ],
-    initialPrice: 9,
-    category: Categories.pizza,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/mexicanPizza.png",
+      name: "Bea",
+      ingredients: [
+        Ingredients.pomodoro,
+        Ingredients.mozzarella,
+        Ingredients.cotto,
+        Ingredients.salsiccia,
+        Ingredients.salamino,
+        Ingredients.piselli,
+        Ingredients.peperoni,
+        Ingredients.gorgonzola,
+        Ingredients.grana
+      ],
+      initialPrice: 9,
+      category: Categories.pizza,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/mexicanPizza.png",
-    name: "Tonno e Cipolla",
-    ingredients: [
-      Ingredients.pomodoro,
-      Ingredients.mozzarella,
-      Ingredients.tonno,
-      Ingredients.cipolla
-    ],
-    initialPrice: 6.99,
-    category: Categories.pizza,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/mexicanPizza.png",
+      name: "Tonno e Cipolla",
+      ingredients: [
+        Ingredients.pomodoro,
+        Ingredients.mozzarella,
+        Ingredients.tonno,
+        Ingredients.cipolla
+      ],
+      initialPrice: 6.99,
+      category: Categories.pizza,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/pizza.png",
-    name: "Wurstel",
-    ingredients: [
-      Ingredients.pomodoro,
-      Ingredients.mozzarella,
-      Ingredients.wustel
-    ],
-    initialPrice: 14,
-    category: Categories.panari,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/pizza.png",
+      name: "Wurstel",
+      ingredients: [
+        Ingredients.pomodoro,
+        Ingredients.mozzarella,
+        Ingredients.wustel
+      ],
+      initialPrice: 14,
+      category: Categories.panari,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/burger.png",
-    name: "A4",
-    ingredients: [
-      Ingredients.mozzarella,
-      Ingredients.salsiccia,
-      Ingredients.cipolla,
-      Ingredients.gorgonzola,
-      Ingredients.funghi
-    ],
-    initialPrice: 6.5,
-    category: Categories.panini,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/burger.png",
+      name: "A4",
+      ingredients: [
+        Ingredients.mozzarella,
+        Ingredients.salsiccia,
+        Ingredients.cipolla,
+        Ingredients.gorgonzola,
+        Ingredients.funghi
+      ],
+      initialPrice: 6.5,
+      category: Categories.panini,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/drink.png",
-    name: "Coca Cola",
-    ingredients: [],
-    initialPrice: 2,
-    category: Categories.bibite,
-  )),
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/drink.png",
+      name: "Coca Cola",
+      ingredients: [],
+      initialPrice: 2,
+      category: Categories.bibite,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  ),
   MenuItem(
-      dataItem: DataItem(
-    key: UniqueKey(),
-    image: "assets/images/drink.png",
-    name: "Acqua",
-    ingredients: [],
-    initialPrice: 1,
-    category: Categories.bibite,
-  ))
+    dataItem: DataItem(
+      key: UniqueKey(),
+      image: "assets/images/drink.png",
+      name: "Acqua",
+      ingredients: [],
+      initialPrice: 1,
+      category: Categories.bibite,
+    ),
+    icon: const Icon(
+      Icons.add_shopping_cart,
+      color: Colors.green,
+    ),
+  )
 ];
 
 enum Ingredients {

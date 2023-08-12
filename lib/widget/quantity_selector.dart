@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class NumericStepButton extends StatefulWidget {
+  const NumericStepButton({
+    super.key,
+    this.minValue = 1,
+    required this.onChanged,
+    this.initialValue = 1,
+  });
+
   final int minValue;
-
   final ValueChanged<int> onChanged;
-
-  const NumericStepButton(
-      {super.key, this.minValue = 1, required this.onChanged});
+  final int initialValue;
 
   @override
   State<NumericStepButton> createState() {
@@ -15,7 +19,13 @@ class NumericStepButton extends StatefulWidget {
 }
 
 class _NumericStepButtonState extends State<NumericStepButton> {
-  int counter = 1;
+  int? counter;
+
+  @override
+  void initState() {
+    super.initState();
+    counter = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +48,10 @@ class _NumericStepButtonState extends State<NumericStepButton> {
               iconSize: 25.0,
               onPressed: () {
                 setState(() {
-                  if (counter > widget.minValue) {
-                    counter--;
+                  if (counter! > widget.minValue) {
+                    counter = counter! - 1;
                   }
-                  widget.onChanged(counter);
+                  widget.onChanged(counter!);
                 });
               },
             ),
@@ -64,8 +74,8 @@ class _NumericStepButtonState extends State<NumericStepButton> {
               iconSize: 25.0,
               onPressed: () {
                 setState(() {
-                  counter++;
-                  widget.onChanged(counter);
+                  counter = counter! + 1;
+                  widget.onChanged(counter!);
                 });
               },
             ),

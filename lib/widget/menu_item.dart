@@ -5,9 +5,10 @@ import 'package:app_pizzeria/widget/item_cart_add.dart';
 import '../data/data_item.dart';
 
 class MenuItem extends StatelessWidget {
-  const MenuItem({super.key, required this.dataItem});
+  const MenuItem({super.key, required this.dataItem, required this.icon});
 
   final DataItem dataItem;
+  final Icon icon;
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +42,28 @@ class MenuItem extends StatelessWidget {
                           const SizedBox(
                             height: 4.0,
                           ),
-                          Text(
-                            dataItem.ingredients
-                                .map((ingr) => toStringIngredients(ingr))
-                                .join(', '),
+                          RichText(
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
-                            style: const TextStyle(color: Colors.grey),
-                          )
+                            text: TextSpan(
+                                style: const TextStyle(color: Colors.grey),
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        "${dataItem.ingredients.where((ingredient) => !dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => toStringIngredients(ingr)).join(', ')}, ",
+                                  ),
+                                  TextSpan(
+                                      text: dataItem.ingredients
+                                          .where((ingredient) =>
+                                              dataItem.addedIngredients[dataItem
+                                                  .ingredients
+                                                  .indexOf(ingredient)])
+                                          .map((ingr) =>
+                                              toStringIngredients(ingr))
+                                          .join(', '),
+                                      style: TextStyle(color: kprimaryColor))
+                                ]),
+                          ),
                         ],
                       ),
                       onTap: () {
@@ -92,7 +107,7 @@ class MenuItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "€${dataItem.initialPrice.toStringAsFixed(2)}",
+                        "€${dataItem.calculatePrice().toStringAsFixed(2)}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -131,10 +146,7 @@ class MenuItem extends StatelessWidget {
                                 );
                               });
                         },
-                        icon: const Icon(
-                          Icons.add_shopping_cart,
-                          color: Colors.green,
-                        ),
+                        icon: icon,
                       )
                     ],
                   )

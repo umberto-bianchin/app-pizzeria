@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/screen/cart.dart';
 import 'package:app_pizzeria/screen/menu.dart';
 import 'package:app_pizzeria/screen/user.dart';
@@ -5,13 +6,14 @@ import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/screen/home.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
 import 'data/data_item.dart';
 
 void main() {
-  runApp(const ProviderScope(
-    child: MyApp(),
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: (_) => CartItemsProvider())],
+    child: const MyApp(),
   ));
 }
 
@@ -74,8 +76,10 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        bottomNavigationBar:
-            NavBar(onChangePage: changePage, selectedIndex: _selectedPage),
+        bottomNavigationBar: NavBar(
+          onChangePage: changePage,
+          selectedIndex: _selectedPage,
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );

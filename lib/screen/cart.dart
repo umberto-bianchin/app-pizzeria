@@ -1,22 +1,23 @@
 import 'package:app_pizzeria/data/data_item.dart';
-import 'package:app_pizzeria/providers/cart_provider.dart';
+import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class CartScreen extends ConsumerStatefulWidget {
+import '../providers/cart_provider.dart';
+import '../widget/total_price.dart';
+
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
   @override
-  ConsumerState<CartScreen> createState() => _CartScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
-class _CartScreenState extends ConsumerState<CartScreen> {
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    final cartItems = ref.watch(cartItemProvider);
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           padding: const EdgeInsets.all(30),
@@ -37,12 +38,29 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           ),
         ),
         SizedBox(
-          height: 500,
+          height: MediaQuery.of(context).size.height / 1.7,
           width: double.infinity,
-          child: ListView.builder(itemBuilder: (ctx, index) {
-            return Text(cartItems[0].name);
-          }),
+          child: ListView.builder(
+              itemCount: context.watch<CartItemsProvider>().cartList.length,
+              itemBuilder: (ctx, index) {
+                if (context.watch<CartItemsProvider>().cartList.isEmpty) {
+                  //TODO
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: MenuItem(
+                    dataItem:
+                        context.watch<CartItemsProvider>().cartList[index],
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.blue,
+                    ),
+                  ),
+                );
+              }),
         ),
+        const TotalPrice(),
       ],
     );
   }

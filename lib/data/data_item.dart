@@ -13,6 +13,7 @@ class DataItem {
     required this.ingredients,
     required this.initialPrice,
     required this.category,
+    this.menuDefault = true,
     this.quantity = 1,
   }) {
     addedIngredients.addAll(List.filled(ingredients.length, false));
@@ -28,6 +29,7 @@ class DataItem {
   List<bool> isSelected = [];
   final UniqueKey key;
   int quantity;
+  bool menuDefault;
 
   void addIngredients(Ingredients ingredient) {
     ingredients.add(ingredient);
@@ -48,11 +50,29 @@ class DataItem {
 
   DataItem copy() {
     return DataItem(
-        key: UniqueKey(),
-        image: image,
-        name: name,
-        ingredients: List.from(ingredients),
-        initialPrice: initialPrice,
-        category: category);
+      key: UniqueKey(),
+      image: image,
+      name: name,
+      ingredients: List.from(ingredients),
+      initialPrice: initialPrice,
+      category: category,
+      menuDefault: menuDefault,
+      quantity: quantity,
+    );
+  }
+
+  void clearList() {
+    final indexes = [];
+    for (Ingredients ingredient in ingredients) {
+      if (!isSelected[ingredients.indexOf(ingredient)]) {
+        indexes.add(ingredients.indexOf(ingredient));
+      }
+    }
+
+    for (int index in indexes) {
+      isSelected.removeAt(index);
+      addedIngredients.removeAt(index);
+      ingredients.removeAt(index);
+    }
   }
 }

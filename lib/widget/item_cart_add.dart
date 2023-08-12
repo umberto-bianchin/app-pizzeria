@@ -1,23 +1,23 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
-import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
 import '../data/data_item.dart';
+import '../providers/cart_provider.dart';
 
-class ItemCart extends ConsumerStatefulWidget {
+class ItemCart extends StatefulWidget {
   const ItemCart({super.key, required this.dataItem});
 
   final DataItem dataItem;
 
   @override
-  ConsumerState<ItemCart> createState() => _ItemCartState();
+  State<ItemCart> createState() => _ItemCartState();
 }
 
-class _ItemCartState extends ConsumerState<ItemCart> {
+class _ItemCartState extends State<ItemCart> {
   String? dropdownValue;
   final ScrollController _controller = ScrollController();
   String searchedValue = "";
@@ -52,7 +52,12 @@ class _ItemCartState extends ConsumerState<ItemCart> {
   @override
   void initState() {
     super.initState();
-    customItem = widget.dataItem.copy();
+
+    if (widget.dataItem.menuDefault) {
+      customItem = widget.dataItem.copy();
+    } else {
+      customItem = widget.dataItem;
+    }
   }
 
   @override
@@ -67,7 +72,11 @@ class _ItemCartState extends ConsumerState<ItemCart> {
               image: AssetImage(customItem!.image),
               height: 80.0,
             ),
-            NumericStepButton(onChanged: setQuantity),
+            NumericStepButton(
+              onChanged: setQuantity,
+              minValue: customItem!.menuDefault ? 1 : 0,
+              initialValue: customItem!.quantity,
+            ),
           ],
         ),
         const SizedBox(height: 10),
@@ -171,8 +180,27 @@ class _ItemCartState extends ConsumerState<ItemCart> {
             const SizedBox(width: 5),
             OutlinedButton(
               onPressed: () {
-                ref.read(cartProvider.notifier).addToCart(customItem!);
-                Navigator.of(context).pop();
+                if (customItem!.menuDefault) {
+                  context.read<CartItemsProvider>().addItem(customItem!);
+                } else {
+                  context
+                      .read<CartItemsProvider>()
+                      .changeQuantity(customItem!, quantity);
+
+                  if (quantity == 0) {
+                    context.read<CartItemsProvider>().removeItem(customItem!);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                        "Rimosso dal carrello",
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      backgroundColor: Color.fromARGB(255, 229, 228, 228),
+                    ));
+                  }
+                }
+                Navigator.pop(context);
               },
               style: OutlinedButton.styleFrom(
                 fixedSize: const Size(120, 20),
