@@ -1,17 +1,17 @@
+import 'package:app_pizzeria/screen/cart.dart';
 import 'package:app_pizzeria/screen/menu.dart';
+import 'package:app_pizzeria/screen/user.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/screen/home.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'data/data_item.dart';
 
 void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(
-      useMaterial3: true,
-      fontFamily: "Gilroy",
-    ),
-    home: const MyApp(),
-    debugShowCheckedModeBanner: false,
+  runApp(const ProviderScope(
+    child: MyApp(),
   ));
 }
 
@@ -51,17 +51,33 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          allowImplicitScrolling: false,
-          controller: _pageController,
-          children: [Home(onSelectCategory: changePage), menuPage],
-        ),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: "Gilroy",
       ),
-      bottomNavigationBar:
-          NavBar(onChangePage: changePage, selectedIndex: _selectedPage),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kprimaryColor,
+          toolbarHeight: 0,
+        ),
+        body: SafeArea(
+          child: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            allowImplicitScrolling: false,
+            controller: _pageController,
+            children: [
+              Home(onSelectCategory: changePage),
+              menuPage,
+              const CartScreen(),
+              const UserScreen(),
+            ],
+          ),
+        ),
+        bottomNavigationBar:
+            NavBar(onChangePage: changePage, selectedIndex: _selectedPage),
+      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

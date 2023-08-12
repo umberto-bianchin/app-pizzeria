@@ -1,27 +1,58 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
+import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
-import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ItemCart extends StatefulWidget {
-  const ItemCart({super.key, required this.menuItem});
+import '../data/data_item.dart';
 
-  final MenuItem menuItem;
+class ItemCart extends ConsumerStatefulWidget {
+  const ItemCart({super.key, required this.dataItem});
+
+  final DataItem dataItem;
 
   @override
-  State<ItemCart> createState() => _ItemCartState();
+  ConsumerState<ItemCart> createState() => _ItemCartState();
 }
 
-class _ItemCartState extends State<ItemCart> {
-  List<bool> isCheck = [];
+class _ItemCartState extends ConsumerState<ItemCart> {
   String? dropdownValue;
+  final ScrollController _controller = ScrollController();
+  String searchedValue = "";
+  DataItem? customItem;
+  int quantity = 1;
+
+  void setSearchedValue(String search) {
+    setState(() {
+      searchedValue = search;
+    });
+  }
+
+  void setQuantity(int x) {
+    setState(() {
+      quantity = x;
+      customItem!.quantity = x;
+    });
+  }
+
+  void addIngredients(Ingredients ingredient) {
+    setState(() {
+      customItem!.addIngredients(ingredient);
+    });
+  }
+
+  void setChecked(int i, bool value) {
+    setState(() {
+      customItem!.isSelected[i] = value;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    isCheck.addAll(List.filled(widget.menuItem.ingredients.length, true));
+    customItem = widget.dataItem.copy();
   }
 
   @override
@@ -30,14 +61,13 @@ class _ItemCartState extends State<ItemCart> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Image(
-              image: AssetImage(widget.menuItem.image),
-              height: 100.0,
-              width: 100.0,
+              image: AssetImage(customItem!.image),
+              height: 80.0,
             ),
-            NumericStepButton(onChanged: (int x) {}),
+            NumericStepButton(onChanged: setQuantity),
           ],
         ),
         const SizedBox(height: 10),
@@ -46,32 +76,34 @@ class _ItemCartState extends State<ItemCart> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.width / 1.5,
+          height: MediaQuery.of(context).size.width / 2.5,
           width: MediaQuery.of(context).size.width / 1.2,
           child: Container(
             padding: const EdgeInsets.all(16),
             child: Scrollbar(
               thumbVisibility: true,
+              controller: _controller,
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: ListView(
+                  controller: _controller,
                   shrinkWrap: true,
                   children: [
-                    for (int i = 0; i < isCheck.length; i++)
+                    for (int i = 0; i < customItem!.ingredients.length; i++)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(capitalize(toStringIngredients(
-                              widget.menuItem.ingredients[i]))),
+                          Text(capitalize(
+                              toStringIngredients(customItem!.ingredients[i]))),
                           SizedBox(
                             height: 40,
                             child: Checkbox(
                               activeColor: Colors.blue,
-                              value: isCheck[i],
+                              value: customItem!.isSelected[i],
                               shape: const CircleBorder(),
                               onChanged: (bool? value) {
                                 setState(() {
-                                  isCheck[i] = value!;
+                                  setChecked(i, value!);
                                 });
                               },
                             ),
@@ -84,10 +116,22 @@ class _ItemCartState extends State<ItemCart> {
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Prezzo\t\t\t",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+            Text(
+              "€${(customItem!.calculatePrice()).toStringAsFixed(2)}",
+              style: const TextStyle(fontSize: 15, color: Colors.red),
+            ),
+          ],
+        ),
         SizedBox(
           width: MediaQuery.of(context).size.width / 1.2,
-          child: const SearchIngredient(),
+          child: SearchIngredient(onChange: setSearchedValue),
         ),
         const SizedBox(height: 10),
         SizedBox(
@@ -98,8 +142,9 @@ class _ItemCartState extends State<ItemCart> {
             padding: const EdgeInsets.only(right: 10),
             children: [
               for (Ingredients ingredient in Ingredients.values)
-                if (!widget.menuItem.ingredients.contains(ingredient))
-                  ingredienButton(
+                if (!customItem!.ingredients.contains(ingredient) &&
+                    toStringIngredients(ingredient).contains(searchedValue))
+                  ingredientButton(
                       ingredient, Ingredients.values.indexOf(ingredient)),
             ],
           ),
@@ -125,7 +170,10 @@ class _ItemCartState extends State<ItemCart> {
             ),
             const SizedBox(width: 5),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                ref.read(cartProvider.notifier).addToCart(customItem!);
+                Navigator.of(context).pop();
+              },
               style: OutlinedButton.styleFrom(
                 fixedSize: const Size(120, 20),
                 backgroundColor: Colors.grey[350],
@@ -144,28 +192,32 @@ class _ItemCartState extends State<ItemCart> {
     );
   }
 
-  Widget ingredienButton(Ingredients ingredient, int index) {
+  Widget ingredientButton(Ingredients ingredient, int index) {
     return Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: OutlinedButton(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+      padding: const EdgeInsets.only(left: 10),
+      child: OutlinedButton(
+        onPressed: () {
+          addIngredients(ingredient);
+        },
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        child: Row(
+          children: [
+            Text(
+              capitalize(toStringIngredients(ingredient)),
+              style: TextStyle(color: Colors.grey[800]),
             ),
-            child: Row(
-              children: [
-                Text(
-                  capitalize(toStringIngredients(ingredient)),
-                  style: TextStyle(color: Colors.grey[800]),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  "+€${costIngredients[ingredient]}",
-                  style: TextStyle(color: Colors.grey[600], fontSize: 10),
-                ),
-              ],
-            )));
+            const SizedBox(width: 8),
+            Text(
+              "+€${costIngredients[ingredient]}",
+              style: TextStyle(color: Colors.grey[600], fontSize: 10),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,22 +1,13 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:flutter/material.dart';
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/item_cart_add.dart';
 
-class MenuItem extends StatelessWidget {
-  const MenuItem(
-      {super.key,
-      required this.image,
-      required this.name,
-      required this.ingredients,
-      required this.price,
-      required this.category});
+import '../data/data_item.dart';
 
-  final String image;
-  final String name;
-  final List<Ingredients> ingredients;
-  final double price;
-  final Categories category;
+class MenuItem extends StatelessWidget {
+  const MenuItem({super.key, required this.dataItem});
+
+  final DataItem dataItem;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +33,7 @@ class MenuItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name,
+                            dataItem.name,
                             style: const TextStyle(
                               fontSize: 18.0,
                             ),
@@ -51,7 +42,7 @@ class MenuItem extends StatelessWidget {
                             height: 4.0,
                           ),
                           Text(
-                            ingredients
+                            dataItem.ingredients
                                 .map((ingr) => toStringIngredients(ingr))
                                 .join(', '),
                             overflow: TextOverflow.ellipsis,
@@ -71,7 +62,7 @@ class MenuItem extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      name,
+                                      dataItem.name,
                                       textAlign: TextAlign.center,
                                     ),
                                     IconButton(
@@ -86,7 +77,7 @@ class MenuItem extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         left: 25, right: 20, bottom: 20),
-                                    child: Text(ingredients
+                                    child: Text(dataItem.ingredients
                                         .map(
                                             (ingr) => toStringIngredients(ingr))
                                         .join(', ')),
@@ -101,7 +92,7 @@ class MenuItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "€${price.toStringAsFixed(2)}",
+                        "€${dataItem.initialPrice.toStringAsFixed(2)}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -119,7 +110,7 @@ class MenuItem extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        name,
+                                        dataItem.name,
                                         textAlign: TextAlign.center,
                                       ),
                                       IconButton(
@@ -133,8 +124,8 @@ class MenuItem extends StatelessWidget {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 25, right: 20, bottom: 20),
-                                      child: ItemCart(menuItem: this),
+                                          left: 25, right: 20),
+                                      child: ItemCart(dataItem: dataItem),
                                     ),
                                   ],
                                 );
@@ -153,7 +144,7 @@ class MenuItem extends StatelessWidget {
             Positioned(
               left: 0.0,
               child: Image(
-                image: AssetImage(image),
+                image: AssetImage(dataItem.image),
                 height: 100.0,
                 width: 100.0,
               ),

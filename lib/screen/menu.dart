@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/data/menu_items_list.dart';
@@ -37,42 +38,53 @@ class _MenuPageState extends State<MenuPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 0.0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            const Text(
-              "Menu",
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
+        Container(
+          padding: const EdgeInsets.only(bottom: 30),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
-            ),
-            //start search icon
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: Colors.black,
-                  style: BorderStyle.solid,
-                  width: 1.0,
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  _showModal(context);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(6.0),
-                  child: Icon(Icons.search),
-                ),
-              ),
-            )
-            //end search icon
-          ]),
+              color: kprimaryColor),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 0.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Menu",
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  //start search icon
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.black,
+                        style: BorderStyle.solid,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        _showModal(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child: Icon(Icons.search),
+                      ),
+                    ),
+                  )
+                  //end search icon
+                ]),
+          ),
         ),
         const SizedBox(
-          height: 40,
+          height: 20,
         ),
         CategoriesButton(currentCategory, changeCategory),
         const SizedBox(
@@ -84,7 +96,8 @@ class _MenuPageState extends State<MenuPage> {
             child: ListView(
               shrinkWrap: true,
               children: items
-                  .where((element) => element.category == currentCategory)
+                  .where(
+                      (element) => element.dataItem.category == currentCategory)
                   .toList(),
             ),
           ),

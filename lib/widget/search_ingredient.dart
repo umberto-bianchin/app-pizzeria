@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchIngredient extends StatefulWidget {
-  const SearchIngredient({super.key});
+  const SearchIngredient({super.key, required this.onChange});
+
+  final void Function(String) onChange;
 
   @override
   State<SearchIngredient> createState() => _SearchIngredientState();
@@ -20,6 +22,7 @@ class _SearchIngredientState extends State<SearchIngredient> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -39,8 +42,9 @@ class _SearchIngredientState extends State<SearchIngredient> {
                       ),
                       title: SizedBox(
                         width: MediaQuery.of(context).size.width / 2,
-                        child: const TextField(
-                          decoration: InputDecoration(
+                        child: TextField(
+                          onChanged: widget.onChange,
+                          decoration: const InputDecoration(
                             hintText: 'Cerca',
                             hintStyle: TextStyle(
                               fontSize: 15,

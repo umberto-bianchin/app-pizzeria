@@ -8,7 +8,8 @@ import 'package:app_pizzeria/widget/position_map.dart';
 class Home extends StatelessWidget {
   const Home({super.key, required this.onSelectCategory});
 
-  final void Function(int index, {Categories? selectedCategory}) onSelectCategory;
+  final void Function(int index, {Categories? selectedCategory})
+      onSelectCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +20,21 @@ class Home extends StatelessWidget {
       height: height,
       width: width,
       child: ListView(
+        physics: const ClampingScrollPhysics(),
         children: [
-          const SizedBox(
-            height: 40.0,
-          ),
           const IntroductionPizzeria(),
           const SizedBox(
             height: 10.0,
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            child: Text("Categorie",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                )),
+            child: Text(
+              "Categorie",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
           ),
           CategoriesTabs(onTap: onSelectCategory),
           const SizedBox(
@@ -41,11 +42,13 @@ class Home extends StatelessWidget {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            child: Text("Suggeriti",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                )),
+            child: Text(
+              "Suggeriti",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
           ),
           const SuggestedTabs(),
           const Padding(

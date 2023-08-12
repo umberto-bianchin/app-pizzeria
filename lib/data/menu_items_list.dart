@@ -1,15 +1,20 @@
 import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
+import 'package:app_pizzeria/data/data_item.dart';
+import 'package:flutter/material.dart';
 
-const items = [
+var items = [
   MenuItem(
-    image: "assets/images/classic.png",
-    name: "Margherita",
-    ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
-    price: 6.99,
-    category: Categories.pizza,
-  ),
+      dataItem: DataItem(
+          key: UniqueKey(),
+          image: "assets/images/classic.png",
+          name: "Margherita",
+          ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
+          initialPrice: 6.99,
+          category: Categories.pizza)),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/americana.png",
     name: "Diavola",
     ingredients: [
@@ -17,10 +22,12 @@ const items = [
       Ingredients.mozzarella,
       Ingredients.salamino_piccante
     ],
-    price: 7.99,
+    initialPrice: 7.99,
     category: Categories.pizza,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/veg.png",
     name: "Vegetariana",
     ingredients: [
@@ -28,10 +35,12 @@ const items = [
       Ingredients.mozzarella,
       Ingredients.verdure_al_forno
     ],
-    price: 4.99,
+    initialPrice: 4.99,
     category: Categories.pizza,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/mexicanPizza.png",
     name: "Prosciutto e Funghi",
     ingredients: [
@@ -40,10 +49,12 @@ const items = [
       Ingredients.cotto,
       Ingredients.funghi
     ],
-    price: 6.99,
+    initialPrice: 6.99,
     category: Categories.pizza,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/mexicanPizza.png",
     name: "Bea",
     ingredients: [
@@ -57,10 +68,12 @@ const items = [
       Ingredients.gorgonzola,
       Ingredients.grana
     ],
-    price: 9,
+    initialPrice: 9,
     category: Categories.pizza,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/mexicanPizza.png",
     name: "Tonno e Cipolla",
     ingredients: [
@@ -69,10 +82,12 @@ const items = [
       Ingredients.tonno,
       Ingredients.cipolla
     ],
-    price: 6.99,
+    initialPrice: 6.99,
     category: Categories.pizza,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/pizza.png",
     name: "Wurstel",
     ingredients: [
@@ -80,10 +95,12 @@ const items = [
       Ingredients.mozzarella,
       Ingredients.wustel
     ],
-    price: 14,
+    initialPrice: 14,
     category: Categories.panari,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/burger.png",
     name: "A4",
     ingredients: [
@@ -93,23 +110,27 @@ const items = [
       Ingredients.gorgonzola,
       Ingredients.funghi
     ],
-    price: 6.5,
+    initialPrice: 6.5,
     category: Categories.panini,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/drink.png",
     name: "Coca Cola",
     ingredients: [],
-    price: 2,
+    initialPrice: 2,
     category: Categories.bibite,
-  ),
+  )),
   MenuItem(
+      dataItem: DataItem(
+    key: UniqueKey(),
     image: "assets/images/drink.png",
     name: "Acqua",
     ingredients: [],
-    price: 1,
+    initialPrice: 1,
     category: Categories.bibite,
-  )
+  ))
 ];
 
 enum Ingredients {

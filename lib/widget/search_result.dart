@@ -13,10 +13,11 @@ class SearchResult extends StatelessWidget {
     return ListView(
       shrinkWrap: true,
       children: items
-          .where((element) =>
-              ((element.name.toLowerCase().contains(name.toLowerCase()) ||
-                  element.ingredients.contains(name.toLowerCase())) &&
-                      element.category == category))
+          .where((element) => ((element.dataItem.name
+                      .toLowerCase()
+                      .contains(name.toLowerCase()) ||
+                  element.dataItem.ingredients.contains(name.toLowerCase())) &&
+              element.dataItem.category == category))
           .toList(),
     );
   }
