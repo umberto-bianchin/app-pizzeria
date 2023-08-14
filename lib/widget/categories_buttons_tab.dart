@@ -5,7 +5,7 @@ enum Categories {
   pizza,
   bibite,
   panini,
-  panari,
+  kebab,
 }
 
 class CategoriesButton extends StatefulWidget {
@@ -22,7 +22,7 @@ class CategoriesButton extends StatefulWidget {
 class _CategoriesButtonState extends State<CategoriesButton> {
   List<Pair> listCategories = [
     Pair("pizza.png", Categories.pizza),
-    Pair("mexican.png", Categories.panari),
+    Pair("mexican.png", Categories.kebab),
     Pair("burger.png", Categories.panini),
     Pair("drink.png", Categories.bibite),
   ];

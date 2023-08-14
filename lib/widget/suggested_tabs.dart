@@ -2,6 +2,9 @@ import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/element_card.dart';
 
+import '../data/data_item.dart';
+import '../data/menu_items_list.dart';
+
 class SuggestedTabs extends StatelessWidget {
   const SuggestedTabs({
     super.key,
@@ -14,16 +17,60 @@ class SuggestedTabs extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(
-      height: 160.0,
+      height: 140.0,
       width: width,
       child: ListView(
         padding: const EdgeInsets.only(left: 15, right: 15),
         scrollDirection: Axis.horizontal,
         children: [
-          FoodCard(width, "Margherita", "assets/images/classic.png", action),
-          FoodCard(width, "Diavola", "assets/images/americana.png", action),
-          FoodCard(
-              width, "Vegetariana", "assets/images/mexicanPizza.png", action),
+          SuggestedCard(
+            DataItem(
+              key: UniqueKey(),
+              image: "assets/images/burger.png",
+              name: "A4",
+              ingredients: [
+                Ingredients.mozzarella,
+                Ingredients.salsiccia,
+                Ingredients.cipolla,
+                Ingredients.gorgonzola,
+                Ingredients.funghi
+              ],
+              initialPrice: 6.5,
+              category: Categories.panini,
+            ),
+          ),
+          SuggestedCard(
+            DataItem(
+              key: UniqueKey(),
+              image: "assets/images/burger.png",
+              name: "A4",
+              ingredients: [
+                Ingredients.mozzarella,
+                Ingredients.salsiccia,
+                Ingredients.cipolla,
+                Ingredients.gorgonzola,
+                Ingredients.funghi
+              ],
+              initialPrice: 6.5,
+              category: Categories.panini,
+            ),
+          ),
+          SuggestedCard(
+            DataItem(
+              key: UniqueKey(),
+              image: "assets/images/burger.png",
+              name: "A4",
+              ingredients: [
+                Ingredients.mozzarella,
+                Ingredients.salsiccia,
+                Ingredients.cipolla,
+                Ingredients.gorgonzola,
+                Ingredients.funghi
+              ],
+              initialPrice: 6.5,
+              category: Categories.panini,
+            ),
+          ),
         ],
       ),
     );

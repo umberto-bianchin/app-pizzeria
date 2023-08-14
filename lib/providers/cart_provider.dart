@@ -40,6 +40,11 @@ class CartItemsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void changeIngredient(DataItem item, int index, bool value) {
+    item.isSelected[index] = value;
+    notifyListeners();
+  }
+
   double getTotal() {
     double amount = 0.0;
 

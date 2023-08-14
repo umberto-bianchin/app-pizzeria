@@ -34,7 +34,10 @@ class MenuItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            dataItem.name,
+                            overflow: TextOverflow.ellipsis,
+                            dataItem.menuDefault
+                                ? dataItem.name
+                                : "${dataItem.name}\t x${dataItem.quantity}",
                             style: const TextStyle(
                               fontSize: 18.0,
                             ),
@@ -50,18 +53,22 @@ class MenuItem extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     text:
-                                        "${dataItem.ingredients.where((ingredient) => !dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => toStringIngredients(ingr)).join(', ')}, ",
+                                        "${dataItem.ingredients.where((ingredient) => !dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => toStringIngredients(ingr)).join(', ')}, ",
                                   ),
                                   TextSpan(
                                       text: dataItem.ingredients
                                           .where((ingredient) =>
                                               dataItem.addedIngredients[dataItem
                                                   .ingredients
+                                                  .indexOf(ingredient)] &&
+                                              dataItem.isSelected[dataItem
+                                                  .ingredients
                                                   .indexOf(ingredient)])
                                           .map((ingr) =>
                                               toStringIngredients(ingr))
                                           .join(', '),
-                                      style: TextStyle(color: kprimaryColor))
+                                      style: const TextStyle(
+                                          color: Color(0xFF1F91E7)))
                                 ]),
                           ),
                         ],

@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,20 +21,13 @@ class _TotalPriceState extends State<TotalPrice> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 87, 87, 87),
-              Color.fromARGB(255, 153, 153, 153)
-            ],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
+          color: kprimaryColor,
           borderRadius: BorderRadius.all(Radius.circular(24))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            'Totale: ${context.watch<CartItemsProvider>().getTotal().toStringAsFixed(2)}',
+            'Totale:  €${context.watch<CartItemsProvider>().getTotal().toStringAsFixed(2)}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -41,19 +35,19 @@ class _TotalPriceState extends State<TotalPrice> {
             ),
           ),
           OutlinedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0))),
-              side: MaterialStateProperty.all(
-                const BorderSide(
-                    color: Colors.black, width: 1.0, style: BorderStyle.solid),
+            style: OutlinedButton.styleFrom(
+              //color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              side: const BorderSide(
+                color: Colors.black,
+                width: 1.0,
+                style: BorderStyle.solid,
               ),
-              backgroundColor:
-                  const MaterialStatePropertyAll<Color>(Colors.transparent),
-              foregroundColor:
-                  const MaterialStatePropertyAll<Color>(Colors.black),
-              shadowColor:
-                  const MaterialStatePropertyAll<Color>(Colors.transparent),
+
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.black,
+              shadowColor: Colors.transparent,
             ),
             onPressed: () {},
             child: const Text(

@@ -14,7 +14,7 @@ var items = [
         category: Categories.pizza),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -32,7 +32,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -50,7 +50,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -69,7 +69,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -93,7 +93,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -112,7 +112,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -126,11 +126,11 @@ var items = [
         Ingredients.wustel
       ],
       initialPrice: 14,
-      category: Categories.panari,
+      category: Categories.kebab,
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -150,7 +150,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -164,7 +164,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   ),
   MenuItem(
@@ -178,7 +178,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: Colors.green,
+      color: kprimaryColor,
     ),
   )
 ];

@@ -16,51 +16,99 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    Widget displayed = context.watch<CartItemsProvider>().cartList.length > 0
+        ? cartElements()
+        : emptyMessage();
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           padding: const EdgeInsets.all(30),
           width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
               color: kprimaryColor),
-          child: const Text(
-            "Carrello",
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Carrello",
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              Icon(
+                Icons.shopping_bag_outlined,
+                size: 30,
+              ),
+            ],
           ),
         ),
+        displayed
+      ],
+    );
+  }
+
+  Widget cartElements() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
         SizedBox(
           height: MediaQuery.of(context).size.height / 1.7,
           width: double.infinity,
           child: ListView.builder(
               itemCount: context.watch<CartItemsProvider>().cartList.length,
               itemBuilder: (ctx, index) {
-                if (context.watch<CartItemsProvider>().cartList.isEmpty) {
-                  //TODO
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: MenuItem(
-                    dataItem:
-                        context.watch<CartItemsProvider>().cartList[index],
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.blue,
+                return Dismissible(
+                  key: ,
+                  background: Container(
+                    color: Colors.red,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 25,
+                    ),
+                  ),
+                  onDismissed: (direction) {
+                    if (direction == DismissDirection.endToStart) {
+                      context.read<CartItemsProvider>().removeItem(
+                          context.watch<CartItemsProvider>().cartList[index]);
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: MenuItem(
+                      dataItem:
+                          context.watch<CartItemsProvider>().cartList[index],
+                      icon: const Icon(
+                        Icons.add,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 );
               }),
         ),
         const TotalPrice(),
+      ],
+    );
+  }
+
+  Widget emptyMessage() {
+    return const Column(
+      children: [
+        SizedBox(height: 50),
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            "Aggiungi qualcosa al carrello per poterlo visualizzare in questa pagina.",
+            style: TextStyle(fontSize: 18),
+          ),
+        )
       ],
     );
   }

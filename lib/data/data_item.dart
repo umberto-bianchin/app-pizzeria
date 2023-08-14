@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../widget/categories_buttons_tab.dart';
 import 'menu_items_list.dart';
 
-Color kprimaryColor = const Color.fromARGB(255, 4, 167, 113);
+const Color kprimaryColor = Color.fromARGB(255, 4, 167, 113);
 
 class DataItem {
   DataItem({

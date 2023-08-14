@@ -1,52 +1,82 @@
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
+import '../data/data_item.dart';
+import 'item_cart_add.dart';
 
-class FoodCard extends StatelessWidget {
-  const FoodCard(this.width, this.title, this.image, this.action,{super.key, this.category});
+class SuggestedCard extends StatelessWidget {
+  const SuggestedCard(this.item, {super.key});
 
-  final double width;
-  final String title;
-  final String image;
-  final void Function(int index, {Categories selectedCategory}) action;
-  final Categories? category;
+  final DataItem item;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 8, bottom: 8, top: 8, right: 4),
-      width: width / 3,
+      //width: width / 3,
       child: Card(
+        elevation: 5,
+        surfaceTintColor: const Color.fromARGB(255, 228, 228, 228),
         child: InkWell(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Image(
-                image: AssetImage(image),
-                height: 80.0,
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(item.image),
+                  height: 80.0,
+                ),
+                const SizedBox(
+                  width: 20.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      item.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "€${item.calculatePrice().toStringAsFixed(2)}",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                          fontSize: 15.0),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           onTap: () {
-
-            if(category == null){
-            action(1);}
-            else {
-              action(1, selectedCategory: category!);
-            }
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return SimpleDialog(
+                    alignment: Alignment.center,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          item.name,
+                          textAlign: TextAlign.center,
+                        ),
+                        IconButton(
+                            icon: const Icon(Icons.close),
+                            color: const Color(0xFF1F91E7),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ],
+                    ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25, right: 20),
+                        child: ItemCart(dataItem: item),
+                      ),
+                    ],
+                  );
+                });
           },
         ),
       ),

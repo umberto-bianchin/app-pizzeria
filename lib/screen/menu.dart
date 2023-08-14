@@ -40,8 +40,8 @@ class _MenuPageState extends State<MenuPage> {
       children: [
         Container(
           padding: const EdgeInsets.only(bottom: 30),
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
@@ -86,22 +86,26 @@ class _MenuPageState extends State<MenuPage> {
         const SizedBox(
           height: 20,
         ),
-        CategoriesButton(currentCategory, changeCategory),
-        const SizedBox(
-          height: 10,
-        ),
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 20.0, 0.0),
-            child: ListView(
-              shrinkWrap: true,
-              children: items
-                  .where(
-                      (element) => element.dataItem.category == currentCategory)
-                  .toList(),
-            ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                top: 0,
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(10.0, 25.0, 20.0, 0.0),
+                  child: ListView(
+                    children: items
+                        .where((element) =>
+                            element.dataItem.category == currentCategory)
+                        .toList(),
+                  ),
+                ),
+              ),
+              CategoriesButton(currentCategory, changeCategory),
+              //const SizedBox(height: 10),
+            ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -122,7 +126,7 @@ class _MenuPageState extends State<MenuPage> {
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                   child: Column(
                     children: [
                       Row(

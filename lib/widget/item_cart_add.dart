@@ -45,7 +45,13 @@ class _ItemCartState extends State<ItemCart> {
 
   void setChecked(int i, bool value) {
     setState(() {
-      customItem!.isSelected[i] = value;
+      if (!customItem!.menuDefault) {
+        context
+            .read<CartItemsProvider>()
+            .changeIngredient(customItem!, i, value);
+      } else {
+        customItem!.isSelected[i] = value;
+      }
     });
   }
 
@@ -105,18 +111,14 @@ class _ItemCartState extends State<ItemCart> {
                           Text(capitalize(
                               toStringIngredients(customItem!.ingredients[i]))),
                           SizedBox(
-                            height: 40,
-                            child: Checkbox(
-                              activeColor: Colors.blue,
-                              value: customItem!.isSelected[i],
-                              shape: const CircleBorder(),
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  setChecked(i, value!);
-                                });
-                              },
-                            ),
-                          ),
+                              height: 40,
+                              child: Checkbox(
+                                  activeColor: Colors.blue,
+                                  value: customItem!.isSelected[i],
+                                  shape: const CircleBorder(),
+                                  onChanged: (bool? value) {
+                                    setChecked(i, value!);
+                                  }))
                         ],
                       )
                   ],
@@ -173,7 +175,7 @@ class _ItemCartState extends State<ItemCart> {
                 ),
               ),
               child: const Text(
-                "Cancella",
+                "Chiudi",
                 style: TextStyle(color: Colors.red),
               ),
             ),
