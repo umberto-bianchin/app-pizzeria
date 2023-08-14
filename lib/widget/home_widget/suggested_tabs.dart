@@ -1,9 +1,9 @@
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:app_pizzeria/widget/element_card.dart';
+import 'package:app_pizzeria/widget/home_widget/suggested_card.dart';
 
-import '../data/data_item.dart';
-import '../data/menu_items_list.dart';
+import '../../data/data_item.dart';
+import '../../data/menu_items_list.dart';
 
 class SuggestedTabs extends StatelessWidget {
   const SuggestedTabs({
@@ -12,8 +12,6 @@ class SuggestedTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void action(int index, {Categories? selectedCategory}) {}
-
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(
@@ -26,14 +24,11 @@ class SuggestedTabs extends StatelessWidget {
           SuggestedCard(
             DataItem(
               key: UniqueKey(),
-              image: "assets/images/burger.png",
-              name: "A4",
+              image: "assets/images/classic.png",
+              name: "Margherita",
               ingredients: [
                 Ingredients.mozzarella,
-                Ingredients.salsiccia,
-                Ingredients.cipolla,
-                Ingredients.gorgonzola,
-                Ingredients.funghi
+                Ingredients.pomodoro,
               ],
               initialPrice: 6.5,
               category: Categories.panini,

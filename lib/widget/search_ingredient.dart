@@ -22,7 +22,7 @@ class _SearchIngredientState extends State<SearchIngredient> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 40,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -35,23 +35,18 @@ class _SearchIngredientState extends State<SearchIngredient> {
                   currentIcon = const Icon(Icons.cancel);
                   displayed = SizedBox(
                     width: MediaQuery.of(context).size.width / 1.8,
-                    child: ListTile(
-                      leading: const Icon(
-                        Icons.search,
-                        size: 28,
-                      ),
-                      title: SizedBox(
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: TextField(
-                          onChanged: widget.onChange,
-                          decoration: const InputDecoration(
-                            hintText: 'Cerca',
-                            hintStyle: TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: InputBorder.none,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: TextField(
+                        onChanged: widget.onChange,
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Cerca',
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                            fontStyle: FontStyle.italic,
                           ),
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
@@ -65,6 +60,7 @@ class _SearchIngredientState extends State<SearchIngredient> {
                     Icons.search,
                     size: 28,
                   );
+                  widget.onChange("");
                 }
               });
             },

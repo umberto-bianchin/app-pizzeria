@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../data/data_item.dart';
-import 'item_cart_add.dart';
+import '../../data/data_item.dart';
+import '../item_cart_add.dart';
 
 class SuggestedCard extends StatelessWidget {
   const SuggestedCard(this.item, {super.key});
@@ -11,7 +11,6 @@ class SuggestedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 8, bottom: 8, top: 8, right: 4),
-      //width: width / 3,
       child: Card(
         elevation: 5,
         surfaceTintColor: const Color.fromARGB(255, 228, 228, 228),

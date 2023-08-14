@@ -1,17 +1,11 @@
-import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/cart_provider.dart';
+import '../../providers/cart_provider.dart';
 
-class TotalPrice extends StatefulWidget {
+class TotalPrice extends StatelessWidget {
   const TotalPrice({super.key});
 
-  @override
-  State<TotalPrice> createState() => _TotalPriceState();
-}
-
-class _TotalPriceState extends State<TotalPrice> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,10 +15,10 @@ class _TotalPriceState extends State<TotalPrice> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: const BoxDecoration(
-          color: kprimaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(24))),
+          color: Colors.black,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
             'Totale:  €${context.watch<CartItemsProvider>().getTotal().toStringAsFixed(2)}',
@@ -36,15 +30,13 @@ class _TotalPriceState extends State<TotalPrice> {
           ),
           OutlinedButton(
             style: OutlinedButton.styleFrom(
-              //color: Colors.blue,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
+                  borderRadius: BorderRadius.circular(4.0)),
               side: const BorderSide(
-                color: Colors.black,
+                color: Colors.white,
                 width: 1.0,
                 style: BorderStyle.solid,
               ),
-
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.black,
               shadowColor: Colors.transparent,

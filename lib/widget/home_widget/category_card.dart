@@ -1,4 +1,4 @@
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {

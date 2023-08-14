@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/data_item.dart';
+import '../../data/data_item.dart';
 
 class IntroductionPizzeria extends StatelessWidget {
   const IntroductionPizzeria({super.key});
@@ -11,8 +11,8 @@ class IntroductionPizzeria extends StatelessWidget {
 
     return Container(
       height: 200.0,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
           bottomRight: Radius.circular(40),
         ),

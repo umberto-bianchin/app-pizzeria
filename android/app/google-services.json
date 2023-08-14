@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "919432796323",
+    "project_id": "flutter-pizzeria",
+    "storage_bucket": "flutter-pizzeria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919432796323:android:e79a931cbaa1c00fd94716",
+        "android_client_info": {
+          "package_name": "com.example.app_pizzeria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919432796323-kpbg67sqp1eh6bdimlphmnu20u9b13lt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAOGIM0Xql1n370k9fO2qOm_9rBlG0wMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919432796323-kpbg67sqp1eh6bdimlphmnu20u9b13lt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "919432796323-t4b1hucmgetccsb2snff7bov3m03nrea.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appPizzeria"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

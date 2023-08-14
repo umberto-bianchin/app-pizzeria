@@ -1,5 +1,5 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
 import 'package:flutter/material.dart';
@@ -86,47 +86,54 @@ class _ItemCartState extends State<ItemCart> {
           ],
         ),
         const SizedBox(height: 10),
-        const Text(
-          "Ingredienti:",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.width / 2.5,
-          width: MediaQuery.of(context).size.width / 1.2,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            child: Scrollbar(
-              thumbVisibility: true,
-              controller: _controller,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: ListView(
-                  controller: _controller,
-                  shrinkWrap: true,
-                  children: [
-                    for (int i = 0; i < customItem!.ingredients.length; i++)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        if (customItem!.category != Categories.bibite)
+          Column(
+            children: [
+              const Text(
+                "Ingredienti:",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: _controller,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: ListView(
+                        controller: _controller,
+                        shrinkWrap: true,
                         children: [
-                          Text(capitalize(
-                              toStringIngredients(customItem!.ingredients[i]))),
-                          SizedBox(
-                              height: 40,
-                              child: Checkbox(
-                                  activeColor: Colors.blue,
-                                  value: customItem!.isSelected[i],
-                                  shape: const CircleBorder(),
-                                  onChanged: (bool? value) {
-                                    setChecked(i, value!);
-                                  }))
+                          for (int i = 0;
+                              i < customItem!.ingredients.length;
+                              i++)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(capitalize(toStringIngredients(
+                                    customItem!.ingredients[i]))),
+                                SizedBox(
+                                    height: 40,
+                                    child: Checkbox(
+                                        activeColor: Colors.blue,
+                                        value: customItem!.isSelected[i],
+                                        shape: const CircleBorder(),
+                                        onChanged: (bool? value) {
+                                          setChecked(i, value!);
+                                        }))
+                              ],
+                            )
                         ],
-                      )
-                  ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -140,26 +147,33 @@ class _ItemCartState extends State<ItemCart> {
             ),
           ],
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width / 1.2,
-          child: SearchIngredient(onChange: setSearchedValue),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 40.0,
-          width: MediaQuery.of(context).size.width / 1.2,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(right: 10),
+        if (customItem!.category != Categories.bibite)
+          Column(
             children: [
-              for (Ingredients ingredient in Ingredients.values)
-                if (!customItem!.ingredients.contains(ingredient) &&
-                    toStringIngredients(ingredient).contains(searchedValue))
-                  ingredientButton(
-                      ingredient, Ingredients.values.indexOf(ingredient)),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: SearchIngredient(onChange: setSearchedValue),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 40.0,
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(right: 10),
+                  children: [
+                    for (Ingredients ingredient in Ingredients.values)
+                      if (!customItem!.ingredients.contains(ingredient) &&
+                          toStringIngredients(ingredient)
+                              .contains(searchedValue))
+                        ingredientButton(
+                            ingredient, Ingredients.values.indexOf(ingredient)),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

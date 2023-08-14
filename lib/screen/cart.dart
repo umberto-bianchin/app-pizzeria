@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
-import '../widget/total_price.dart';
+import '../widget/cart_widget/total_price.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -16,7 +16,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    Widget displayed = context.watch<CartItemsProvider>().cartList.length > 0
+    Widget displayed = context.watch<CartItemsProvider>().cartList.isNotEmpty
         ? cartElements()
         : emptyMessage();
 
@@ -65,7 +65,7 @@ class _CartScreenState extends State<CartScreen> {
               itemCount: context.watch<CartItemsProvider>().cartList.length,
               itemBuilder: (ctx, index) {
                 return Dismissible(
-                  key: ,
+                  key: UniqueKey(),
                   background: Container(
                     color: Colors.red,
                     margin: const EdgeInsets.symmetric(
@@ -75,10 +75,13 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   onDismissed: (direction) {
                     if (direction == DismissDirection.endToStart) {
-                      context.read<CartItemsProvider>().removeItem(
-                          context.watch<CartItemsProvider>().cartList[index]);
+                      Provider.of<CartItemsProvider>(context, listen: false)
+                          .removeItem(Provider.of<CartItemsProvider>(context,
+                                  listen: false)
+                              .cartList[index]);
                     }
                   },
+                  direction: DismissDirection.endToStart,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: MenuItem(

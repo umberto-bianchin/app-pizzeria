@@ -1,8 +1,8 @@
 import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/data/menu_items_list.dart';
-import 'package:app_pizzeria/widget/search_result.dart';
+import 'package:app_pizzeria/widget/menu_widget/search_result.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key, required this.selectedCategory});

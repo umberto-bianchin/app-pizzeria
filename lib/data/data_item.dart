@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widget/categories_buttons_tab.dart';
+import '../widget/menu_widget/categories_buttons_tab.dart';
 import 'menu_items_list.dart';
 
 const Color kprimaryColor = Color.fromARGB(255, 4, 167, 113);

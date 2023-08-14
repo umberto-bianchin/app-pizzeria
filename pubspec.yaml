@@ -30,15 +30,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cloud_firestore: ^4.8.4
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  sliding_up_panel: ^2.0.0+1
   google_maps_flutter: ^2.4.0
-  quantity_input: ^1.0.2
-  provider: ^5.0.0
-  collection: ^1.17.1
+  provider: ^6.0.5
+  firebase_core: ^2.15.0
+  firebase_auth: ^4.7.2
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_test:
@@ -68,7 +71,6 @@ flutter:
     - assets/images/pizzeria.png
     - assets/images/mexican.png
     - assets/images/burger.png
-    - assets/images/pizzagirl.png
     - assets/images/americana.png
     - assets/images/classic.png
     - assets/images/drink.png

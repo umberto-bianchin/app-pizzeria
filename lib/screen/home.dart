@@ -1,9 +1,9 @@
-import 'package:app_pizzeria/widget/categories_buttons_tab.dart';
-import 'package:app_pizzeria/widget/suggested_tabs.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/home_widget/suggested_tabs.dart';
 import 'package:flutter/material.dart';
-import 'package:app_pizzeria/widget/categories_cards_tab.dart';
-import 'package:app_pizzeria/widget/introduction_banner.dart';
-import 'package:app_pizzeria/widget/position_map.dart';
+import 'package:app_pizzeria/widget/home_widget/categories_cards_tab.dart';
+import 'package:app_pizzeria/widget/home_widget/introduction_banner.dart';
+import 'package:app_pizzeria/widget/home_widget/position_map.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key, required this.onSelectCategory});

@@ -1,4 +1,5 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/item_cart_add.dart';
 
@@ -45,68 +46,71 @@ class MenuItem extends StatelessWidget {
                           const SizedBox(
                             height: 4.0,
                           ),
-                          RichText(
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
-                            text: TextSpan(
-                                style: const TextStyle(color: Colors.grey),
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        "${dataItem.ingredients.where((ingredient) => !dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => toStringIngredients(ingr)).join(', ')}, ",
-                                  ),
-                                  TextSpan(
+                          if (dataItem.category != Categories.bibite)
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              text: TextSpan(
+                                  style: const TextStyle(color: Colors.grey),
+                                  children: [
+                                    TextSpan(
                                       text: dataItem.ingredients
                                           .where((ingredient) =>
-                                              dataItem.addedIngredients[dataItem
-                                                  .ingredients
-                                                  .indexOf(ingredient)] &&
+                                              !dataItem.addedIngredients[
+                                                  dataItem.ingredients
+                                                      .indexOf(ingredient)] &&
                                               dataItem.isSelected[dataItem
                                                   .ingredients
                                                   .indexOf(ingredient)])
                                           .map((ingr) =>
                                               toStringIngredients(ingr))
                                           .join(', '),
-                                      style: const TextStyle(
-                                          color: Color(0xFF1F91E7)))
-                                ]),
-                          ),
+                                    ),
+                                    TextSpan(
+                                        text:
+                                            ", ${dataItem.ingredients.where((ingredient) => dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => toStringIngredients(ingr)).join(', ')}",
+                                        style: const TextStyle(
+                                            color: Color(0xFF1F91E7)))
+                                  ]),
+                            ),
                         ],
                       ),
                       onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return SimpleDialog(
-                                alignment: Alignment.center,
-                                title: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      dataItem.name,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    IconButton(
-                                        icon: const Icon(Icons.close),
-                                        color: const Color(0xFF1F91E7),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        })
-                                  ],
-                                ),
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 25, right: 20, bottom: 20),
-                                    child: Text(dataItem.ingredients
-                                        .map(
-                                            (ingr) => toStringIngredients(ingr))
-                                        .join(', ')),
+                        if (dataItem.category != Categories.bibite) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  alignment: Alignment.center,
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        dataItem.name,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      IconButton(
+                                          icon: const Icon(Icons.close),
+                                          color: const Color(0xFF1F91E7),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          })
+                                    ],
                                   ),
-                                ],
-                              );
-                            });
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 25, right: 20, bottom: 20),
+                                      child: Text(dataItem.ingredients
+                                          .map((ingr) =>
+                                              toStringIngredients(ingr))
+                                          .join(', ')),
+                                    ),
+                                  ],
+                                );
+                              });
+                        }
                       },
                     ),
                   ),
