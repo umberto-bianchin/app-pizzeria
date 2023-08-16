@@ -257,7 +257,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     IconButton(
                       onPressed: () {},
                       icon: Image.asset(
-                        'assets/images/apple.png',
+                        'assets/images/facebook.png',
                         width: 60,
                         height: 60,
                       ),
