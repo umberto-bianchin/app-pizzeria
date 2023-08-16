@@ -1,7 +1,9 @@
+import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/registration.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/data_item.dart';
 import '../main.dart';
@@ -236,7 +238,12 @@ class _AuthScreenState extends State<AuthScreen> {
                   children: [
                     // google button
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.googleLogin();
+                      },
                       icon: Image.asset(
                         'assets/images/google.png',
                         width: 60,

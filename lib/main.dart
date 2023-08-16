@@ -1,4 +1,5 @@
 import 'package:app_pizzeria/providers/cart_provider.dart';
+import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/cart.dart';
 import 'package:app_pizzeria/screen/menu.dart';
 import 'package:app_pizzeria/screen/auth.dart';
@@ -24,7 +25,10 @@ void main() async {
   );
 
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => CartItemsProvider())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => CartItemsProvider()),
+      ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
+    ],
     child: const MyApp(),
   ));
 }
