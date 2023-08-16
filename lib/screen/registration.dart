@@ -14,6 +14,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final validatePasswordController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -97,6 +99,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       passwordController,
                       'Password',
                       true,
+                    ),
+                    const SizedBox(height: 10),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: TextFormField(
+                        controller: validatePasswordController,
+                        autocorrect: false,
+                        obscureText: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value != passwordController.text) {
+                            return 'Password incorretta';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
+                            ),
+                            fillColor: Colors.grey.shade200,
+                            filled: true,
+                            hintText: 'Conferma password',
+                            hintStyle: TextStyle(color: Colors.grey[500])),
+                      ),
                     ),
 
                     const SizedBox(height: 20),
@@ -191,11 +222,17 @@ String? validatePassword(String? password) {
   }
 }
 
+bool isPasswordCorrect(String? password, String? confirmPassword) {
+  return password == confirmPassword;
+}
+
 Widget textField(controller, final String hintText, final bool obscureText) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0),
     child: TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType:
+          obscureText ? TextInputType.emailAddress : TextInputType.text,
+      autocorrect: false,
       controller: controller,
       obscureText: obscureText,
       autovalidateMode: AutovalidateMode.onUserInteraction,

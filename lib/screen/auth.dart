@@ -386,7 +386,9 @@ Widget textField(controller, final String hintText, final bool obscureText) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0),
     child: TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType:
+          obscureText ? TextInputType.emailAddress : TextInputType.text,
+      autocorrect: false,
       controller: controller,
       obscureText: obscureText,
       autovalidateMode: AutovalidateMode.onUserInteraction,
