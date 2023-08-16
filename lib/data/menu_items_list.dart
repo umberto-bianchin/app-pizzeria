@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:app_pizzeria/data/data_item.dart';

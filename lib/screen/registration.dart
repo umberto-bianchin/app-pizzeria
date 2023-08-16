@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../data/data_item.dart';
 import '../main.dart';
 
@@ -15,6 +14,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,64 +66,67 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 30,
             ),
             Expanded(
-              child: ListView(
-                physics: const ClampingScrollPhysics(),
-                children: [
-                  // welcome back, you've been missed!
-                  Text(
-                    'Benvenuto!',
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 20,
+              child: Form(
+                key: formKey,
+                child: ListView(
+                  physics: const ClampingScrollPhysics(),
+                  children: [
+                    // welcome back, you've been missed!
+                    Text(
+                      'Benvenuto!',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
 
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 25),
 
-                  // username textfield
-                  textField(
-                    emailController,
-                    'Email',
-                    false,
-                  ),
+                    // username textfield
+                    textField(
+                      emailController,
+                      'Email',
+                      false,
+                    ),
 
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                  // password textfield
-                  textField(
-                    passwordController,
-                    'Password',
-                    true,
-                  ),
+                    // password textfield
+                    textField(
+                      passwordController,
+                      'Password',
+                      true,
+                    ),
 
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: 200,
-                    height: 60,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                      ),
-                      icon: const Icon(
-                        Icons.lock_open,
-                        size: 32,
-                        color: Colors.white,
-                      ),
-                      label: const Text(
-                        "Registrati",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
                         ),
+                        icon: const Icon(
+                          Icons.lock_open,
+                          size: 32,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "Registrati",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        onPressed: () {
+                          signUp();
+                        },
                       ),
-                      onPressed: () {
-                        signUp();
-                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ]),
@@ -133,6 +136,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future signUp() async {
+    FocusScope.of(context).unfocus();
+    if (!formKey.currentState!.validate()) return;
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -145,16 +151,43 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      String error = e.code;
+
+      if (e.code == 'email-already-in-use') {
+        error = "Email già utilizzata";
+      } else if (e.code == 'weak-password') {
+        error = "Password debole";
       } else {
-        print(e.code);
+        //print(e.code);
       }
+
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error),
+        ),
+      );
+      return;
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+}
+
+String? validateMail(String? email) {
+  if (!EmailValidator.validate(email!)) {
+    return "Inserisci una mail valida";
+  } else {
+    return null;
+  }
+}
+
+String? validatePassword(String? password) {
+  if (password!.length < 6) {
+    return "Inserisci una password con almeno 6 caratteri";
+  } else {
+    return null;
   }
 }
 
@@ -165,8 +198,14 @@ Widget textField(controller, final String hintText, final bool obscureText) {
       keyboardType: TextInputType.emailAddress,
       controller: controller,
       obscureText: obscureText,
-      validator: (value) =>
-          EmailValidator.validate(value!) ? null : "Inserisci una mail valida",
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (obscureText) {
+          return validatePassword(value);
+        } else {
+          return validateMail(value);
+        }
+      },
       decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
