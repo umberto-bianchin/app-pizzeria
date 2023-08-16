@@ -2,7 +2,7 @@ import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/screen/cart.dart';
 import 'package:app_pizzeria/screen/menu.dart';
 import 'package:app_pizzeria/screen/auth.dart';
-import 'package:app_pizzeria/screen/user.dart';
+import 'package:app_pizzeria/screen/verify_email.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
                     } else if (snapshot.hasError) {
                       return const Text("Exception");
                     } else if (snapshot.hasData) {
-                      return const UserScreen();
+                      return const VerifyEmailScreen();
                     } else {
                       return const AuthScreen();
                     }
