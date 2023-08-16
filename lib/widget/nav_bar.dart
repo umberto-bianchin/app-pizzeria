@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
-  NavBar({super.key, required this.onChangePage, required this.selectedIndex});
+  NavBar(
+      {super.key,
+      required this.onChangePage,
+      required this.selectedIndex,
+      required this.cartItemCount});
 
   final void Function(int index) onChangePage;
   final int selectedIndex;
+  final int cartItemCount;
 
   final List<Pair> pairList = [
     Pair(Icons.home, "Home"),
     Pair(Icons.menu_book_rounded, "Menu"),
-    Pair(Icons.shopping_basket, "Carrello"),
+    Pair(Icons.shopping_cart, "Carrello"),
     Pair(Icons.person, "Utente"),
   ];
 
@@ -55,15 +60,36 @@ class NavBar extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    icon,
-                    color: index == selectedIndex ? Colors.red : Colors.black,
+                  Row(
+                    children: [
+                      Icon(
+                        icon,
+                        color:
+                            index == selectedIndex ? Colors.red : Colors.black,
+                      ),
+                      if (index == 2 && cartItemCount != 0)
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: index == selectedIndex
+                                ? Colors.red
+                                : Colors.black,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            cartItemCount.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                   Text(
                     name,
                     style: TextStyle(
-                      color:
-                          index == selectedIndex ? Colors.red : Colors.black,
+                      color: index == selectedIndex ? Colors.red : Colors.black,
                     ),
                   ),
                 ],

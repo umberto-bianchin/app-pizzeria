@@ -20,37 +20,41 @@ class _CartScreenState extends State<CartScreen> {
         ? cartElements()
         : emptyMessage();
 
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(30),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              color: kprimaryColor),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Carrello",
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(30),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
                 ),
-              ),
-              Icon(
-                Icons.shopping_bag_outlined,
-                size: 30,
-              ),
-            ],
+                color: kprimaryColor),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Carrello",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Icon(
+                  Icons.shopping_bag_outlined,
+                  size: 30,
+                ),
+              ],
+            ),
           ),
-        ),
-        displayed
-      ],
+          Flexible(child: displayed),
+          if (context.watch<CartItemsProvider>().cartList.isNotEmpty)
+            const TotalPrice(),
+        ],
+      ),
     );
   }
 
@@ -59,7 +63,7 @@ class _CartScreenState extends State<CartScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height / 1.7,
+          height: MediaQuery.of(context).size.height / 1.6,
           width: double.infinity,
           child: ListView.builder(
               itemCount: context.watch<CartItemsProvider>().cartList.length,
@@ -79,6 +83,15 @@ class _CartScreenState extends State<CartScreen> {
                           .removeItem(Provider.of<CartItemsProvider>(context,
                                   listen: false)
                               .cartList[index]);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                          "Rimosso dal carrello",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        backgroundColor: Color.fromARGB(255, 229, 228, 228),
+                      ));
                     }
                   },
                   direction: DismissDirection.endToStart,
@@ -96,7 +109,6 @@ class _CartScreenState extends State<CartScreen> {
                 );
               }),
         ),
-        const TotalPrice(),
       ],
     );
   }

@@ -43,6 +43,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final PageController _pageController = PageController();
   int _selectedPage = 0;
+  int cartItemCount = 0;
 
   MenuPage menuPage = const MenuPage(selectedCategory: Categories.pizza);
 
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    cartItemCount = Provider.of<CartItemsProvider>(context).element;
     return MaterialApp(
       navigatorKey: navigatorKey,
       theme: ThemeData(
@@ -108,6 +110,7 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBar: NavBar(
           onChangePage: changePage,
           selectedIndex: _selectedPage,
+          cartItemCount: cartItemCount,
         ),
       ),
       debugShowCheckedModeBanner: false,

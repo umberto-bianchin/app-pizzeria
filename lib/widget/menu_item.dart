@@ -38,7 +38,7 @@ class MenuItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             dataItem.menuDefault
                                 ? dataItem.name
-                                : "${dataItem.name}\t x${dataItem.quantity}",
+                                : "${dataItem.name}\n x${dataItem.quantity}",
                             style: const TextStyle(
                               fontSize: 18.0,
                             ),
@@ -49,7 +49,7 @@ class MenuItem extends StatelessWidget {
                           if (dataItem.category != Categories.bibite)
                             RichText(
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                              maxLines: 2,
                               text: TextSpan(
                                   style: const TextStyle(color: Colors.grey),
                                   children: [

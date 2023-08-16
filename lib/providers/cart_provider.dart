@@ -6,6 +6,14 @@ class CartItemsProvider with ChangeNotifier {
   List<DataItem> cartList = [];
 
   List<DataItem> get cart => cartList;
+  int get element {
+    int elementCount = 0;
+    for (DataItem item in cartList) {
+      elementCount += item.quantity;
+    }
+
+    return elementCount;
+  }
 
   void addItem(DataItem item) {
     item.clearList();
@@ -15,7 +23,7 @@ class CartItemsProvider with ChangeNotifier {
       if (itemList.name == item.name &&
           const DeepCollectionEquality.unordered()
               .equals(itemList.ingredients, item.ingredients)) {
-        itemList.quantity += 1;
+        itemList.quantity += item.quantity;
         notifyListeners();
         return;
       }
@@ -26,11 +34,7 @@ class CartItemsProvider with ChangeNotifier {
   }
 
   void removeItem(DataItem item) {
-    if (item.quantity > 1) {
-      item.quantity -= 1;
-    } else {
-      cartList.remove(item);
-    }
+    cartList.remove(item);
 
     notifyListeners();
   }
