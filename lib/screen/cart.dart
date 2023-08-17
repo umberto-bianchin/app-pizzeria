@@ -1,4 +1,4 @@
-import 'package:app_pizzeria/data/data_item.dart';
+import 'package:app_pizzeria/top_screen.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -23,32 +23,9 @@ class _CartScreenState extends State<CartScreen> {
 
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(30),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              color: kprimaryColor),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Carrello",
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              Icon(
-                Icons.shopping_bag_outlined,
-                size: 30,
-              ),
-            ],
-          ),
+        const TopScreen(
+          title: 'Carrello',
+          icon: Icons.shopping_bag_outlined,
         ),
         displayed,
       ],
@@ -73,6 +50,20 @@ class _CartScreenState extends State<CartScreen> {
                         margin: const EdgeInsets.symmetric(
                           horizontal: 10,
                           vertical: 25,
+                        ),
+                        child: const Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'Trascina per eliminare',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       onDismissed: (direction) {

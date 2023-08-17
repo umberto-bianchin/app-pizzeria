@@ -75,7 +75,6 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: navigatorKey,
       theme: ThemeData(
         useMaterial3: true,
-        fontFamily: "Gilroy",
       ),
       home: Scaffold(
         appBar: AppBar(

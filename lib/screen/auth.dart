@@ -1,12 +1,12 @@
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/registration.dart';
+import 'package:app_pizzeria/top_screen.dart';
 import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/data_item.dart';
 import '../main.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -26,32 +26,9 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(30),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-              color: kprimaryColor),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Login",
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              Icon(
-                Icons.lock,
-                size: 30,
-              ),
-            ],
-          ),
+        const TopScreen(
+          title: 'Login',
+          icon: Icons.lock,
         ),
         Expanded(
           child: Form(

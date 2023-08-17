@@ -41,7 +41,7 @@ class ProfileMenu extends StatelessWidget {
               child: Text(
                 text,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.black,
                 ),
               ),
