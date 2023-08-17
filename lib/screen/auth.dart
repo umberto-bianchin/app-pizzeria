@@ -129,7 +129,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                       padding: EdgeInsets.only(
                                           left: 25, right: 20, bottom: 20),
                                       child: Text(
-                                          'Ricevi una mail per effettuare il reset della tua password'),
+                                        'Ricevi una mail per effettuare il reset della tua password',
+                                      ),
                                     ),
                                     textField(
                                       backupEmailController,
@@ -159,7 +160,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          verifyEmail();
+                                          resetPassword();
                                         },
                                       ),
                                     ),
@@ -315,8 +316,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         error = "Credenziali errate";
+      } else if (emailController.text.isEmpty ||
+          passwordController.text.isEmpty) {
+        error = "Inserire le credenziali per continuare";
       } else {
-        //print(e.code);
+        print(e.code);
       }
 
       Navigator.pop(context);
@@ -329,7 +333,7 @@ class _AuthScreenState extends State<AuthScreen> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  Future verifyEmail() async {
+  Future resetPassword() async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -346,7 +350,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
         MySnackBar.showMySnackBar(context, 'Email inviato');
       }
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       String error = e.code;
 
@@ -354,14 +357,18 @@ class _AuthScreenState extends State<AuthScreen> {
         error = "Nessun utente registrato con questa mail";
       } else if (e.code == 'missing-email') {
         error = "Inserire la mail per il reset della password";
-      } else {}
-
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      } else if (e.code == 'invalid-email') {
+        error = "Inserire una mail valida";
+      } else if (backupEmailController.text.isEmpty) {
+        error = "Inserire la mail per il reset della password";
+      } else {
+        print(e.code);
+      }
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       MySnackBar.showMySnackBar(context, error);
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
   }
 }

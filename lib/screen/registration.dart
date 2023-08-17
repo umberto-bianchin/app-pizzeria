@@ -189,8 +189,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         error = "Email già utilizzata";
       } else if (e.code == 'weak-password') {
         error = "Password debole";
+      } else if (emailController.text.isEmpty ||
+          passwordController.text.isEmpty) {
+        error = "Inserire le credenziali per continuare";
       } else {
-        //print(e.code);
+        print(e.code);
       }
 
       Navigator.pop(context);
