@@ -321,6 +321,7 @@ class _AuthScreenState extends State<AuthScreen> {
       }
 
       Navigator.pop(context);
+ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -346,6 +347,8 @@ class _AuthScreenState extends State<AuthScreen> {
           .sendPasswordResetEmail(email: backupEmailController.text.trim());
 
       if (context.mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Email inviato'),
         ));
@@ -364,6 +367,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
       Navigator.of(context).pop();
       Navigator.of(context).pop();
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

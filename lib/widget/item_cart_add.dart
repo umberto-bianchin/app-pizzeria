@@ -198,6 +198,17 @@ class _ItemCartState extends State<ItemCart> {
               onPressed: () {
                 if (customItem!.menuDefault) {
                   context.read<CartItemsProvider>().addItem(customItem!);
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      "Aggiunto al carrello",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    backgroundColor: Color.fromARGB(255, 229, 228, 228),
+                  ));
                 } else {
                   context
                       .read<CartItemsProvider>()
@@ -205,6 +216,8 @@ class _ItemCartState extends State<ItemCart> {
 
                   if (quantity == 0) {
                     context.read<CartItemsProvider>().removeItem(customItem!);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text(
                         "Rimosso dal carrello",

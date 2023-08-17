@@ -194,6 +194,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       Navigator.pop(context);
 
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(error),
