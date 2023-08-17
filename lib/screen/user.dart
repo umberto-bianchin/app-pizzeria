@@ -18,22 +18,22 @@ class UserScreen extends StatelessWidget {
           const ProfilePic(),
           const SizedBox(height: 20),
           ProfileMenu(
-            text: "My Account",
+            text: "Il mio Account",
             icon: "assets/images/user_icon.svg",
             press: () => {},
           ),
           ProfileMenu(
-            text: "Notifications",
+            text: "Notifiche",
             icon: "assets/images/bell.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Settings",
+            text: "Impostazioni",
             icon: "assets/images/settings.svg",
             press: () {},
           ),
           ProfileMenu(
-            text: "Help Center",
+            text: "Aiuto",
             icon: "assets/images/question_mark.svg",
             press: () {},
           ),
