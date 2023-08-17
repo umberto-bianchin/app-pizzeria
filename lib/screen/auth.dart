@@ -1,5 +1,6 @@
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/registration.dart';
+import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -312,10 +313,8 @@ class _AuthScreenState extends State<AuthScreen> {
     } on FirebaseAuthException catch (e) {
       String error = e.code;
 
-      if (e.code == 'user-not-found') {
-        error = "Nessun profilo trovato con questa email";
-      } else if (e.code == 'wrong-password') {
-        error = "Password errata";
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        error = "Credenziali errate";
       } else {
         //print(e.code);
       }
@@ -323,13 +322,7 @@ class _AuthScreenState extends State<AuthScreen> {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          showCloseIcon: true,
-          closeIconColor: Colors.red,
-          content: Text(error),
-        ),
-      );
+      MySnackBar.showMySnackBar(context, error);
       return;
     }
 
@@ -351,22 +344,14 @@ class _AuthScreenState extends State<AuthScreen> {
       if (context.mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            showCloseIcon: true,
-            closeIconColor: Colors.red,
-            content: Text('Email inviato'),
-          ),
-        );
+        MySnackBar.showMySnackBar(context, 'Email inviato');
       }
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       String error = e.code;
 
       if (e.code == 'user-not-found') {
-        error = "Nessun profilo trovato con questa email";
-      } else if (e.code == 'wrong-password') {
-        error = "Password errata";
+        error = "Nessun utente registrato con questa mail";
       } else if (e.code == 'missing-email') {
         error = "Inserire la mail per il reset della password";
       } else {}
@@ -376,13 +361,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          showCloseIcon: true,
-          closeIconColor: Colors.red,
-          content: Text(error),
-        ),
-      );
+      MySnackBar.showMySnackBar(context, error);
     }
   }
 }

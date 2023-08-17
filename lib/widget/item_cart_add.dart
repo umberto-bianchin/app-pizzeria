@@ -1,5 +1,6 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
 import 'package:flutter/material.dart';
@@ -200,19 +201,7 @@ class _ItemCartState extends State<ItemCart> {
                   context.read<CartItemsProvider>().addItem(customItem!);
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      showCloseIcon: true,
-                      closeIconColor: Colors.red,
-                      content: Text(
-                        "Aggiunto al carrello",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 229, 228, 228),
-                    ),
-                  );
+                  MySnackBar.showMySnackBar(context, "Aggiunto al carrello");
                 } else {
                   context
                       .read<CartItemsProvider>()
@@ -222,19 +211,7 @@ class _ItemCartState extends State<ItemCart> {
                     context.read<CartItemsProvider>().removeItem(customItem!);
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        showCloseIcon: true,
-                        closeIconColor: Colors.red,
-                        content: Text(
-                          "Rimosso dal carrello",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        backgroundColor: Color.fromARGB(255, 229, 228, 228),
-                      ),
-                    );
+                    MySnackBar.showMySnackBar(context, "Rimosso dal carrello");
                   }
                 }
                 Navigator.pop(context);

@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -196,13 +197,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          showCloseIcon: true,
-          closeIconColor: Colors.red,
-          content: Text(error),
-        ),
-      );
+      MySnackBar.showMySnackBar(context, error);
       return;
     }
 

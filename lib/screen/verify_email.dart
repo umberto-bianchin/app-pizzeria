@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_pizzeria/screen/user.dart';
+import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -62,13 +63,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     } catch (e) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          showCloseIcon: true,
-          closeIconColor: Colors.red,
-          content: Text(e.toString()),
-        ),
-      );
+      MySnackBar.showMySnackBar(context, e.toString());
       return;
     }
   }

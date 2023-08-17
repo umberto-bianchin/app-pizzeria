@@ -1,5 +1,6 @@
 import 'package:app_pizzeria/data/data_item.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
+import 'package:app_pizzeria/widget/my_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -82,20 +83,8 @@ class _CartScreenState extends State<CartScreen> {
                                       listen: false)
                                   .cartList[index]);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              showCloseIcon: true,
-                              closeIconColor: Colors.red,
-                              content: Text(
-                                "Rimosso dal carrello",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              backgroundColor:
-                                  Color.fromARGB(255, 229, 228, 228),
-                            ),
-                          );
+                          MySnackBar.showMySnackBar(
+                              context, "Rimosso dal carrello");
                         }
                       },
                       direction: DismissDirection.endToStart,
