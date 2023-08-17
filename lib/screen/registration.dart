@@ -198,6 +198,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          showCloseIcon: true,
+          closeIconColor: Colors.red,
           content: Text(error),
         ),
       );

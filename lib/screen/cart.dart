@@ -82,16 +82,20 @@ class _CartScreenState extends State<CartScreen> {
                                       listen: false)
                                   .cartList[index]);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text(
-                              "Rimosso dal carrello",
-                              style: TextStyle(
-                                color: Colors.black,
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              showCloseIcon: true,
+                              closeIconColor: Colors.red,
+                              content: Text(
+                                "Rimosso dal carrello",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
                               ),
+                              backgroundColor:
+                                  Color.fromARGB(255, 229, 228, 228),
                             ),
-                            backgroundColor: Color.fromARGB(255, 229, 228, 228),
-                          ));
+                          );
                         }
                       },
                       direction: DismissDirection.endToStart,

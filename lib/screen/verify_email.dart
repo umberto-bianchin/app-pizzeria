@@ -64,6 +64,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          showCloseIcon: true,
+          closeIconColor: Colors.red,
           content: Text(e.toString()),
         ),
       );

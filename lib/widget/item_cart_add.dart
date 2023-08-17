@@ -200,15 +200,19 @@ class _ItemCartState extends State<ItemCart> {
                   context.read<CartItemsProvider>().addItem(customItem!);
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                      "Aggiunto al carrello",
-                      style: TextStyle(
-                        color: Colors.black,
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      showCloseIcon: true,
+                      closeIconColor: Colors.red,
+                      content: Text(
+                        "Aggiunto al carrello",
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
+                      backgroundColor: Color.fromARGB(255, 229, 228, 228),
                     ),
-                    backgroundColor: Color.fromARGB(255, 229, 228, 228),
-                  ));
+                  );
                 } else {
                   context
                       .read<CartItemsProvider>()
@@ -218,15 +222,19 @@ class _ItemCartState extends State<ItemCart> {
                     context.read<CartItemsProvider>().removeItem(customItem!);
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                        "Rimosso dal carrello",
-                        style: TextStyle(
-                          color: Colors.black,
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        showCloseIcon: true,
+                        closeIconColor: Colors.red,
+                        content: Text(
+                          "Rimosso dal carrello",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
+                        backgroundColor: Color.fromARGB(255, 229, 228, 228),
                       ),
-                      backgroundColor: Color.fromARGB(255, 229, 228, 228),
-                    ));
+                    );
                   }
                 }
                 Navigator.pop(context);

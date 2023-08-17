@@ -321,10 +321,12 @@ class _AuthScreenState extends State<AuthScreen> {
       }
 
       Navigator.pop(context);
-ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          showCloseIcon: true,
+          closeIconColor: Colors.red,
           content: Text(error),
         ),
       );
@@ -349,9 +351,13 @@ ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (context.mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Email inviato'),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            showCloseIcon: true,
+            closeIconColor: Colors.red,
+            content: Text('Email inviato'),
+          ),
+        );
       }
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
@@ -372,6 +378,8 @@ ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          showCloseIcon: true,
+          closeIconColor: Colors.red,
           content: Text(error),
         ),
       );

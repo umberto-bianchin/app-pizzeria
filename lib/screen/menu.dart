@@ -102,7 +102,6 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               ),
               CategoriesButton(currentCategory, changeCategory),
-              //const SizedBox(height: 10),
             ],
           ),
         ),
