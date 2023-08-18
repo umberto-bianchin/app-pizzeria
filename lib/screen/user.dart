@@ -1,5 +1,5 @@
 import 'package:app_pizzeria/providers/google_sign_in.dart';
-import 'package:app_pizzeria/top_screen.dart';
+import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TopScreen(
+        const TopBanner(
           title: 'Account',
           icon: Icons.account_box_outlined,
         ),

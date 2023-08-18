@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'data/data_item.dart';
+import '../../data/data_item.dart';
 
-class TopScreen extends StatelessWidget {
-  const TopScreen(
-      {super.key, required this.title, required this.icon});
+class TopBanner extends StatelessWidget {
+  const TopBanner({super.key, required this.title, required this.icon});
 
   final String title;
   final IconData icon;

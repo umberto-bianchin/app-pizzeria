@@ -1,6 +1,6 @@
-import 'package:app_pizzeria/top_screen.dart';
+import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
-import 'package:app_pizzeria/widget/my_snackbar.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
 
     return Column(
       children: [
-        const TopScreen(
+        const TopBanner(
           title: 'Carrello',
           icon: Icons.shopping_bag_outlined,
         ),

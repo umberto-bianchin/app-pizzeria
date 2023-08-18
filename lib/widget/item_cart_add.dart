@@ -1,6 +1,6 @@
 import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
-import 'package:app_pizzeria/widget/my_snackbar.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
 import 'package:flutter/material.dart';

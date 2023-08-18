@@ -1,4 +1,5 @@
 import 'package:app_pizzeria/providers/cart_provider.dart';
+import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/cart.dart';
 import 'package:app_pizzeria/screen/menu.dart';
@@ -28,6 +29,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => CartItemsProvider()),
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
+      ChangeNotifierProvider(create: (_) => FacebookSignInProvider()),
     ],
     child: const MyApp(),
   ));
@@ -71,6 +73,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     cartItemCount = Provider.of<CartItemsProvider>(context).element;
+
     return MaterialApp(
       navigatorKey: navigatorKey,
       theme: ThemeData(

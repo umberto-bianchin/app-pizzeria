@@ -1,13 +1,15 @@
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/registration.dart';
-import 'package:app_pizzeria/top_screen.dart';
-import 'package:app_pizzeria/widget/my_snackbar.dart';
+import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
+import '../providers/facebook_provider.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -21,12 +23,13 @@ class _AuthScreenState extends State<AuthScreen> {
   final backupEmailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final resetKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TopScreen(
+        const TopBanner(
           title: 'Login',
           icon: Icons.lock,
         ),
@@ -82,66 +85,69 @@ class _AuthScreenState extends State<AuthScreen> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return SimpleDialog(
-                                  alignment: Alignment.center,
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                return Form(
+                                  key: resetKey,
+                                  child: SimpleDialog(
+                                    alignment: Alignment.center,
+                                    title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Password dimenticata?',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                        IconButton(
+                                            icon: const Icon(Icons.close),
+                                            color: const Color(0xFF1F91E7),
+                                            onPressed: () {
+                                              backupEmailController.clear();
+                                              Navigator.of(context).pop();
+                                            })
+                                      ],
+                                    ),
                                     children: [
-                                      const Text(
-                                        'Password dimenticata?',
-                                        style: TextStyle(fontSize: 18),
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 25, right: 20, bottom: 20),
+                                        child: Text(
+                                          'Ricevi una mail per effettuare il reset della tua password',
+                                        ),
                                       ),
-                                      IconButton(
-                                          icon: const Icon(Icons.close),
-                                          color: const Color(0xFF1F91E7),
+                                      textField(
+                                        backupEmailController,
+                                        'Email',
+                                        false,
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        height: 60,
+                                        child: ElevatedButton.icon(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                          ),
+                                          icon: const Icon(
+                                            Icons.email_outlined,
+                                            size: 32,
+                                            color: Colors.white,
+                                          ),
+                                          label: const Text(
+                                            "Reset password",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
+                                          ),
                                           onPressed: () {
-                                            backupEmailController.clear();
-                                            Navigator.of(context).pop();
-                                          })
+                                            resetPassword();
+                                          },
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 25, right: 20, bottom: 20),
-                                      child: Text(
-                                        'Ricevi una mail per effettuare il reset della tua password',
-                                      ),
-                                    ),
-                                    textField(
-                                      backupEmailController,
-                                      'Email',
-                                      false,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      height: 40,
-                                      child: ElevatedButton.icon(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.black,
-                                        ),
-                                        icon: const Icon(
-                                          Icons.email_outlined,
-                                          size: 32,
-                                          color: Colors.white,
-                                        ),
-                                        label: const Text(
-                                          "Reset password",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          resetPassword();
-                                        },
-                                      ),
-                                    ),
-                                  ],
                                 );
                               });
                         },
@@ -232,9 +238,14 @@ class _AuthScreenState extends State<AuthScreen> {
 
                     const SizedBox(width: 25),
 
-                    // apple button
+                    // facebook button
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final provider = Provider.of<FacebookSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.facebookLogin();
+                      },
                       icon: Image.asset(
                         'assets/images/facebook.png',
                         width: 60,
@@ -275,6 +286,11 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future signIn() async {
+    if (!formKey.currentState!.validate()) {
+      MySnackBar.showMySnackBar(context, "Credenziali in forma errata");
+      return;
+    }
+
     FocusScope.of(context).unfocus();
 
     showDialog(
@@ -293,11 +309,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         error = "Credenziali errate";
-      } else if (emailController.text.isEmpty ||
-          passwordController.text.isEmpty) {
-        error = "Inserire le credenziali per continuare";
-      } else {
-        print(e.code);
+      }
+      {
+        if (kDebugMode) {
+          print(error);
+        }
       }
 
       Navigator.pop(context);
@@ -311,6 +327,11 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future resetPassword() async {
+    if (!resetKey.currentState!.validate()) {
+      MySnackBar.showMySnackBar(context, "Credenziali in forma errata");
+      return;
+    }
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -332,14 +353,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (e.code == 'user-not-found') {
         error = "Nessun utente registrato con questa mail";
-      } else if (e.code == 'missing-email') {
-        error = "Inserire la mail per il reset della password";
-      } else if (e.code == 'invalid-email') {
-        error = "Inserire una mail valida";
-      } else if (backupEmailController.text.isEmpty) {
-        error = "Inserire la mail per il reset della password";
       } else {
-        print(e.code);
+        if (kDebugMode) {
+          print(e.code);
+        }
       }
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -370,7 +387,7 @@ Widget textField(controller, final String hintText, final bool obscureText) {
     padding: const EdgeInsets.symmetric(horizontal: 25.0),
     child: TextFormField(
       keyboardType:
-          obscureText ? TextInputType.emailAddress : TextInputType.text,
+          obscureText ? TextInputType.text : TextInputType.emailAddress,
       autocorrect: false,
       controller: controller,
       obscureText: obscureText,
@@ -380,12 +397,12 @@ Widget textField(controller, final String hintText, final bool obscureText) {
           : "Inserisci una mail valida",
       decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
+              //borderSide: BorderSide(color: Colors.transparent),
+              ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400),
           ),
-          fillColor: Colors.grey.shade200,
+          fillColor: const Color.fromARGB(255, 231, 231, 231),
           filled: true,
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey[500])),

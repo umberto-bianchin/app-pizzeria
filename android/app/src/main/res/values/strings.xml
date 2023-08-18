@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+<string name="app_name">app_pizzeria</string>
+<string name="facebook_app_id">1231652314896785</string>
+<string name="fb_login_protocol_scheme">fb1231652314896785</string>
+<string name="facebook_client_token">aa6e6af2ea0b95ccc9f2cb9ae3011c14</string>
+</resources>

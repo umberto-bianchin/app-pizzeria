@@ -1,6 +1,7 @@
-import 'package:app_pizzeria/widget/my_snackbar.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../data/data_item.dart';
 import '../main.dart';
@@ -112,14 +113,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value != passwordController.text) {
-                            return 'Password incorretta';
+                            return 'Le password non corrispondono';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                                // borderSide: BorderSide(color: Colors.white),
+                                ),
                             focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.grey.shade400),
@@ -169,7 +170,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future signUp() async {
     FocusScope.of(context).unfocus();
-    if (!formKey.currentState!.validate()) return;
+    if (!formKey.currentState!.validate()) {
+      MySnackBar.showMySnackBar(context, "Credenziali in forma errata");
+      return;
+    }
 
     showDialog(
         context: context,
@@ -189,15 +193,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         error = "Email già utilizzata";
       } else if (e.code == 'weak-password') {
         error = "Password debole";
-      } else if (emailController.text.isEmpty ||
-          passwordController.text.isEmpty) {
-        error = "Inserire le credenziali per continuare";
       } else {
-        print(e.code);
+        if (kDebugMode) {
+          print(e.code);
+        }
       }
 
       Navigator.pop(context);
-
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       MySnackBar.showMySnackBar(context, error);
@@ -233,7 +235,7 @@ Widget textField(controller, final String hintText, final bool obscureText) {
     padding: const EdgeInsets.symmetric(horizontal: 25.0),
     child: TextFormField(
       keyboardType:
-          obscureText ? TextInputType.emailAddress : TextInputType.text,
+          obscureText ? TextInputType.text : TextInputType.emailAddress,
       autocorrect: false,
       controller: controller,
       obscureText: obscureText,
@@ -247,8 +249,8 @@ Widget textField(controller, final String hintText, final bool obscureText) {
       },
       decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
+              //borderSide: BorderSide(color: Colors.white),
+              ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400),
           ),

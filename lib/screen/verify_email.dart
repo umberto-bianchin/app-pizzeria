@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app_pizzeria/screen/user.dart';
-import 'package:app_pizzeria/widget/my_snackbar.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -107,6 +107,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 40),
                   const Text(
                     'Una email di verifica ti è stata inviata',
                     style: TextStyle(fontSize: 20),
@@ -116,7 +117,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
+                        minimumSize: const Size.fromHeight(60),
                         backgroundColor: Colors.black,
                       ),
                       icon: const Icon(
@@ -134,12 +135,12 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       onPressed: canResendEmail ? sendVerificationEmail : null,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
+                        minimumSize: const Size.fromHeight(60),
                         backgroundColor: Colors.black,
                       ),
                       icon: const Icon(
