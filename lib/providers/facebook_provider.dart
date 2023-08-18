@@ -6,22 +6,14 @@ class FacebookSignInProvider extends ChangeNotifier {
   bool _isLogged = false;
   Map userObj = {};
 
+  bool get isLogged => _isLogged;
+
   Future facebookLogout() async {
     FacebookAuth.instance.logOut().then((value) {
       _isLogged = false;
       userObj = {};
     });
   }
-
-  /*Future facebookLogin() async {
-    FacebookAuth.instance
-        .login(permissions: ["public_profile", "email"]).then((value) {
-      FacebookAuth.instance.getUserData().then((userData) async {
-        _isLogged = true;
-        userObj = userData;
-      });
-    });
-  } */
 
   Future facebookLogin() async {
     // Trigger the sign-in flow
@@ -35,6 +27,18 @@ class FacebookSignInProvider extends ChangeNotifier {
     // Once signed in, return the UserCredential
     FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
+    FacebookAuth.instance.getUserData().then((userData) async {
+      _isLogged = true;
+      userObj = userData;
+    });
+
     notifyListeners();
+  }
+
+  String? getImage() {
+    if (userObj != {}) {
+      return userObj['picture']['data']['url'];
+    }
+    return null;
   }
 }

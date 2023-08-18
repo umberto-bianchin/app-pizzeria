@@ -63,6 +63,8 @@
 </array>
 <!-- End of the Google Sign-in Section -->
 
+
+
 <!-- Facebook Sign-in Section -->
 <key>CFBundleURLTypes</key>
 <array>

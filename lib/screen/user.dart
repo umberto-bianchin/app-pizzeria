@@ -1,9 +1,7 @@
-import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../helper.dart';
 import '../widget/user_widget/profile_menu.dart';
 
 class UserScreen extends StatelessWidget {
@@ -22,11 +20,10 @@ class UserScreen extends StatelessWidget {
             physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.symmetric(vertical: 20),
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: CircleAvatar(
-                  backgroundImage: AssetImage(
-                      "assets/images/user_default.png"), //TODO ternary expression with user photo if possible
+                  backgroundImage: getImage(context),
                   maxRadius: 50,
                 ),
               ),
@@ -49,15 +46,8 @@ class UserScreen extends StatelessWidget {
               ProfileMenu(
                 text: "Log Out",
                 icon: "assets/images/logout.svg",
-                press: () async {
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-
-                  if (await provider.googleSignIn.isSignedIn()) {
-                    provider.googleLogout();
-                  } else {
-                    FirebaseAuth.instance.signOut();
-                  }
+                press: () {
+                  logOut(context);
                 },
               ),
             ],

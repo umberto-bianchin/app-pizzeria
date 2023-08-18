@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -6,8 +6,10 @@ class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
 
   GoogleSignInAccount? _user;
+  bool _isLogged = false;
 
   GoogleSignInAccount get user => _user!;
+  bool get isLogged => _isLogged;
 
   Future googleLogin() async {
     try {
@@ -24,13 +26,24 @@ class GoogleSignInProvider extends ChangeNotifier {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
+
+    _isLogged = true;
     notifyListeners();
   }
 
   Future googleLogout() async {
+    _isLogged = false;
     await googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
+  }
+
+  String? getImage() {
+    if (_user != null) {
+      return _user!.photoUrl;
+    }
+    return null;
   }
 }
