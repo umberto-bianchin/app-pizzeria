@@ -58,4 +58,16 @@ class CartItemsProvider with ChangeNotifier {
 
     return amount;
   }
+
+/*
+  Map<String, String> getOrder() {
+    Map<String, String> order = {};
+
+    for (DataItem item in cartList) {
+      String ingredients = item.ingredients.join(',');
+      order[item.name] = ingredients;
+    }
+
+    return order;
+  }*/
 }

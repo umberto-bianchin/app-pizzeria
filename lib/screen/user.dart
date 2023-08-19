@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/screen/user_account.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,12 @@ class UserScreen extends StatelessWidget {
               ProfileMenu(
                 text: "Il mio Account",
                 icon: "assets/images/user_icon.svg",
-                press: () {},
+                press: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => UserAccountScreen()),
+                  );
+                },
               ),
               ProfileMenu(
                 text: "Notifiche",

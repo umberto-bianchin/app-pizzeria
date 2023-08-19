@@ -41,7 +41,9 @@ class TotalPrice extends StatelessWidget {
               foregroundColor: Colors.black,
               shadowColor: Colors.transparent,
             ),
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             child: const Text(
               'Ordina',
               style: TextStyle(

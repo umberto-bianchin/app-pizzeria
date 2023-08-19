@@ -396,16 +396,16 @@ Widget textField(controller, final String hintText, final bool obscureText) {
           ? null
           : "Inserisci una mail valida",
       decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-              //borderSide: BorderSide(color: Colors.transparent),
-              ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-          ),
-          fillColor: const Color.fromARGB(255, 231, 231, 231),
-          filled: true,
-          hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey[500])),
+        enabledBorder: const OutlineInputBorder(
+            ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade400),
+        ),
+        fillColor: const Color.fromARGB(255, 231, 231, 231),
+        filled: true,
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.grey[500]),
+      ),
     ),
   );
 }
