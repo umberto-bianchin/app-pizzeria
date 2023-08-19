@@ -1,7 +1,11 @@
+import 'package:app_pizzeria/screen/location_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../data/data_item.dart';
 import '../helper.dart';
+
+const double klatitude = 45.406435;
+const double klongitude = 11.876761;
 
 class UserAccountScreen extends StatefulWidget {
   const UserAccountScreen({super.key});
@@ -11,7 +15,7 @@ class UserAccountScreen extends StatefulWidget {
 }
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
-  TextEditingController? _addressController;
+  String? _address = "";
   TextEditingController? _phoneController;
   final Map<String, String> infos = {};
 
@@ -21,11 +25,17 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     getInfos();
   }
 
+  void setAdress(String address) {
+    setState(() {
+      _address = address;
+    });
+  }
+
   void getInfos() async {
     Map<String, String> information = await getUserInfo();
     setState(() {
       infos.addAll(information);
-      _addressController = TextEditingController(text: infos["address"]);
+      _address = infos["address"] ?? "";
       _phoneController = TextEditingController(text: infos["phone"]);
     });
   }
@@ -82,23 +92,30 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextFormField(
-                  autocorrect: false,
-                  keyboardType: TextInputType.streetAddress,
-                  controller: _addressController,
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade400),
-                    ),
-                    fillColor: const Color.fromARGB(255, 231, 231, 231),
-                    filled: true,
-                    hintText: "Inserisci l'indirizzo per la consegna",
-                    hintStyle: TextStyle(color: Colors.grey[500]),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LocationPicker(setAdress),
+                        ));
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(20)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(_address!.isEmpty
+                          ? "Seleziona il tuo indirizzo"
+                          : _address!),
+                      const Icon(Icons.map_rounded),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
@@ -106,14 +123,17 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
                   decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade400),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    fillColor: const Color.fromARGB(255, 231, 231, 231),
-                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
                     hintText: "Inserisci il numero di telefono",
-                    hintStyle: TextStyle(color: Colors.grey[500]),
+                    suffixIcon: const Icon(Icons.phone),
                   ),
                 ),
               ),
@@ -121,8 +141,9 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
               OutlinedButton(
                 onPressed: () {
                   saveUserInfos(
-                      address: _addressController!.text,
-                      phone: _phoneController!.text);
+                    address: _address!,
+                    phone: _phoneController!.text,
+                  );
                   Navigator.pop(context);
                 },
                 style: OutlinedButton.styleFrom(
@@ -139,7 +160,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

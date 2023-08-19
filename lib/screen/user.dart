@@ -35,7 +35,7 @@ class UserScreen extends StatelessWidget {
                 press: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => UserAccountScreen()),
+                        builder: (context) => const UserAccountScreen()),
                   );
                 },
               ),
