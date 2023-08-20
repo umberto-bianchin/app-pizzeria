@@ -1,4 +1,3 @@
-import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import 'data/data_item.dart';
+import 'data/menu_items_list.dart';
 
 enum LoginType { google, facebook, apple, email }
 
@@ -105,10 +105,9 @@ Future<Map<String, String>> getUserInfo() async {
   };
 }
 
-void submitOrder(BuildContext ctx, {required String timeInterval}) {
+void submitOrder(BuildContext ctx,
+    {required String timeInterval, required order}) {
   var firebaseUser = FirebaseAuth.instance.currentUser;
-  final cart = Provider.of<CartItemsProvider>(ctx);
-  List<DataItem> order = cart.cart;
   Map<String, dynamic> jsonOrder = {};
   int index = 0;
 
@@ -116,7 +115,8 @@ void submitOrder(BuildContext ctx, {required String timeInterval}) {
     jsonOrder["ordine$index"] = {
       "name": item.name,
       "quantity": item.quantity,
-      "ingredients": item.ingredients.join(','),
+      "ingredients":
+          item.ingredients.map((ingr) => toStringIngredients(ingr)).join(', '),
       "time-interval": timeInterval,
       "accepted": "False",
     };
@@ -129,4 +129,6 @@ void submitOrder(BuildContext ctx, {required String timeInterval}) {
       .collection("orders")
       .doc("order")
       .set(jsonOrder);
+
+      
 }

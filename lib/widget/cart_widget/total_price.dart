@@ -1,6 +1,9 @@
+import 'package:app_pizzeria/data/data_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper.dart';
 import '../../providers/cart_provider.dart';
 
 class TotalPrice extends StatelessWidget {
@@ -41,8 +44,98 @@ class TotalPrice extends StatelessWidget {
               foregroundColor: Colors.black,
               shadowColor: Colors.transparent,
             ),
-            onPressed: () {
-              
+            onPressed: () async {
+              final time = await showTimePicker(
+                  initialEntryMode: TimePickerEntryMode.inputOnly,
+                  cancelText: "Cancella",
+                  confirmText: "Conferma",
+                  hourLabelText: "Ora",
+                  minuteLabelText: "Minuti",
+                  errorInvalidText: "Inserisci un orario valido",
+                  helpText: "Inserisci l'orario di consegna desiderato",
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                  builder: (context, childWidget) {
+                    return MediaQuery(
+                        data: MediaQuery.of(context)
+                            .copyWith(alwaysUse24HourFormat: true),
+                        child: childWidget!);
+                  });
+
+              bool timeSelected = time == null ? false : true;
+              bool orderSubmit = false;
+
+              if (context.mounted && timeSelected) {
+                await showCupertinoDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: const Text(
+                          "Il tuo orario",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        content: Text(
+                          'Il tuo ordine sarà disponibile in un intervallo di 30 minuti a partire dalle ${time.format(context)}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDestructiveAction: true,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Cancella'),
+                          ),
+                          CupertinoDialogAction(
+                            onPressed: () {
+                              final cart = Provider.of<CartItemsProvider>(
+                                  context,
+                                  listen: false);
+
+                              submitOrder(context,
+                                  timeInterval: time.format(context),
+                                  order: cart.cart);
+
+                              orderSubmit = true;
+                              cart.clearCart();
+
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              'Ordina',
+                              style: TextStyle(color: kprimaryColor),
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              }
+              if (context.mounted) {
+                if (orderSubmit) {
+                  showCupertinoDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text("Ordine confermato!"),
+                          content: const Text(
+                            'Il tuo ordine è stato confermato, verrà presto accettato dalla pizzeria\nSe vuoi modificarlo o cancellarlo vai nella sezione Utente -> Il mio ordine',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'OK',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            )
+                          ],
+                        );
+                      });
+                }
+              }
             },
             child: const Text(
               'Ordina',
