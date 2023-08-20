@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -106,19 +107,24 @@ Future<Map<String, String>> getUserInfo() async {
 }
 
 void submitOrder(BuildContext ctx,
-    {required String timeInterval, required order}) {
+    {required String timeInterval,
+    required CartItemsProvider order,
+    required String deliveryMethod}) {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   Map<String, dynamic> jsonOrder = {};
   int index = 0;
 
-  for (DataItem item in order) {
+  jsonOrder["accepted"] = "False";
+  jsonOrder["time-interval"] = timeInterval;
+  jsonOrder["total"] = order.getTotal().toStringAsFixed(2);
+  jsonOrder["delivery-method"] = deliveryMethod;
+
+  for (DataItem item in order.cartList) {
     jsonOrder["ordine$index"] = {
       "name": item.name,
       "quantity": item.quantity,
       "ingredients":
           item.ingredients.map((ingr) => toStringIngredients(ingr)).join(', '),
-      "time-interval": timeInterval,
-      "accepted": "False",
     };
     index++;
   }
@@ -129,6 +135,4 @@ void submitOrder(BuildContext ctx,
       .collection("orders")
       .doc("order")
       .set(jsonOrder);
-
-      
 }

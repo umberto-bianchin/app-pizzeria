@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class NavBar extends StatelessWidget {
-  NavBar(
-      {super.key,
-      required this.onChangePage,
-      required this.selectedIndex,
-      required this.cartItemCount});
+import '../providers/cart_provider.dart';
+
+class NavBar extends StatefulWidget {
+  const NavBar({
+    super.key,
+    required this.onChangePage,
+    required this.selectedIndex,
+    required this.cartItemCount,
+  });
 
   final void Function(int index) onChangePage;
   final int selectedIndex;
   final int cartItemCount;
 
-  final List<Pair> pairList = [
-    Pair(Icons.home, "Home"),
-    Pair(Icons.menu_book_rounded, "Menu"),
-    Pair(Icons.shopping_cart, "Carrello"),
-    Pair(Icons.person, "Utente"),
-  ];
+  @override
+  State<NavBar> createState() => _NavBarState();
+}
 
+class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartItemsProvider>(context);
+
+    final List<Pair> pairList = [
+      Pair(Icons.home, "Home"),
+      Pair(Icons.menu_book_rounded, "Menu"),
+      if (cart.ordered)
+        Pair(Icons.list_alt_outlined, "Ordine")
+      else
+        Pair(Icons.shopping_cart, "Carrello"),
+      Pair(Icons.person, "Utente"),
+    ];
+
     return Container(
       height: 80,
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -38,13 +52,14 @@ class NavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           for (Pair pair in pairList)
-            buildNavBarItem(pair.icon, pair.name, pairList.indexOf(pair)),
+            buildNavBarItem(
+                pair.icon, pair.name, pairList.indexOf(pair), cart.ordered),
         ],
       ),
     );
   }
 
-  Widget buildNavBarItem(IconData icon, String name, int index) {
+  Widget buildNavBarItem(IconData icon, String name, int index, bool ordered) {
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -64,20 +79,21 @@ class NavBar extends StatelessWidget {
                     children: [
                       Icon(
                         icon,
-                        color:
-                            index == selectedIndex ? Colors.red : Colors.black,
+                        color: index == widget.selectedIndex
+                            ? Colors.red
+                            : Colors.black,
                       ),
-                      if (index == 2 && cartItemCount != 0)
+                      if (index == 2 && widget.cartItemCount != 0 && !ordered)
                         Container(
                           padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
-                            color: index == selectedIndex
+                            color: index == widget.selectedIndex
                                 ? Colors.red
                                 : Colors.black,
                             shape: BoxShape.circle,
                           ),
                           child: Text(
-                            cartItemCount.toString(),
+                            widget.cartItemCount.toString(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -89,14 +105,16 @@ class NavBar extends StatelessWidget {
                   Text(
                     name,
                     style: TextStyle(
-                      color: index == selectedIndex ? Colors.red : Colors.black,
+                      color: index == widget.selectedIndex
+                          ? Colors.red
+                          : Colors.black,
                     ),
                   ),
                 ],
               ),
             ),
             onTap: () {
-              onChangePage(index);
+              widget.onChangePage(index);
             },
           ),
         ),

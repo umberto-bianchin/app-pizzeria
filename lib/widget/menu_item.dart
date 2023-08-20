@@ -2,17 +2,21 @@ import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/item_cart_add.dart';
+import 'package:provider/provider.dart';
 
 import '../data/data_item.dart';
+import '../providers/cart_provider.dart';
 
 class MenuItem extends StatelessWidget {
   const MenuItem({super.key, required this.dataItem, required this.icon});
 
   final DataItem dataItem;
-  final Icon icon;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {
+    bool confirmed = context.watch<CartItemsProvider>().confirmed;
+
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: SizedBox(
@@ -126,38 +130,46 @@ class MenuItem extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return SimpleDialog(
-                                  alignment: Alignment.center,
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        dataItem.name,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      IconButton(
-                                          icon: const Icon(Icons.close),
-                                          color: const Color(0xFF1F91E7),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          }),
-                                    ],
-                                  ),
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 25, right: 20),
-                                      child: ItemCart(dataItem: dataItem),
+                          if (icon != null) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SimpleDialog(
+                                    alignment: Alignment.center,
+                                    title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          confirmed
+                                              ? "Ordine confermato"
+                                              : dataItem.name,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        IconButton(
+                                            icon: const Icon(Icons.close),
+                                            color: const Color(0xFF1F91E7),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            }),
+                                      ],
                                     ),
-                                  ],
-                                );
-                              });
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 25, right: 20),
+                                        child: ItemCart(dataItem: dataItem),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          }
                         },
-                        icon: icon,
+                        icon: icon ??
+                            const Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            ),
                       )
                     ],
                   )

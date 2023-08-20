@@ -1,11 +1,9 @@
 import 'package:app_pizzeria/screen/location_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/data_item.dart';
-import '../helper.dart';
-
-const double klatitude = 45.406435;
-const double klongitude = 11.876761;
+import '../providers/user_infos_provider.dart';
 
 class UserAccountScreen extends StatefulWidget {
   const UserAccountScreen({super.key});
@@ -17,7 +15,6 @@ class UserAccountScreen extends StatefulWidget {
 class _UserAccountScreenState extends State<UserAccountScreen> {
   String? _address = " ";
   TextEditingController? _phoneController;
-  final Map<String, String> infos = {};
 
   @override
   void initState() {
@@ -31,12 +28,13 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     });
   }
 
-  void getInfos() async {
-    Map<String, String> information = await getUserInfo();
+  void getInfos() {
+    if (context.mounted) {}
+
     setState(() {
-      infos.addAll(information);
-      _address = infos["address"] ?? "";
-      _phoneController = TextEditingController(text: infos["phone"]);
+      final info = Provider.of<UserInfoProvider>(context, listen: false);
+      _address = info.address;
+      _phoneController = TextEditingController(text: info.number);
     });
   }
 
@@ -110,9 +108,19 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(_address!.isEmpty
-                          ? "Seleziona il tuo indirizzo"
-                          : _address!),
+                      Expanded(
+                        child: RichText(
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            text: _address!.isEmpty
+                                ? "Seleziona il tuo indirizzo"
+                                : _address!,
+                            style: const TextStyle(
+                              color: kprimaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
                       const Icon(Icons.map_rounded),
                     ],
                   ),
@@ -125,6 +133,14 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   autocorrect: false,
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value!.length != 10 && value.length != 9) {
+                      return "Inserisci un numero di telefono valido";
+                    }
+                    _phoneController!.text = value;
+                    return null;
+                  },
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -143,9 +159,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
               const SizedBox(height: 20),
               OutlinedButton(
                 onPressed: () {
-                  saveUserInfos(
+                  Provider.of<UserInfoProvider>(context, listen: false)
+                      .submitInfos(
                     address: _address!,
-                    phone: _phoneController!.text,
+                    number: _phoneController!.text,
                   );
                   Navigator.pop(context);
                 },

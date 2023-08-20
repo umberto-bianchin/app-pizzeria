@@ -1,8 +1,10 @@
 import 'package:app_pizzeria/screen/user_account.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../helper.dart';
+import '../providers/user_infos_provider.dart';
 import '../widget/user_widget/profile_menu.dart';
 
 class UserScreen extends StatelessWidget {
@@ -10,6 +12,9 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final info = Provider.of<UserInfoProvider>(context, listen: false);
+    info.getUser();
+
     return Column(
       children: [
         const TopBanner(
@@ -38,11 +43,6 @@ class UserScreen extends StatelessWidget {
                         builder: (context) => const UserAccountScreen()),
                   );
                 },
-              ),
-              ProfileMenu(
-                text: "Il mio ordine",
-                icon: "assets/images/bell.svg",
-                press: () {},
               ),
               ProfileMenu(
                 text: "Log Out",

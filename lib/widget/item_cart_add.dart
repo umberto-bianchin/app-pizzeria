@@ -3,6 +3,7 @@ import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,6 +70,15 @@ class _ItemCartState extends State<ItemCart> {
 
   @override
   Widget build(BuildContext context) {
+    bool confirmed = context.watch<CartItemsProvider>().confirmed;
+
+    if (confirmed) {
+      return const Text(
+        "L'ordine è stato confermato. Non è possibile modificarlo.",
+        style: TextStyle(fontSize: 16),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

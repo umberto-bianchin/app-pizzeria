@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/widget/cart_widget/order.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
@@ -17,22 +18,28 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    Widget displayed = context.watch<CartItemsProvider>().cartList.isNotEmpty
-        ? cartElements()
-        : emptyMessage();
+    final cart = Provider.of<CartItemsProvider>(context);
+
+    Widget displayed =
+        (cart.cartList.isNotEmpty && !cart.ordered) || cart.ordered
+            ? cartElements()
+            : emptyMessage();
 
     return Column(
       children: [
-        const TopBanner(
-          title: 'Carrello',
-          icon: Icons.shopping_bag_outlined,
+        TopBanner(
+          title: cart.ordered ? 'Il tuo ordine' : 'Carrello',
+          icon: cart.ordered ? Icons.list_alt : Icons.shopping_bag_outlined,
         ),
+        if (cart.ordered) const Order(),
         displayed,
       ],
     );
   }
 
   Widget cartElements() {
+    final cart = Provider.of<CartItemsProvider>(context);
+
     return Expanded(
       child: Stack(
         children: [
@@ -41,14 +48,13 @@ class _CartScreenState extends State<CartScreen> {
             child: Container(
               padding: const EdgeInsets.fromLTRB(10.0, 0, 20.0, 0.0),
               child: ListView.builder(
-                  itemCount: context.watch<CartItemsProvider>().cartList.length,
+                  itemCount: cart.cartList.length,
                   itemBuilder: (ctx, index) {
                     return Dismissible(
                       key: UniqueKey(),
                       background: Container(
                         color: Colors.red,
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 10,
                           vertical: 25,
                         ),
                         child: const Align(
@@ -68,34 +74,33 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       onDismissed: (direction) {
                         if (direction == DismissDirection.endToStart) {
-                          Provider.of<CartItemsProvider>(context, listen: false)
-                              .removeItem(Provider.of<CartItemsProvider>(
-                                      context,
-                                      listen: false)
-                                  .cartList[index]);
+                          cart.removeItem(cart.cartList[index]);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           MySnackBar.showMySnackBar(
                               context, "Rimosso dal carrello");
                         }
                       },
-                      direction: DismissDirection.endToStart,
+                      direction: cart.confirmed
+                          ? DismissDirection.none
+                          : DismissDirection.endToStart,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: MenuItem(
-                          dataItem: context
-                              .watch<CartItemsProvider>()
-                              .cartList[index],
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.blue,
-                          ),
+                          dataItem: cart.cartList[index],
+                          icon: cart.confirmed
+                              ? null
+                              : const Icon(
+                                  Icons.add,
+                                  color: Colors.blue,
+                                ),
                         ),
                       ),
                     );
                   }),
             ),
           ),
-          if (context.watch<CartItemsProvider>().cartList.isNotEmpty)
+          if (!cart.confirmed &&
+              ((cart.cartList.isNotEmpty && !cart.ordered) || cart.modified))
             const Align(
               alignment: Alignment.bottomCenter,
               child: TotalPrice(),
