@@ -309,17 +309,17 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         error = "Credenziali errate";
-      }
-      {
+      } else {
         if (kDebugMode) {
           print(error);
         }
       }
 
+      if (!mounted) return;
       Navigator.pop(context);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
       MySnackBar.showMySnackBar(context, error);
+
       return;
     }
 
@@ -345,8 +345,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-        MySnackBar.showMySnackBar(context, 'Email inviato');
+        MySnackBar.showMySnackBar(context, 'Email inviata');
       }
     } on FirebaseAuthException catch (e) {
       String error = e.code;
@@ -359,8 +358,8 @@ class _AuthScreenState extends State<AuthScreen> {
         }
       }
 
+      if (!mounted) return;
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
       MySnackBar.showMySnackBar(context, error);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
@@ -396,8 +395,7 @@ Widget textField(controller, final String hintText, final bool obscureText) {
           ? null
           : "Inserisci una mail valida",
       decoration: InputDecoration(
-        enabledBorder: const OutlineInputBorder(
-            ),
+        enabledBorder: const OutlineInputBorder(),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade400),
         ),

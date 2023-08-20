@@ -15,7 +15,7 @@ class UserAccountScreen extends StatefulWidget {
 }
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
-  String? _address = "";
+  String? _address = " ";
   TextEditingController? _phoneController;
   final Map<String, String> infos = {};
 
@@ -100,9 +100,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           builder: (context) => LocationPicker(setAdress),
                         ));
                   },
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.all(20)),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    foregroundColor: const Color.fromARGB(255, 53, 126, 56),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,7 +118,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(

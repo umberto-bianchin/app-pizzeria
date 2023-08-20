@@ -55,12 +55,27 @@ class Home extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 20,
               top: 40,
+              right: 20,
             ),
-            child: Text("Dove Siamo?",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Dove Siamo?",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  "Via Pizzeria 35, Padova",
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
           ),
           const Maps(),
         ],

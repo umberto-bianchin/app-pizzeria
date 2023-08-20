@@ -40,13 +40,8 @@ class UserScreen extends StatelessWidget {
                 },
               ),
               ProfileMenu(
-                text: "Notifiche",
+                text: "Il mio ordine",
                 icon: "assets/images/bell.svg",
-                press: () {},
-              ),
-              ProfileMenu(
-                text: "Impostazioni",
-                icon: "assets/images/settings.svg",
                 press: () {},
               ),
               ProfileMenu(

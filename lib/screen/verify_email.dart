@@ -61,10 +61,9 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       await Future.delayed(const Duration(seconds: 5));
       setState(() => canResendEmail = true);
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
       MySnackBar.showMySnackBar(context, e.toString());
-      return;
     }
   }
 

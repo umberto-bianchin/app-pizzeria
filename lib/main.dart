@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: navigatorKey,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: kprimaryColor),
+        //colorScheme: ColorScheme.fromSeed(seedColor: kprimaryColor),
       ),
       home: Scaffold(
         appBar: AppBar(

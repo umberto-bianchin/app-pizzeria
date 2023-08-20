@@ -29,10 +29,19 @@ class _LocationPickerState extends State<LocationPicker> {
           child: Center(
         child: MapLocationPicker(
             hideMapTypeButton: true,
+            hideLocationButton: true,
+            topCardColor: Colors.lightBlue[200]!.withOpacity(0.9),
+            bottomCardColor: kprimaryColor.withOpacity(0.9),
             language: "it",
+            region: "it",
+            //types: ['address'],
             searchHintText: "Cerca il tuo indirizzo",
             apiKey: "AIzaSyAwhBXaYPS_FdtoUkkA-BNVq8nlmpdJP0Q",
             popOnNextButtonTaped: true,
+            bottomCardIcon: const Icon(
+              Icons.send,
+              color: Colors.black,
+            ),
             currentLatLng: const LatLng(klatitude, klongitude),
             onNext: (GeocodingResult? result) {
               if (result != null) {

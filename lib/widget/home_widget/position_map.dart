@@ -1,77 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const double klatitude = 45.406435;
 const double klongitude = 11.876761;
 
-class Maps extends StatefulWidget {
+class Maps extends StatelessWidget {
   const Maps({super.key});
 
   @override
-  State<Maps> createState() => _MapsState();
-}
-
-class _MapsState extends State<Maps> {
-  late GoogleMapController mapController;
-  final LatLng _center = const LatLng(klatitude, klongitude);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  @override
-  void dispose() {
-    mapController.dispose();
-    super.dispose();
-  }
-
-  final List<Marker> _markers = [
-    const Marker(
-      markerId: MarkerId("Pizzeria"),
-      position: LatLng(klatitude, klongitude),
-      infoWindow: InfoWindow(
-        title: "Pizzeria",
-        snippet: "Via Pizzeria",
-      ),
-    ),
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    final initialCameraPosition = CameraPosition(
-      target: _center,
-      zoom: 17.0,
-    );
-
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: SizedBox(
-        height: 300,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Card(
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: GoogleMap(
-              mapType: MapType.normal,
-              myLocationButtonEnabled: false,
-              gestureRecognizers: {
-                Factory<OneSequenceGestureRecognizer>(
-                    () => EagerGestureRecognizer())
-              },
-              zoomControlsEnabled: false,
-              mapToolbarEnabled: true,
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: initialCameraPosition,
-              markers: _markers.toSet(),
+      child: InkWell(
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Image(
+                  image: AssetImage("assets/images/google_map.png"),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "Clicca per aprire la mappa",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
+        onTap: () {
+          _launchGoogleMaps(const LatLng(klatitude, klongitude));
+        },
       ),
     );
+  }
+
+  void _launchGoogleMaps(LatLng location) async {
+    String appleUrl =
+        'https://maps.apple.com/?saddr=&daddr=${location.latitude},${location.longitude}&directionsmode=driving';
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}';
+
+    Uri appleUri = Uri.parse(appleUrl);
+    Uri googleUri = Uri.parse(googleUrl);
+
+    if (await canLaunchUrl(appleUri)) {
+      await launchUrl(appleUri, mode: LaunchMode.externalApplication);
+    } else if (await canLaunchUrl(googleUri)) {
+      await launchUrl(googleUri, mode: LaunchMode.externalApplication);
+    }
   }
 }

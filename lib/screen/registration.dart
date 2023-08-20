@@ -199,9 +199,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
       }
 
+      if (!mounted) return;
       Navigator.pop(context);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
       MySnackBar.showMySnackBar(context, error);
       return;
     }
