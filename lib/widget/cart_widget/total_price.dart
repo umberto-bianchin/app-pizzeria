@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:app_pizzeria/providers/page_provider.dart';
+import 'package:app_pizzeria/providers/user_infos_provider.dart';
+import 'package:app_pizzeria/widget/cart_widget/order_dialogs.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../helper.dart';
 import '../../providers/cart_provider.dart';
 
 class TotalPrice extends StatelessWidget {
@@ -11,7 +12,6 @@ class TotalPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool ordered = Provider.of<CartItemsProvider>(context).ordered;
-    TimeOfDay? time;
 
     return Container(
       height: 50,
@@ -48,199 +48,17 @@ class TotalPrice extends StatelessWidget {
               shadowColor: Colors.transparent,
             ),
             onPressed: () async {
-              String deliveryMethod = "Asporto";
-              bool isDelivery = false;
-
-              await showCupertinoDialog(
-                  context: context,
-                  builder: ((context) {
-                    return CupertinoAlertDialog(
-                      title: const Text("Scegli come ritirare il tuo ordine"),
-                      content: StatefulBuilder(
-                        builder: (context, setState) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Asporto",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: Checkbox(
-                                        activeColor: Colors.blue,
-                                        value: !isDelivery,
-                                        shape: const CircleBorder(),
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            isDelivery = !value!;
-                                            deliveryMethod = "Asporto";
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Domicilio",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: Checkbox(
-                                        activeColor: Colors.blue,
-                                        value: isDelivery,
-                                        shape: const CircleBorder(),
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            isDelivery = value!;
-                                            deliveryMethod = "Domicilio";
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          );
-                        },
-                      ),
-                      actions: <Widget>[
-                        CupertinoDialogAction(
-                          isDestructiveAction: true,
-                          onPressed: () {
-                            deliveryMethod = "";
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Cancella'),
-                        ),
-                        CupertinoDialogAction(
-                          onPressed: () {
-                            Provider.of<CartItemsProvider>(context,
-                                    listen: false)
-                                .deliveryMethod = deliveryMethod;
-
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            'Seleziona',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                      ],
-                    );
-                  }));
-
-              if (context.mounted && deliveryMethod != "") {
-                time = await showTimePicker(
-                    initialEntryMode: TimePickerEntryMode.inputOnly,
-                    cancelText: "Cancella",
-                    confirmText: "Conferma",
-                    hourLabelText: "Ora",
-                    minuteLabelText: "Minuti",
-                    errorInvalidText: "Inserisci un orario valido",
-                    helpText: "Inserisci l'orario di consegna desiderato",
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                    builder: (context, childWidget) {
-                      return MediaQuery(
-                          data: MediaQuery.of(context)
-                              .copyWith(alwaysUse24HourFormat: true),
-                          child: childWidget!);
-                    });
+              if (!Provider.of<UserInfoProvider>(context, listen: false)
+                  .isLoggedin) {
+                MySnackBar.showMySnackBar(
+                    context, "Devi essere registrato per ordinare");
+                Provider.of<PageProvider>(context, listen: false).changePage(3);
+                return;
               }
-              bool timeSelected = time == null ? false : true;
-              bool orderSubmit = false;
 
-              if (context.mounted && timeSelected && deliveryMethod != "") {
-                await showCupertinoDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CupertinoAlertDialog(
-                        title: Text(
-                          "Il tuo orario",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        content: const Text(
-                          'Il tuo ordine potrà subire piccole variazioni di orario in base alla disponibilità della pizzeria, attendi che venga confermato',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            isDestructiveAction: true,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Cancella'),
-                          ),
-                          CupertinoDialogAction(
-                            onPressed: () {
-                              submitOrder(
-                                context,
-                                timeInterval: time!.to24hours(),
-                                order: Provider.of<CartItemsProvider>(context,
-                                    listen: false),
-                                deliveryMethod: deliveryMethod,
-                              );
-
-                              orderSubmit = true;
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              'Ordina',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                          ),
-                        ],
-                      );
-                    });
-              }
-              if (context.mounted) {
-                if (orderSubmit) {
-                  showCupertinoDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CupertinoAlertDialog(
-                          title: const Text("Ordine inviato!"),
-                          content: const Text(
-                            'Il tuo ordine è stato inviato, verrà presto confermato dalla pizzeria',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          actions: <Widget>[
-                            CupertinoDialogAction(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                'OK',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            )
-                          ],
-                        );
-                      });
-                }
-              }
+              OrderDialogs(
+                context: context,
+              ).initializeCheckOut();
             },
             child: Text(
               ordered ? 'Modifica' : 'Ordina',
@@ -254,13 +72,5 @@ class TotalPrice extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-extension TimeOfDayConverter on TimeOfDay {
-  String to24hours() {
-    final hr = hour.toString().padLeft(2, "0");
-    final min = minute.toString().padLeft(2, "0");
-    return "$hr:$min";
   }
 }

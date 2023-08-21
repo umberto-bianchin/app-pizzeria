@@ -12,8 +12,9 @@ class UserAccountScreen extends StatefulWidget {
 }
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
-  String? _address = " ";
+  String? _address = "";
   TextEditingController? _phoneController;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -73,7 +74,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     const SizedBox(
                       width: 10,
                     ),
-                     Text(
+                    Text(
                       "Il mio account",
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
@@ -110,7 +111,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             text: _address!.isEmpty
                                 ? "Seleziona il tuo indirizzo"
                                 : _address!,
-                            style:  TextStyle(
+                            style: TextStyle(
                               color: Theme.of(context).primaryColor,
                             ),
                           ),
@@ -124,42 +125,47 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextFormField(
-                  autocorrect: false,
-                  keyboardType: TextInputType.phone,
-                  controller: _phoneController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    if (value!.length != 10 && value.length != 9) {
-                      return "Inserisci un numero di telefono valido";
-                    }
-                    _phoneController!.text = value;
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Colors.grey.shade400,
+                child: Form(
+                  key: formKey,
+                  child: TextFormField(
+                    autocorrect: false,
+                    keyboardType: TextInputType.phone,
+                    controller: _phoneController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if ((value!.length != 10 && value.length != 9) ||
+                          !isNumeric(value)) {
+                        return "Inserisci un numero di telefono valido";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      hintText: "Inserisci il numero di telefono",
+                      suffixIcon: const Icon(Icons.phone),
                     ),
-                    hintText: "Inserisci il numero di telefono",
-                    suffixIcon: const Icon(Icons.phone),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               OutlinedButton(
                 onPressed: () {
-                  Provider.of<UserInfoProvider>(context, listen: false)
-                      .submitInfos(
-                    address: _address!,
-                    number: _phoneController!.text,
-                  );
-                  Navigator.pop(context);
+                  if (formKey.currentState!.validate()) {
+                    Provider.of<UserInfoProvider>(context, listen: false)
+                        .submitInfos(
+                      address: _address!,
+                      number: _phoneController!.text,
+                    );
+                    Navigator.pop(context);
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                   fixedSize: const Size(120, 20),
@@ -182,4 +188,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
       ),
     );
   }
+}
+
+bool isNumeric(String str) {
+  return int.tryParse(str) != null;
 }

@@ -1,6 +1,7 @@
 import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
+import 'package:app_pizzeria/providers/user_infos_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ void logOut(BuildContext ctx) {
   }
 
   FirebaseAuth.instance.signOut();
+  Provider.of<UserInfoProvider>(ctx, listen: false).logOut();
 }
 
 ImageProvider getImage(BuildContext ctx) {
@@ -110,7 +112,6 @@ void submitOrder(
   BuildContext ctx, {
   required String timeInterval,
   required CartItemsProvider order,
-  required String deliveryMethod,
 }) {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   Map<String, dynamic> jsonOrder = {};
@@ -119,7 +120,7 @@ void submitOrder(
   jsonOrder["accepted"] = "False";
   jsonOrder["time-interval"] = timeInterval;
   jsonOrder["total"] = order.getTotal().toStringAsFixed(2);
-  jsonOrder["delivery-method"] = deliveryMethod;
+  jsonOrder["delivery-method"] = order.deliveryMethod;
 
   for (DataItem item in order.cartList) {
     jsonOrder["ordine$index"] = {
