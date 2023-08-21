@@ -9,9 +9,7 @@ class MySnackBar {
         duration: const Duration(seconds: 1),
         content: Text(
           message,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         backgroundColor: const Color.fromARGB(255, 229, 228, 228),
       ),

@@ -5,7 +5,6 @@ import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../data/data_item.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key});
@@ -73,7 +72,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
         ? const UserScreen()
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: kprimaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               toolbarHeight: 0,
             ),
             body: SafeArea(
@@ -82,24 +81,20 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   Container(
                     padding: const EdgeInsets.all(30),
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                    decoration:  BoxDecoration(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(30),
                           bottomRight: Radius.circular(30),
                         ),
-                        color: kprimaryColor),
-                    child: const Row(
+                        color: Theme.of(context).primaryColor),
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Verifica email",
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                          style:Theme.of(context).textTheme.titleLarge,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.verified_outlined,
                           size: 30,
                         ),
@@ -107,9 +102,9 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  const Text(
+                  Text(
                     'Una email di verifica ti è stata inviata',
-                    style: TextStyle(fontSize: 20),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 20),
                   Container(

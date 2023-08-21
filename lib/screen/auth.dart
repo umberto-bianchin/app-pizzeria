@@ -44,10 +44,10 @@ class _AuthScreenState extends State<AuthScreen> {
                 // welcome back, you've been missed!
                 Text(
                   'Bentornato, ci sei mancato!',
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 16,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Colors.grey[700]),
                   textAlign: TextAlign.center,
                 ),
 
@@ -93,9 +93,15 @@ class _AuthScreenState extends State<AuthScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Password dimenticata?',
-                                          style: TextStyle(fontSize: 18),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                         ),
                                         IconButton(
                                             icon: const Icon(Icons.close),
@@ -107,11 +113,14 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ],
                                     ),
                                     children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(
+                                      Padding(
+                                        padding: const EdgeInsets.only(
                                             left: 25, right: 20, bottom: 20),
                                         child: Text(
                                           'Ricevi una mail per effettuare il reset della tua password',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
                                         ),
                                       ),
                                       textField(
@@ -202,7 +211,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Oppure continua con',
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: Colors.grey[700]),
                         ),
                       ),
                       Expanded(
@@ -261,19 +273,20 @@ class _AuthScreenState extends State<AuthScreen> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
                     'Non sei ancora registrato?',
-                    style: TextStyle(color: Colors.grey[700]),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: Colors.grey[700]),
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const RegistrationScreen()));
                     },
-                    child: const Text(
+                    child: Text(
                       'Registrati ora',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                   )
                 ]),

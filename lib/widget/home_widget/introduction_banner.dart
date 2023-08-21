@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../data/data_item.dart';
-
 class IntroductionPizzeria extends StatelessWidget {
   const IntroductionPizzeria({super.key});
 
@@ -11,27 +9,24 @@ class IntroductionPizzeria extends StatelessWidget {
 
     return Container(
       height: 200.0,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(40),
           bottomRight: Radius.circular(40),
         ),
-        color: kprimaryColor,
+        color: Theme.of(context).primaryColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Padding(
             padding: EdgeInsets.only(left: width / 20, right: width / 20),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Pizzeria\n\tAntonino",
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),

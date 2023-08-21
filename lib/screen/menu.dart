@@ -1,4 +1,3 @@
-import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/data/menu_items_list.dart';
@@ -40,24 +39,20 @@ class _MenuPageState extends State<MenuPage> {
       children: [
         Container(
           padding: const EdgeInsets.only(bottom: 30),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
-              color: kprimaryColor),
+              color: Theme.of(context).primaryColor),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 0.0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "Menu",
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   //start search icon
                   Container(

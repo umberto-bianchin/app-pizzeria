@@ -3,7 +3,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../data/data_item.dart';
 import '../main.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -24,7 +23,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kprimaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         toolbarHeight: 0,
       ),
       body: SafeArea(
@@ -33,12 +32,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Container(
               padding: const EdgeInsets.only(bottom: 30, top: 30, right: 30),
               width: double.infinity,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft:  Radius.circular(30),
+                    bottomRight:  Radius.circular(30),
                   ),
-                  color: kprimaryColor),
+                  color: Theme.of(context).primaryColor,),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -55,13 +54,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Text(
+                   Text(
                     "Registrazione",
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ],
               ),
@@ -78,10 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     // welcome back, you've been missed!
                     Text(
                       'Benvenuto!',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 20,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey[700]),
                       textAlign: TextAlign.center,
                     ),
 

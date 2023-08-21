@@ -111,14 +111,14 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget emptyMessage() {
-    return const Column(
+    return Column(
       children: [
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Text(
             "Aggiungi qualcosa al carrello per poterlo visualizzare in questa pagina.",
-            style: TextStyle(fontSize: 20),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         )
       ],

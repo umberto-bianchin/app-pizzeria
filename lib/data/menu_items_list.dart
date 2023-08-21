@@ -3,6 +3,8 @@ import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 
+const Color _kprimaryColor = Color.fromARGB(255, 4, 167, 113);
+
 var items = [
   MenuItem(
     dataItem: DataItem(
@@ -14,7 +16,7 @@ var items = [
         category: Categories.pizza),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -32,7 +34,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -50,7 +52,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -69,7 +71,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -93,7 +95,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -112,7 +114,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -130,7 +132,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -150,7 +152,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -164,7 +166,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   ),
   MenuItem(
@@ -178,7 +180,7 @@ var items = [
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
-      color: kprimaryColor,
+      color: _kprimaryColor,
     ),
   )
 ];

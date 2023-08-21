@@ -3,7 +3,6 @@ import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
 import 'package:app_pizzeria/widget/search_ingredient.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -99,6 +98,7 @@ class _ItemCartState extends State<ItemCart> {
         const SizedBox(height: 10),
         if (customItem!.category != Categories.bibite)
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 "Ingredienti:",
@@ -124,17 +124,23 @@ class _ItemCartState extends State<ItemCart> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(capitalize(toStringIngredients(
-                                    customItem!.ingredients[i]))),
+                                Text(
+                                  capitalize(
+                                    toStringIngredients(
+                                        customItem!.ingredients[i]),
+                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
                                 SizedBox(
-                                    height: 40,
-                                    child: Checkbox(
-                                        activeColor: Colors.blue,
-                                        value: customItem!.isSelected[i],
-                                        shape: const CircleBorder(),
-                                        onChanged: (bool? value) {
-                                          setChecked(i, value!);
-                                        }))
+                                  height: 30,
+                                  child: Checkbox(
+                                      activeColor: Colors.blue,
+                                      value: customItem!.isSelected[i],
+                                      shape: const CircleBorder(),
+                                      onChanged: (bool? value) {
+                                        setChecked(i, value!);
+                                      }),
+                                )
                               ],
                             )
                         ],

@@ -1,4 +1,3 @@
-import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 
 enum Categories {
@@ -52,7 +51,7 @@ class _CategoriesButtonState extends State<CategoriesButton> {
         children: [
           for (Pair pair in listCategories)
             category(
-                pair.category == _selected ? kprimaryColor : Colors.grey,
+                pair.category == _selected ? Theme.of(context).primaryColor : Colors.grey,
                 pair.category,
                 pair.icon,
                 pair.category == _selected ? Colors.white : Colors.black,

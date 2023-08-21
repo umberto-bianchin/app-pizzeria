@@ -1,4 +1,3 @@
-import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,7 +29,7 @@ class ProfileMenu extends StatelessWidget {
           children: [
             ColorFiltered(
               colorFilter:
-                  const ColorFilter.mode(kprimaryColor, BlendMode.srcIn),
+                   ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
               child: SvgPicture.asset(
                 icon,
                 width: 22,

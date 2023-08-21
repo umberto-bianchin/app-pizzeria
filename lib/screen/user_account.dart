@@ -2,7 +2,6 @@ import 'package:app_pizzeria/screen/location_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/data_item.dart';
 import '../providers/user_infos_provider.dart';
 
 class UserAccountScreen extends StatefulWidget {
@@ -42,7 +41,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kprimaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         toolbarHeight: 0,
       ),
       body: SafeArea(
@@ -52,12 +51,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
               Container(
                 padding: const EdgeInsets.only(bottom: 30, top: 30, right: 30),
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
                     ),
-                    color: kprimaryColor),
+                    color: Theme.of(context).primaryColor),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -74,13 +73,9 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     const SizedBox(
                       width: 10,
                     ),
-                    const Text(
+                     Text(
                       "Il mio account",
-                      style: TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
@@ -115,8 +110,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             text: _address!.isEmpty
                                 ? "Seleziona il tuo indirizzo"
                                 : _address!,
-                            style: const TextStyle(
-                              color: kprimaryColor,
+                            style:  TextStyle(
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

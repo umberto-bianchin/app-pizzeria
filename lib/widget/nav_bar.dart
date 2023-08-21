@@ -3,31 +3,25 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
 
-class NavBar extends StatefulWidget {
+class NavBar extends StatelessWidget {
   const NavBar({
     super.key,
     required this.onChangePage,
     required this.selectedIndex,
-    required this.cartItemCount,
   });
 
   final void Function(int index) onChangePage;
   final int selectedIndex;
-  final int cartItemCount;
 
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
-
-class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartItemsProvider>(context);
+    final bool ordered = Provider.of<CartItemsProvider>(context).ordered;
+    final int cartItemCount = Provider.of<CartItemsProvider>(context).element;
 
     final List<Pair> pairList = [
       Pair(Icons.home, "Home"),
       Pair(Icons.menu_book_rounded, "Menu"),
-      if (cart.ordered)
+      if (ordered)
         Pair(Icons.list_alt_outlined, "Ordine")
       else
         Pair(Icons.shopping_cart, "Carrello"),
@@ -53,13 +47,19 @@ class _NavBarState extends State<NavBar> {
         children: [
           for (Pair pair in pairList)
             buildNavBarItem(
-                pair.icon, pair.name, pairList.indexOf(pair), cart.ordered),
+              pair.icon,
+              pair.name,
+              pairList.indexOf(pair),
+              ordered,
+              cartItemCount
+            ),
         ],
       ),
     );
   }
 
-  Widget buildNavBarItem(IconData icon, String name, int index, bool ordered) {
+  Widget buildNavBarItem(
+      IconData icon, String name, int index, bool ordered, int cartItemCount) {
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -79,21 +79,20 @@ class _NavBarState extends State<NavBar> {
                     children: [
                       Icon(
                         icon,
-                        color: index == widget.selectedIndex
-                            ? Colors.red
-                            : Colors.black,
+                        color:
+                            index == selectedIndex ? Colors.red : Colors.black,
                       ),
-                      if (index == 2 && widget.cartItemCount != 0 && !ordered)
+                      if (index == 2 && cartItemCount != 0 && !ordered)
                         Container(
                           padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
-                            color: index == widget.selectedIndex
+                            color: index == selectedIndex
                                 ? Colors.red
                                 : Colors.black,
                             shape: BoxShape.circle,
                           ),
                           child: Text(
-                            widget.cartItemCount.toString(),
+                            cartItemCount.toString(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -105,16 +104,15 @@ class _NavBarState extends State<NavBar> {
                   Text(
                     name,
                     style: TextStyle(
-                      color: index == widget.selectedIndex
-                          ? Colors.red
-                          : Colors.black,
+                      color: index == selectedIndex ? Colors.red : Colors.black,
+                      fontSize: 16,
                     ),
                   ),
                 ],
               ),
             ),
             onTap: () {
-              widget.onChangePage(index);
+              onChangePage(index);
             },
           ),
         ),

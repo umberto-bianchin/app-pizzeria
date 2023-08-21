@@ -1,4 +1,3 @@
-import 'package:app_pizzeria/data/data_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -146,9 +145,9 @@ class _TotalPriceState extends State<TotalPrice> {
 
                             Navigator.of(context).pop();
                           },
-                          child: const Text(
+                          child:  Text(
                             'Seleziona',
-                            style: TextStyle(color: kprimaryColor),
+                            style: TextStyle(color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ],
@@ -181,9 +180,9 @@ class _TotalPriceState extends State<TotalPrice> {
                     context: context,
                     builder: (BuildContext context) {
                       return CupertinoAlertDialog(
-                        title: const Text(
+                        title: Text(
                           "Il tuo orario",
-                          style: TextStyle(fontSize: 20),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         content: const Text(
                           'Il tuo ordine potrà subire piccole variazioni di orario in base alla disponibilità della pizzeria, attendi che venga confermato',
@@ -211,9 +210,9 @@ class _TotalPriceState extends State<TotalPrice> {
 
                               Navigator.of(context).pop();
                             },
-                            child: const Text(
+                            child:  Text(
                               'Ordina',
-                              style: TextStyle(color: kprimaryColor),
+                              style: TextStyle(color: Theme.of(context).primaryColor),
                             ),
                           ),
                         ],

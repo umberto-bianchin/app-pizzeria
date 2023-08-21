@@ -26,33 +26,29 @@ class Home extends StatelessWidget {
           const SizedBox(
             height: 10.0,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text(
               "Categorie",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CategoriesTabs(onTap: onSelectCategory),
           const SizedBox(
             height: 15.0,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text(
               "Suggeriti",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           const SuggestedTabs(),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               left: 20,
               top: 40,
               right: 20,
@@ -62,17 +58,11 @@ class Home extends StatelessWidget {
               children: [
                 Text(
                   "Dove Siamo?",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
                   "Via Pizzeria 35, Padova",
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),

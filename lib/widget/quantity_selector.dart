@@ -31,9 +31,9 @@ class _NumericStepButtonState extends State<NumericStepButton> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
+        Text(
           "Quantità",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

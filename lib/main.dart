@@ -12,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/screen/home.dart';
 import 'package:provider/provider.dart';
-import 'data/data_item.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -47,7 +46,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final PageController _pageController = PageController();
   int _selectedPage = 0;
-  int cartItemCount = 0;
 
   MenuPage menuPage = const MenuPage(selectedCategory: Categories.pizza);
 
@@ -70,17 +68,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    cartItemCount = Provider.of<CartItemsProvider>(context).element;
 
     return MaterialApp(
       navigatorKey: navigatorKey,
       theme: ThemeData(
-        useMaterial3: true,
-        //colorScheme: ColorScheme.fromSeed(seedColor: kprimaryColor),
-      ),
+          useMaterial3: true,
+          primaryColor: const Color.fromARGB(255, 4, 167, 113),
+          textTheme: const TextTheme(
+            titleLarge: TextStyle(
+                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+            titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            titleSmall: TextStyle(fontSize: 18),
+            bodyMedium: TextStyle(fontSize: 20),
+            bodySmall: TextStyle(fontSize: 16),
+
+          
+          )),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: kprimaryColor,
+          backgroundColor: const Color.fromARGB(255, 4, 167, 113),
           toolbarHeight: 0,
         ),
         body: SafeArea(
@@ -111,7 +117,6 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBar: NavBar(
           onChangePage: changePage,
           selectedIndex: _selectedPage,
-          cartItemCount: cartItemCount,
         ),
       ),
       debugShowCheckedModeBanner: false,

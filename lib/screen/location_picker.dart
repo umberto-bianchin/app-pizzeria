@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
-import '../data/data_item.dart';
-
 const double klatitude = 45.406435;
 const double klongitude = 11.876761;
 
@@ -22,7 +20,7 @@ class _LocationPickerState extends State<LocationPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kprimaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         toolbarHeight: 0,
       ),
       body: SafeArea(
@@ -31,7 +29,7 @@ class _LocationPickerState extends State<LocationPicker> {
             hideMapTypeButton: true,
             hideLocationButton: true,
             topCardColor: Colors.lightBlue[200]!.withOpacity(0.9),
-            bottomCardColor: kprimaryColor.withOpacity(0.9),
+            bottomCardColor: Theme.of(context).primaryColor.withOpacity(0.9),
             language: "it",
             region: "it",
             //types: ['address'],

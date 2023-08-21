@@ -43,9 +43,7 @@ class MenuItem extends StatelessWidget {
                             dataItem.menuDefault
                                 ? dataItem.name
                                 : "${dataItem.name}\n x${dataItem.quantity}",
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           const SizedBox(
                             height: 4.0,
@@ -145,6 +143,9 @@ class MenuItem extends StatelessWidget {
                                               ? "Ordine confermato"
                                               : dataItem.name,
                                           textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
                                         ),
                                         IconButton(
                                             icon: const Icon(Icons.close),
