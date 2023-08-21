@@ -40,8 +40,6 @@ class _AuthScreenState extends State<AuthScreen> {
               physics: const ClampingScrollPhysics(),
               children: [
                 const SizedBox(height: 30),
-
-                // welcome back, you've been missed!
                 Text(
                   'Bentornato, ci sei mancato!',
                   style: Theme.of(context)
