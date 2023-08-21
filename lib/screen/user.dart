@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../helper.dart';
+import '../providers/page_provider.dart';
 import '../providers/user_infos_provider.dart';
 import '../widget/user_widget/profile_menu.dart';
 
@@ -16,23 +17,34 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  //questo va messo qui in modo che le notifiche possano essere inviate solo ad utenti registrati
-  //dal momento che qui ci arrivi solo dopo esserti loggato
   void setupPushNotifications() async {
     final fcm = FirebaseMessaging.instance;
 
-    await fcm.requestPermission();
-    //queste due righe servono a vedere il token di ogni dispositivo
-    //quindi si dovrebbe collegare con il rispettivo utente in modo da poter inviare
-    //notifiche solo a uno alla volta
-    //final token = await fcm.getToken(); 
-    //print(token); 
+    await fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-    //questo serve a iscrivere ogni utente che accede a questo "gruppo"
-    //in modo da mandare notifiche a tutti molto piu semplicemente
-    fcm.subscribeToTopic(
-        'utente'); 
-        
+    final token = await fcm.getToken();
+
+    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+      Provider.of<UserInfoProvider>(context, listen: false).addToken(token!);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Provider.of<PageProvider>(context, listen: false).changePage(2);
+    });
+
+    if (context.mounted) {
+      Provider.of<UserInfoProvider>(context, listen: false).addToken(token!);
+    }
+    
+    fcm.subscribeToTopic('utenti');
   }
 
   @override

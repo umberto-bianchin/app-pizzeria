@@ -80,12 +80,22 @@ void saveUserInfos({required String address, required String phone}) {
       .set({
     "address": address,
     "phone": phone,
-  }, SetOptions(merge: true)).then(
-    (_) {
-      //print("success!");
-    },
-  );
+  }, SetOptions(merge: true));
 }
+
+void saveToken(String token){
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+  firestoreInstance
+      .collection("users")
+      .doc(firebaseUser!.uid)
+      .collection("infos")
+      .doc("information")
+      .set({
+    "token": token,
+  }, SetOptions(merge: true));
+
+}
+
 
 Future<Map<String, String>> getUserInfo() async {
   var firebaseUser = FirebaseAuth.instance.currentUser;
