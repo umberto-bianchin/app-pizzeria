@@ -106,10 +106,12 @@ Future<Map<String, String>> getUserInfo() async {
   };
 }
 
-void submitOrder(BuildContext ctx,
-    {required String timeInterval,
-    required CartItemsProvider order,
-    required String deliveryMethod}) {
+void submitOrder(
+  BuildContext ctx, {
+  required String timeInterval,
+  required CartItemsProvider order,
+  required String deliveryMethod,
+}) {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   Map<String, dynamic> jsonOrder = {};
   int index = 0;
@@ -135,4 +137,6 @@ void submitOrder(BuildContext ctx,
       .collection("orders")
       .doc("order")
       .set(jsonOrder);
+
+  order.submitOrder();
 }

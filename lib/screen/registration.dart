@@ -73,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     // welcome back, you've been missed!
                     Text(
                       'Benvenuto!',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey[700]),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.grey[700]),
                       textAlign: TextAlign.center,
                     ),
 

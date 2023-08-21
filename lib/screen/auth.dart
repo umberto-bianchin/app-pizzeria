@@ -120,7 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           'Ricevi una mail per effettuare il reset della tua password',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyMedium,
+                                              .bodyLarge,
                                         ),
                                       ),
                                       textField(

@@ -2,17 +2,13 @@ import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Order extends StatefulWidget {
+class Order extends StatelessWidget {
   const Order({super.key});
 
   @override
-  State<Order> createState() => _OrderState();
-}
-
-class _OrderState extends State<Order> {
-  @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartItemsProvider>(context);
+    final bool confirmed = Provider.of<CartItemsProvider>(context).confirmed;
+    final String time = Provider.of<CartItemsProvider>(context).time;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -32,10 +28,10 @@ class _OrderState extends State<Order> {
                   color: Colors.black),
               children: <TextSpan>[
                 TextSpan(
-                  text: cart.confirmed ? 'Confermato' : 'Da confermare',
+                  text: confirmed ? 'Confermato' : 'Da confermare',
                   style: TextStyle(
                     fontSize: 16,
-                    color: cart.confirmed ? Colors.green : Colors.red,
+                    color: confirmed ? Colors.green : Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 )
@@ -51,9 +47,9 @@ class _OrderState extends State<Order> {
                   color: Colors.black),
               children: <TextSpan>[
                 TextSpan(
-                  text: cart.time == ""
+                  text: time == ""
                       ? "Riceverai presto aggiornamenti sull'orario"
-                      : cart.time.toString(),
+                      : time.toString(),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

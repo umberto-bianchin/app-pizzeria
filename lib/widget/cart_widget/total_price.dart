@@ -5,17 +5,12 @@ import 'package:provider/provider.dart';
 import '../../helper.dart';
 import '../../providers/cart_provider.dart';
 
-class TotalPrice extends StatefulWidget {
+class TotalPrice extends StatelessWidget {
   const TotalPrice({super.key});
 
   @override
-  State<TotalPrice> createState() => _TotalPriceState();
-}
-
-class _TotalPriceState extends State<TotalPrice> {
-  @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartItemsProvider>(context);
+    final bool ordered = Provider.of<CartItemsProvider>(context).ordered;
     TimeOfDay? time;
 
     return Container(
@@ -30,8 +25,8 @@ class _TotalPriceState extends State<TotalPrice> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            cart.ordered
-                ? 'Differenza: €${cart.difference().toStringAsFixed(2)}'
+            ordered
+                ? 'Differenza: €${Provider.of<CartItemsProvider>(context).difference().toStringAsFixed(2)}'
                 : 'Totale:  €${context.watch<CartItemsProvider>().getTotal().toStringAsFixed(2)}',
             style: const TextStyle(
               color: Colors.white,
@@ -145,9 +140,10 @@ class _TotalPriceState extends State<TotalPrice> {
 
                             Navigator.of(context).pop();
                           },
-                          child:  Text(
+                          child: Text(
                             'Seleziona',
-                            style: TextStyle(color: Theme.of(context).primaryColor),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ],
@@ -182,7 +178,7 @@ class _TotalPriceState extends State<TotalPrice> {
                       return CupertinoAlertDialog(
                         title: Text(
                           "Il tuo orario",
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         content: const Text(
                           'Il tuo ordine potrà subire piccole variazioni di orario in base alla disponibilità della pizzeria, attendi che venga confermato',
@@ -198,21 +194,21 @@ class _TotalPriceState extends State<TotalPrice> {
                           ),
                           CupertinoDialogAction(
                             onPressed: () {
-                              final cart = Provider.of<CartItemsProvider>(
-                                  context,
-                                  listen: false);
-
-                              submitOrder(context,
-                                  timeInterval: time!.to24hours(), order: cart, deliveryMethod: deliveryMethod);
+                              submitOrder(
+                                context,
+                                timeInterval: time!.to24hours(),
+                                order: Provider.of<CartItemsProvider>(context,
+                                    listen: false),
+                                deliveryMethod: deliveryMethod,
+                              );
 
                               orderSubmit = true;
-                              cart.submitOrder();
-
                               Navigator.of(context).pop();
                             },
-                            child:  Text(
+                            child: Text(
                               'Ordina',
-                              style: TextStyle(color: Theme.of(context).primaryColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
                             ),
                           ),
                         ],
@@ -247,7 +243,7 @@ class _TotalPriceState extends State<TotalPrice> {
               }
             },
             child: Text(
-              cart.ordered ? 'Modifica' : 'Ordina',
+              ordered ? 'Modifica' : 'Ordina',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,

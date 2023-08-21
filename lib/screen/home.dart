@@ -1,4 +1,4 @@
-import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
+
 import 'package:app_pizzeria/widget/home_widget/suggested_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/home_widget/categories_cards_tab.dart';
@@ -6,10 +6,7 @@ import 'package:app_pizzeria/widget/home_widget/introduction_banner.dart';
 import 'package:app_pizzeria/widget/home_widget/position_map.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key, required this.onSelectCategory});
-
-  final void Function(int index, {Categories? selectedCategory})
-      onSelectCategory;
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class Home extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          CategoriesTabs(onTap: onSelectCategory),
+          const CategoriesTabs(),
           const SizedBox(
             height: 15.0,
           ),
@@ -62,7 +59,7 @@ class Home extends StatelessWidget {
                 ),
                 Text(
                   "Via Pizzeria 35, Padova",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),

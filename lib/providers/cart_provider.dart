@@ -50,12 +50,6 @@ class CartItemsProvider with ChangeNotifier {
 
   void removeItem(DataItem item) {
     cartList.remove(item);
-
-    if (cartList.isEmpty) {
-      modified = false;
-      ordered = false;
-    }
-
     if (ordered) {
       modified = true;
     }
@@ -65,11 +59,6 @@ class CartItemsProvider with ChangeNotifier {
 
   void changeQuantity(DataItem item, int quantity) {
     item.quantity = quantity;
-
-    if (cartList.isEmpty) {
-      modified = false;
-      ordered = false;
-    }
 
     if (ordered) {
       modified = true;
@@ -103,8 +92,8 @@ class CartItemsProvider with ChangeNotifier {
 
   void submitOrder() {
     orderPrice = getTotal();
-    ordered = true;
     modified = false;
+    ordered = cartList.isNotEmpty;
 
     for (DataItem item in cartList) {
       orderList.add(item.copy());

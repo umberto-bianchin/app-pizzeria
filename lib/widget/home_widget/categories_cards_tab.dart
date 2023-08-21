@@ -6,11 +6,7 @@ import 'category_card.dart';
 
 class CategoriesTabs extends StatelessWidget {
   const CategoriesTabs({
-    super.key,
-    required this.onTap,
-  });
-
-  final void Function(int index, {Categories selectedCategory}) onTap;
+    super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +20,16 @@ class CategoriesTabs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           CategoryCard(width, capitalize(Categories.pizza.name),
-              "assets/images/pizza.png", onTap,
+              "assets/images/pizza.png",
               category: Categories.pizza),
           CategoryCard(width, capitalize(Categories.kebab.name),
-              "assets/images/mexican.png", onTap,
+              "assets/images/mexican.png",
               category: Categories.kebab),
           CategoryCard(width, capitalize(Categories.panini.name),
-              "assets/images/burger.png", onTap,
+              "assets/images/burger.png",
               category: Categories.panini),
           CategoryCard(width, capitalize(Categories.bibite.name),
-              "assets/images/drink.png", onTap,
+              "assets/images/drink.png",
               category: Categories.bibite)
         ],
       ),

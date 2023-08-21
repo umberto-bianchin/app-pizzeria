@@ -8,22 +8,17 @@ import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../widget/cart_widget/total_price.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartItemsProvider>(context);
 
     Widget displayed =
         (cart.cartList.isNotEmpty && !cart.ordered) || cart.ordered
-            ? cartElements()
-            : emptyMessage();
+            ? cartElements(cart, context)
+            : emptyMessage(context);
 
     return Column(
       children: [
@@ -37,9 +32,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget cartElements() {
-    final cart = Provider.of<CartItemsProvider>(context);
-
+  Widget cartElements(CartItemsProvider cart, BuildContext context) {
     return Expanded(
       child: Stack(
         children: [
@@ -110,7 +103,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget emptyMessage() {
+  Widget emptyMessage(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 50),

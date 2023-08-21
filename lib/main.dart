@@ -1,12 +1,12 @@
 import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
+import 'package:app_pizzeria/providers/page_provider.dart';
 import 'package:app_pizzeria/providers/user_infos_provider.dart';
 import 'package:app_pizzeria/screen/cart.dart';
 import 'package:app_pizzeria/screen/menu.dart';
 import 'package:app_pizzeria/screen/auth.dart';
 import 'package:app_pizzeria/screen/verify_email.dart';
-import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,59 +31,43 @@ void main() async {
       ChangeNotifierProvider(create: (_) => UserInfoProvider()),
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
       ChangeNotifierProvider(create: (_) => FacebookSignInProvider()),
+      ChangeNotifierProvider(create: (_) => PageProvider()),
     ],
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   final PageController _pageController = PageController();
-  int _selectedPage = 0;
-
-  MenuPage menuPage = const MenuPage(selectedCategory: Categories.pizza);
-
-  void changePage(int index, {Categories? selectedCategory}) {
-    setState(() {
-      _selectedPage = index;
-      _pageController.jumpToPage(_selectedPage);
-
-      if (selectedCategory != null) {
-        menuPage = MenuPage(selectedCategory: selectedCategory);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  final ValueNotifier<int> selectedPage = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
+    selectedPage.value = Provider.of<PageProvider>(context).selectedPage;
+
+    selectedPage.addListener(() {
+      _pageController.jumpToPage(selectedPage.value);
+    });
+    MenuPage menuPage = MenuPage(
+        selectedCategory: Provider.of<PageProvider>(context).selectedCategory);
 
     return MaterialApp(
       navigatorKey: navigatorKey,
       theme: ThemeData(
-          useMaterial3: true,
-          primaryColor: const Color.fromARGB(255, 4, 167, 113),
-          textTheme: const TextTheme(
-            titleLarge: TextStyle(
-                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-            titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            titleSmall: TextStyle(fontSize: 18),
-            bodyMedium: TextStyle(fontSize: 20),
-            bodySmall: TextStyle(fontSize: 16),
-
-          
-          )),
+        useMaterial3: true,
+        primaryColor: const Color.fromARGB(255, 4, 167, 113),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          titleSmall: TextStyle(fontSize: 18),
+          bodyLarge: TextStyle(fontSize: 20),
+          bodyMedium: TextStyle(fontSize: 15),
+          bodySmall: TextStyle(fontSize: 16),
+        ),
+      ),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 4, 167, 113),
@@ -95,7 +79,7 @@ class _MyAppState extends State<MyApp> {
             allowImplicitScrolling: false,
             controller: _pageController,
             children: [
-              Home(onSelectCategory: changePage),
+              const Home(),
               menuPage,
               const CartScreen(),
               StreamBuilder<User?>(
@@ -114,10 +98,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        bottomNavigationBar: NavBar(
-          onChangePage: changePage,
-          selectedIndex: _selectedPage,
-        ),
+        bottomNavigationBar: const NavBar(),
       ),
       debugShowCheckedModeBanner: false,
     );

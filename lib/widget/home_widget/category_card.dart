@@ -1,14 +1,16 @@
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/page_provider.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard(this.width, this.title, this.image, this.action,
+  const CategoryCard(this.width, this.title, this.image,
       {super.key, this.category});
 
   final double width;
   final String title;
   final String image;
-  final void Function(int index, {Categories selectedCategory}) action;
   final Categories? category;
 
   @override
@@ -37,7 +39,7 @@ class CategoryCard extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          action(1, selectedCategory: category!);
+          Provider.of<PageProvider>(context, listen: false).changePage(1, selectedCategories: category!);
         },
       ),
     );

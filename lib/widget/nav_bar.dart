@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
+import '../providers/page_provider.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({
-    super.key,
-    required this.onChangePage,
-    required this.selectedIndex,
-  });
-
-  final void Function(int index) onChangePage;
-  final int selectedIndex;
+  const NavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     final bool ordered = Provider.of<CartItemsProvider>(context).ordered;
     final int cartItemCount = Provider.of<CartItemsProvider>(context).element;
+    final int selectedIndex = Provider.of<PageProvider>(context).selectedPage;
 
     final List<Pair> pairList = [
       Pair(Icons.home, "Home"),
@@ -46,20 +41,22 @@ class NavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           for (Pair pair in pairList)
-            buildNavBarItem(
-              pair.icon,
-              pair.name,
-              pairList.indexOf(pair),
-              ordered,
-              cartItemCount
-            ),
+            buildNavBarItem(pair.icon, pair.name, pairList.indexOf(pair),
+                ordered, cartItemCount, selectedIndex, context),
         ],
       ),
     );
   }
 
   Widget buildNavBarItem(
-      IconData icon, String name, int index, bool ordered, int cartItemCount) {
+    IconData icon,
+    String name,
+    int index,
+    bool ordered,
+    int cartItemCount,
+    int selectedIndex,
+    BuildContext context,
+  ) {
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -112,7 +109,8 @@ class NavBar extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onChangePage(index);
+              Provider.of<PageProvider>(context, listen: false)
+                  .changePage(index);
             },
           ),
         ),
