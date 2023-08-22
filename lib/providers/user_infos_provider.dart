@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../helper.dart';
@@ -6,7 +7,7 @@ class UserInfoProvider with ChangeNotifier {
   String number = "";
   String address = "";
   String token = "";
-  bool isLoggedin = false;
+  bool isLoggedin = FirebaseAuth.instance.currentUser != null;
 
   void submitInfos({required String number, required String address}) {
     if (number != this.number || address != this.address) {

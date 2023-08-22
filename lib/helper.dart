@@ -83,7 +83,7 @@ void saveUserInfos({required String address, required String phone}) {
   }, SetOptions(merge: true));
 }
 
-void saveToken(String token){
+void saveToken(String token) {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   firestoreInstance
       .collection("users")
@@ -93,9 +93,7 @@ void saveToken(String token){
       .set({
     "token": token,
   }, SetOptions(merge: true));
-
 }
-
 
 Future<Map<String, String>> getUserInfo() async {
   var firebaseUser = FirebaseAuth.instance.currentUser;

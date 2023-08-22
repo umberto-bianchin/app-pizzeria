@@ -1,6 +1,7 @@
 import 'package:app_pizzeria/screen/user_account.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,31 +21,67 @@ class _UserScreenState extends State<UserScreen> {
   void setupPushNotifications() async {
     final fcm = FirebaseMessaging.instance;
 
-    await fcm.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
+    NotificationSettings permission = await fcm.getNotificationSettings();
 
-    final token = await fcm.getToken();
+    if ((permission.authorizationStatus == AuthorizationStatus.denied ||
+            permission.authorizationStatus ==
+                AuthorizationStatus.notDetermined) &&
+        context.mounted) {
+      await showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(
+                "Richiesta Autorizzazioni",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              content: const Text(
+                "Tra poco ti richiederemo l'autorizzazione per ricevere le notifiche sulle conferme da parte della pizzeria dei tuoi ordini",
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              ],
+            );
+          });
 
-    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
-      Provider.of<UserInfoProvider>(context, listen: false).addToken(token!);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Provider.of<PageProvider>(context, listen: false).changePage(2);
-    });
-
-    if (context.mounted) {
-      Provider.of<UserInfoProvider>(context, listen: false).addToken(token!);
+      permission = await fcm.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
     }
-    
-    fcm.subscribeToTopic('utenti');
+
+    if (permission.authorizationStatus == AuthorizationStatus.authorized ||
+        permission.authorizationStatus == AuthorizationStatus.provisional) {
+      final token = await fcm.getToken();
+
+      FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+        Provider.of<UserInfoProvider>(context, listen: false).addToken(token!);
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        Provider.of<PageProvider>(context, listen: false).changePage(2);
+      });
+
+      if (context.mounted) {
+        Provider.of<UserInfoProvider>(context, listen: false).addToken(token!);
+      }
+
+      fcm.subscribeToTopic('utenti');
+    }
   }
 
   @override
@@ -55,8 +92,7 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final info = Provider.of<UserInfoProvider>(context, listen: false);
-    info.getUser();
+    Provider.of<UserInfoProvider>(context, listen: false).getUser();
 
     return Column(
       children: [
