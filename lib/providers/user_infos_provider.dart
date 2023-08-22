@@ -17,11 +17,15 @@ class UserInfoProvider with ChangeNotifier {
     }
   }
 
-  void getUser() async {
+  void getUser(BuildContext ctx) async {
     Map<String, String> information = await getUserInfo();
-    number = information["phone"]!;
-    address = information["address"]!;
-    token = information["token"]!;
+    number = information["phone"] ?? "";
+    address = information["address"] ?? "";
+    token = information["token"] ?? "";
+
+    if (ctx.mounted) {
+      setLogInType(information["type"] ?? "email", ctx);
+    }
     isLoggedin = true;
   }
 

@@ -254,7 +254,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         final provider = Provider.of<FacebookSignInProvider>(
                             context,
                             listen: false);
-                        provider.facebookLogin();
+                        provider.facebookLogin(context);
                       },
                       icon: Image.asset(
                         'assets/images/facebook.png',

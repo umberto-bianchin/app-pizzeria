@@ -91,6 +91,9 @@ class MenuItem extends StatelessWidget {
                                       Text(
                                         dataItem.name,
                                         textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
                                       ),
                                       IconButton(
                                           icon: const Icon(Icons.close),
@@ -104,10 +107,15 @@ class MenuItem extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           left: 25, right: 20, bottom: 20),
-                                      child: Text(dataItem.ingredients
-                                          .map((ingr) =>
-                                              toStringIngredients(ingr))
-                                          .join(', ')),
+                                      child: Text(
+                                        dataItem.ingredients
+                                            .map((ingr) =>
+                                                toStringIngredients(ingr))
+                                            .join(', '),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
                                     ),
                                   ],
                                 );

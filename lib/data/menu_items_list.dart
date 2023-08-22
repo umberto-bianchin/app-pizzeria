@@ -8,12 +8,13 @@ const Color _kprimaryColor = Color.fromARGB(255, 4, 167, 113);
 var items = [
   MenuItem(
     dataItem: DataItem(
-        key: UniqueKey(),
-        image: "assets/images/classic.png",
-        name: "Margherita",
-        ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
-        initialPrice: 6.99,
-        category: Categories.pizza),
+      key: UniqueKey(),
+      image: information["Margherita"]![2],
+      name: "Margherita",
+      ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
+      initialPrice: information["Margherita"]![0],
+      category: information["Margherita"]![1],
+    ),
     icon: const Icon(
       Icons.add_shopping_cart,
       color: _kprimaryColor,
@@ -22,15 +23,15 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/americana.png",
+      image: information["Diavola"]![2],
       name: "Diavola",
       ingredients: [
         Ingredients.pomodoro,
         Ingredients.mozzarella,
         Ingredients.salamino_piccante
       ],
-      initialPrice: 7.99,
-      category: Categories.pizza,
+      initialPrice: information["Diavola"]![0],
+      category: information["Diavola"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -40,15 +41,15 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/veg.png",
+      image: information["Vegetariana"]![2],
       name: "Vegetariana",
       ingredients: [
         Ingredients.pomodoro,
         Ingredients.mozzarella,
         Ingredients.verdure_al_forno
       ],
-      initialPrice: 4.99,
-      category: Categories.pizza,
+      initialPrice: information["Vegetariana"]![0],
+      category: information["Vegetariana"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -58,7 +59,7 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/mexicanPizza.png",
+      image: information["Prosciutto e Funghi"]![2],
       name: "Prosciutto e Funghi",
       ingredients: [
         Ingredients.pomodoro,
@@ -66,8 +67,8 @@ var items = [
         Ingredients.cotto,
         Ingredients.funghi
       ],
-      initialPrice: 6.99,
-      category: Categories.pizza,
+      initialPrice: information["Prosciutto e Funghi"]![0],
+      category: information["Prosciutto e Funghi"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -77,7 +78,7 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/mexicanPizza.png",
+      image: information["Bea"]![2],
       name: "Bea",
       ingredients: [
         Ingredients.pomodoro,
@@ -90,8 +91,8 @@ var items = [
         Ingredients.gorgonzola,
         Ingredients.grana
       ],
-      initialPrice: 9,
-      category: Categories.pizza,
+      initialPrice: information["Bea"]![0],
+      category: information["Bea"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -101,7 +102,7 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/mexicanPizza.png",
+      image: information["Tonno e Cipolla"]![2],
       name: "Tonno e Cipolla",
       ingredients: [
         Ingredients.pomodoro,
@@ -109,8 +110,8 @@ var items = [
         Ingredients.tonno,
         Ingredients.cipolla
       ],
-      initialPrice: 6.99,
-      category: Categories.pizza,
+      initialPrice: information["Tonno e Cipolla"]![0],
+      category: information["Tonno e Cipolla"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -120,15 +121,15 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/pizza.png",
+      image: information["Wurstel"]![2],
       name: "Wurstel",
       ingredients: [
         Ingredients.pomodoro,
         Ingredients.mozzarella,
         Ingredients.wustel
       ],
-      initialPrice: 14,
-      category: Categories.kebab,
+      initialPrice: information["Wurstel"]![0],
+      category: information["Wurstel"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -138,7 +139,7 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/burger.png",
+      image: information["A4"]![2],
       name: "A4",
       ingredients: [
         Ingredients.mozzarella,
@@ -147,8 +148,8 @@ var items = [
         Ingredients.gorgonzola,
         Ingredients.funghi
       ],
-      initialPrice: 6.5,
-      category: Categories.panini,
+      initialPrice: information["A4"]![0],
+      category: information["A4"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -158,11 +159,11 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/drink.png",
+      image: information["Coca Cola"]![2],
       name: "Coca Cola",
       ingredients: [],
-      initialPrice: 2,
-      category: Categories.bibite,
+      initialPrice: information["Coca Cola"]![0],
+      category: information["Coca Cola"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -172,11 +173,11 @@ var items = [
   MenuItem(
     dataItem: DataItem(
       key: UniqueKey(),
-      image: "assets/images/drink.png",
+      image: information["Acqua"]![2],
       name: "Acqua",
       ingredients: [],
-      initialPrice: 1,
-      category: Categories.bibite,
+      initialPrice: information["Acqua"]![0],
+      category: information["Acqua"]![1],
     ),
     icon: const Icon(
       Icons.add_shopping_cart,
@@ -207,6 +208,23 @@ enum Ingredients {
 String toStringIngredients(Ingredients ingredient) {
   return ingredient.name.replaceAll("_", " ");
 }
+
+Map<String, List<dynamic>> information = {
+  "Margherita": [6.99, Categories.pizza, "assets/images/classic.png"],
+  "Diavola": [7.99, Categories.pizza, "assets/images/americana.png"],
+  "Vegetariana": [4.99, Categories.pizza, "assets/images/veg.png"],
+  "Prosciutto e Funghi": [
+    6.99,
+    Categories.pizza,
+    "assets/images/mexicanPizza.png"
+  ],
+  "Bea": [9.0, Categories.pizza, "assets/images/mexicanPizza.png"],
+  "Tonno e Cipolla": [6.99, Categories.pizza, "assets/images/mexicanPizza.png"],
+  "Wurstel": [14.0, Categories.kebab, "assets/images/pizza.png"],
+  "A4": [6.5, Categories.panini, "assets/images/burger.png"],
+  "Coca Cola": [2.0, Categories.bibite, "assets/images/drink.png"],
+  "Acqua": [1.0, Categories.bibite, "assets/images/drink.png"],
+};
 
 Map<Ingredients, double> costIngredients = {
   Ingredients.pomodoro: 0.55,

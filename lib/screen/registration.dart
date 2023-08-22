@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/helper.dart';
 import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,11 +34,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               padding: const EdgeInsets.only(bottom: 30, top: 30, right: 30),
               width: double.infinity,
               decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft:  Radius.circular(30),
-                    bottomRight:  Radius.circular(30),
-                  ),
-                  color: Theme.of(context).primaryColor,),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                color: Theme.of(context).primaryColor,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -54,7 +56,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                   Text(
+                  Text(
                     "Registrazione",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -73,7 +75,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     // welcome back, you've been missed!
                     Text(
                       'Benvenuto!',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.grey[700]),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.grey[700]),
                       textAlign: TextAlign.center,
                     ),
 
@@ -178,6 +183,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
+
+      saveRegType("email");
     } on FirebaseAuthException catch (e) {
       String error = e.code;
 

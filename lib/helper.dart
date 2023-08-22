@@ -28,6 +28,17 @@ LoginType getLogInType(BuildContext ctx) {
   return LoginType.email;
 }
 
+void setLogInType(String type, BuildContext ctx) {
+  if (type == "google") {
+    Provider.of<GoogleSignInProvider>(ctx, listen: false).setIsLogged(true);
+    return;
+  }
+  if (type == "facebook") {
+    Provider.of<FacebookSignInProvider>(ctx, listen: false).setIsLogged(true);
+    return;
+  }
+}
+
 void logOut(BuildContext ctx) {
   final googleProvider = Provider.of<GoogleSignInProvider>(ctx, listen: false);
   final facebookProvider =
@@ -71,7 +82,7 @@ ImageProvider getImage(BuildContext ctx) {
 }
 
 void saveUserInfos({required String address, required String phone}) {
-  var firebaseUser = FirebaseAuth.instance.currentUser;
+  final firebaseUser = FirebaseAuth.instance.currentUser;
   firestoreInstance
       .collection("users")
       .doc(firebaseUser!.uid)
@@ -84,7 +95,7 @@ void saveUserInfos({required String address, required String phone}) {
 }
 
 void saveToken(String token) {
-  var firebaseUser = FirebaseAuth.instance.currentUser;
+  final firebaseUser = FirebaseAuth.instance.currentUser;
   firestoreInstance
       .collection("users")
       .doc(firebaseUser!.uid)
@@ -95,9 +106,21 @@ void saveToken(String token) {
   }, SetOptions(merge: true));
 }
 
+void saveRegType(String type) {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+  firestoreInstance
+      .collection("users")
+      .doc(firebaseUser!.uid)
+      .collection("infos")
+      .doc("information")
+      .set({
+    "type": type,
+  }, SetOptions(merge: true));
+}
+
 Future<Map<String, String>> getUserInfo() async {
-  var firebaseUser = FirebaseAuth.instance.currentUser;
-  var snapshot = await firestoreInstance
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+  final snapshot = await firestoreInstance
       .collection("users")
       .doc(firebaseUser!.uid)
       .collection("infos")
@@ -106,14 +129,65 @@ Future<Map<String, String>> getUserInfo() async {
 
   if (snapshot.exists) {
     return {
-      "address": snapshot.data()!["address"],
-      "phone": snapshot.data()!["phone"],
+      "address": snapshot.data()?["address"] ?? "",
+      "phone": snapshot.data()?["phone"] ?? "",
+      "type": snapshot.data()?["type"] ?? "email",
     };
   }
-  return {
-    "address": "",
-    "phone": "",
-  };
+  return {"address": "", "phone": "", "type": "email"};
+}
+
+void retrieveOrder(BuildContext context) async {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+
+  final snapshot = await firestoreInstance
+      .collection("users")
+      .doc(firebaseUser!.uid)
+      .collection("orders")
+      .doc("order")
+      .get();
+
+  List<DataItem> list = [];
+
+  if (snapshot.exists) {
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+
+    if (!context.mounted) return;
+
+    Provider.of<CartItemsProvider>(context, listen: false).deliveryMethod =
+        data["delivery-method"];
+    Provider.of<CartItemsProvider>(context, listen: false).updateState();
+    Provider.of<CartItemsProvider>(context, listen: false).ordered = true;
+
+    // Iterate through fields with "ordine" prefix
+    int orderIndex = 0;
+    while (data.containsKey('ordine$orderIndex')) {
+      final Map<String, dynamic> field = data['ordine$orderIndex'];
+      list.add(DataItem(
+          key: UniqueKey(),
+          image: information[field["name"]]![2],
+          name: field["name"],
+          ingredients: getIngredients(field["ingredients"]),
+          initialPrice: information[field["name"]]![0],
+          category: information[field["name"]]![1],
+          quantity: field["quantity"]));
+
+      orderIndex++;
+    }
+  }
+
+  if (!context.mounted) return;
+
+  Provider.of<CartItemsProvider>(context, listen: false).cartList = list;
+  Provider.of<CartItemsProvider>(context, listen: false).orderList = list;
+}
+
+List<Ingredients> getIngredients(String ingredients) {
+  List<String> ingr = ingredients.split(', ');
+  return ingr
+      .map((ingred) => Ingredients.values
+          .firstWhere((e) => e.toString() == 'Ingredients.$ingred'))
+      .toList();
 }
 
 void submitOrder(
@@ -121,8 +195,8 @@ void submitOrder(
   required String timeInterval,
   required CartItemsProvider order,
 }) {
-  var firebaseUser = FirebaseAuth.instance.currentUser;
-  Map<String, dynamic> jsonOrder = {};
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+  final Map<String, dynamic> jsonOrder = {};
   int index = 0;
 
   jsonOrder["accepted"] = "False";
@@ -134,8 +208,7 @@ void submitOrder(
     jsonOrder["ordine$index"] = {
       "name": item.name,
       "quantity": item.quantity,
-      "ingredients":
-          item.ingredients.map((ingr) => toStringIngredients(ingr)).join(', '),
+      "ingredients": item.ingredients.map((ingr) => ingr.name).join(', '),
     };
     index++;
   }

@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/helper.dart';
 import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
@@ -50,8 +51,20 @@ class MyApp extends StatelessWidget {
     selectedPage.addListener(() {
       _pageController.jumpToPage(selectedPage.value);
     });
+
     MenuPage menuPage = MenuPage(
         selectedCategory: Provider.of<PageProvider>(context).selectedCategory);
+
+    FirebaseAuth.instance.authStateChanges().listen((user) async {
+      if (FirebaseAuth.instance.currentUser != null) {
+        Provider.of<UserInfoProvider>(context, listen: false).getUser(context);
+        if (Provider.of<CartItemsProvider>(context, listen: false)
+            .cartList
+            .isEmpty) {
+          retrieveOrder(context);
+        }
+      }
+    });
 
     return MaterialApp(
       navigatorKey: navigatorKey,
