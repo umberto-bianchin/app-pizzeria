@@ -92,7 +92,7 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<UserInfoProvider>(context, listen: false).getUser(context);
+    //Provider.of<UserInfoProvider>(context, listen: false).getUser(context);
 
     return Column(
       children: [

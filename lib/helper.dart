@@ -61,6 +61,7 @@ void logOut(BuildContext ctx) {
 
   FirebaseAuth.instance.signOut();
   Provider.of<UserInfoProvider>(ctx, listen: false).logOut();
+  Provider.of<CartItemsProvider>(ctx, listen: false).clearCart();
 }
 
 ImageProvider getImage(BuildContext ctx) {
@@ -83,12 +84,7 @@ ImageProvider getImage(BuildContext ctx) {
 
 void saveUserInfos({required String address, required String phone}) {
   final firebaseUser = FirebaseAuth.instance.currentUser;
-  firestoreInstance
-      .collection("users")
-      .doc(firebaseUser!.uid)
-      .collection("infos")
-      .doc("information")
-      .set({
+  firestoreInstance.collection("users").doc(firebaseUser!.uid).set({
     "address": address,
     "phone": phone,
   }, SetOptions(merge: true));
@@ -96,36 +92,22 @@ void saveUserInfos({required String address, required String phone}) {
 
 void saveToken(String token) {
   final firebaseUser = FirebaseAuth.instance.currentUser;
-  firestoreInstance
-      .collection("users")
-      .doc(firebaseUser!.uid)
-      .collection("infos")
-      .doc("information")
-      .set({
+  firestoreInstance.collection("users").doc(firebaseUser!.uid).set({
     "token": token,
   }, SetOptions(merge: true));
 }
 
 void saveRegType(String type) {
   final firebaseUser = FirebaseAuth.instance.currentUser;
-  firestoreInstance
-      .collection("users")
-      .doc(firebaseUser!.uid)
-      .collection("infos")
-      .doc("information")
-      .set({
+  firestoreInstance.collection("users").doc(firebaseUser!.uid).set({
     "type": type,
   }, SetOptions(merge: true));
 }
 
 Future<Map<String, String>> getUserInfo() async {
   final firebaseUser = FirebaseAuth.instance.currentUser;
-  final snapshot = await firestoreInstance
-      .collection("users")
-      .doc(firebaseUser!.uid)
-      .collection("infos")
-      .doc("information")
-      .get();
+  final snapshot =
+      await firestoreInstance.collection("users").doc(firebaseUser!.uid).get();
 
   if (snapshot.exists) {
     return {
@@ -150,12 +132,16 @@ void retrieveOrder(BuildContext context) async {
   List<DataItem> list = [];
 
   if (snapshot.exists) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = snapshot.data()!;
 
     if (!context.mounted) return;
 
     Provider.of<CartItemsProvider>(context, listen: false).deliveryMethod =
         data["delivery-method"];
+    Provider.of<CartItemsProvider>(context, listen: false).orderPrice =
+        double.parse(data["total"]);
+    Provider.of<CartItemsProvider>(context, listen: false).time =
+        data["time-interval"];
     Provider.of<CartItemsProvider>(context, listen: false).updateState();
     Provider.of<CartItemsProvider>(context, listen: false).ordered = true;
 

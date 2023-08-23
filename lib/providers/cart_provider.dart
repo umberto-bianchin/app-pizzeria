@@ -25,6 +25,19 @@ class CartItemsProvider with ChangeNotifier {
     return elementCount;
   }
 
+  void clearCart() {
+    cartList = [];
+    orderList = [];
+    ordered = false;
+    modified = false;
+    confirmed = false;
+    orderPrice = 0;
+    time = "";
+    deliveryMethod = "";
+
+    notifyListeners();
+  }
+
   void addItem(DataItem item) {
     item.clearList();
     item.menuDefault = false;
