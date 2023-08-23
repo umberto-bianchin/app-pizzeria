@@ -1,4 +1,6 @@
+import 'package:app_pizzeria/helper.dart';
 import 'package:app_pizzeria/providers/cart_provider.dart';
+import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,13 +47,37 @@ class Order extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                    time == ""
-                        ? "\tRiceverai presto aggiornamenti sull'orario"
-                        : "\t$time",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(fontSize: 16)),
+                  confirmed
+                      ? time
+                      : "Riceverai presto aggiornamenti sull'orario",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 16),
+                ),
+                const SizedBox(height: 10),
+                if (!confirmed)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        deleteOrder(context);
+                        MySnackBar.showMySnackBar(context, "Ordine cancellato");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5,
+                        surfaceTintColor: Colors.white60,
+                      ),
+                      child: Text(
+                        "Cancella ordine",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontSize: 16,
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

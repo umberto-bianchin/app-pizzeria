@@ -215,7 +215,7 @@ class OrderDialogs {
             title: const Text("Ordine inviato!"),
             content: const Text(
               'Il tuo ordine è stato inviato, verrà presto confermato dalla pizzeria',
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 16),
             ),
             actions: <Widget>[
               CupertinoDialogAction(

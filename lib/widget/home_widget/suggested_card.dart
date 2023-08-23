@@ -51,30 +51,7 @@ class SuggestedCard extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return SimpleDialog(
-                    alignment: Alignment.center,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          item.name,
-                          textAlign: TextAlign.center,
-                        ),
-                        IconButton(
-                            icon: const Icon(Icons.close),
-                            color: const Color(0xFF1F91E7),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ],
-                    ),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25, right: 20),
-                        child: ItemCart(dataItem: item),
-                      ),
-                    ],
-                  );
+                  return ItemCart(dataItem: item);
                 });
           },
         ),

@@ -107,11 +107,13 @@ class CartItemsProvider with ChangeNotifier {
     orderPrice = getTotal();
     modified = false;
     ordered = cartList.isNotEmpty;
+    List<DataItem> tempList = [];
 
     for (DataItem item in cartList) {
-      orderList.add(item.copy());
+      tempList.add(item.copy());
     }
 
+    orderList = tempList;
     updateState();
     notifyListeners();
   }
@@ -129,7 +131,7 @@ class CartItemsProvider with ChangeNotifier {
       confirmed = querySnapshot.get("accepted") == "True" ? true : false;
       if (confirmed) {
         time = querySnapshot.get("time-interval");
-        cartList = orderList;
+        orderList = [];
       }
 
       notifyListeners();

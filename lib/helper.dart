@@ -208,3 +208,18 @@ void submitOrder(
 
   order.submitOrder();
 }
+
+Future<void> deleteOrder(BuildContext context) async {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+  await FirebaseFirestore.instance
+      .collection("users")
+      .doc(firebaseUser!.uid)
+      .collection("orders")
+      .doc("order")
+      .delete();
+
+  if(context.mounted){
+    Provider.of<CartItemsProvider>(context, listen: false).clearCart();
+  }
+    
+}
