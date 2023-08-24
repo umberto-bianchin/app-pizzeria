@@ -82,12 +82,12 @@ ImageProvider getImage(BuildContext ctx) {
   }
 }
 
-void saveUserInfos({required String address, required String phone}) {
+void saveUserInfos(
+    {required String address, required String phone, required String name}) {
   final firebaseUser = FirebaseAuth.instance.currentUser;
-  firestoreInstance.collection("users").doc(firebaseUser!.uid).set({
-    "address": address,
-    "phone": phone,
-  }, SetOptions(merge: true));
+  firestoreInstance.collection("users").doc(firebaseUser!.uid).set(
+      {"address": address, "phone": phone, "name": name},
+      SetOptions(merge: true));
 }
 
 void saveToken(String token) {
@@ -104,19 +104,40 @@ void saveRegType(String type) {
   }, SetOptions(merge: true));
 }
 
+void saveInfoEmpty(String info) {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+  firestoreInstance.collection("users").doc(firebaseUser!.uid).set({
+    info: "",
+  }, SetOptions(merge: true));
+}
+
 Future<Map<String, String>> getUserInfo() async {
   final firebaseUser = FirebaseAuth.instance.currentUser;
   final snapshot =
       await firestoreInstance.collection("users").doc(firebaseUser!.uid).get();
 
+  final information = ["address", "phone", "type", "name"];
+
   if (snapshot.exists) {
+    for (String info in information) {
+      if (snapshot.data()?[info] == null) {
+        saveInfoEmpty(info);
+      }
+    }
+
     return {
       "address": snapshot.data()?["address"] ?? "",
       "phone": snapshot.data()?["phone"] ?? "",
       "type": snapshot.data()?["type"] ?? "email",
+      "name": snapshot.data()?["name"] ?? "",
     };
   }
-  return {"address": "", "phone": "", "type": "email"};
+
+  for (String info in information) {
+    saveInfoEmpty(info);
+  }
+
+  return {"address": "", "phone": "", "type": "email", "name": ""};
 }
 
 void retrieveOrder(BuildContext context) async {
@@ -218,8 +239,7 @@ Future<void> deleteOrder(BuildContext context) async {
       .doc("order")
       .delete();
 
-  if(context.mounted){
+  if (context.mounted) {
     Provider.of<CartItemsProvider>(context, listen: false).clearCart();
   }
-    
 }

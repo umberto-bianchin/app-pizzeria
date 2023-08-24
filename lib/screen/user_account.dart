@@ -13,6 +13,8 @@ class UserAccountScreen extends StatefulWidget {
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
   String? _address = "";
+  TextEditingController? _usernameController;
+
   TextEditingController? _phoneController;
   final formKey = GlobalKey<FormState>();
 
@@ -34,6 +36,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     setState(() {
       final info = Provider.of<UserInfoProvider>(context, listen: false);
       _address = info.address;
+      _usernameController = TextEditingController(text: info.name);
       _phoneController = TextEditingController(text: info.number);
     });
   }
@@ -155,15 +158,37 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                   ),
                 ),
               ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: TextField(
+                  autocorrect: false,
+                  keyboardType: TextInputType.name,
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    hintText: "Inserisci il tuo nome",
+                    suffixIcon: const Icon(Icons.person_outlined),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               OutlinedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Provider.of<UserInfoProvider>(context, listen: false)
                         .submitInfos(
-                      address: _address!,
-                      number: _phoneController!.text,
-                    );
+                            address: _address!,
+                            number: _phoneController!.text,
+                            name: _usernameController!.text);
                     Navigator.pop(context);
                   }
                 },

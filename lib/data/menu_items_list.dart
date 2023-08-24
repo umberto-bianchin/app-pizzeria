@@ -11,7 +11,7 @@ var items = [
       key: UniqueKey(),
       image: information["Margherita"]![2],
       name: "Margherita",
-      ingredients: [Ingredients.pomodoro, Ingredients.mozzarella],
+      ingredients: information["Margherita"]![3],
       initialPrice: information["Margherita"]![0],
       category: information["Margherita"]![1],
     ),
@@ -25,11 +25,7 @@ var items = [
       key: UniqueKey(),
       image: information["Diavola"]![2],
       name: "Diavola",
-      ingredients: [
-        Ingredients.pomodoro,
-        Ingredients.mozzarella,
-        Ingredients.salamino_piccante
-      ],
+      ingredients: information["Diavola"]![3],
       initialPrice: information["Diavola"]![0],
       category: information["Diavola"]![1],
     ),
@@ -43,11 +39,7 @@ var items = [
       key: UniqueKey(),
       image: information["Vegetariana"]![2],
       name: "Vegetariana",
-      ingredients: [
-        Ingredients.pomodoro,
-        Ingredients.mozzarella,
-        Ingredients.verdure_al_forno
-      ],
+      ingredients: information["Vegetariana"]![3],
       initialPrice: information["Vegetariana"]![0],
       category: information["Vegetariana"]![1],
     ),
@@ -61,12 +53,7 @@ var items = [
       key: UniqueKey(),
       image: information["Prosciutto e Funghi"]![2],
       name: "Prosciutto e Funghi",
-      ingredients: [
-        Ingredients.pomodoro,
-        Ingredients.mozzarella,
-        Ingredients.cotto,
-        Ingredients.funghi
-      ],
+      ingredients: information["Prosciutto e Funghi"]![3],
       initialPrice: information["Prosciutto e Funghi"]![0],
       category: information["Prosciutto e Funghi"]![1],
     ),
@@ -80,17 +67,7 @@ var items = [
       key: UniqueKey(),
       image: information["Bea"]![2],
       name: "Bea",
-      ingredients: [
-        Ingredients.pomodoro,
-        Ingredients.mozzarella,
-        Ingredients.cotto,
-        Ingredients.salsiccia,
-        Ingredients.salamino,
-        Ingredients.piselli,
-        Ingredients.peperoni,
-        Ingredients.gorgonzola,
-        Ingredients.grana
-      ],
+      ingredients: information["Bea"]![3],
       initialPrice: information["Bea"]![0],
       category: information["Bea"]![1],
     ),
@@ -104,12 +81,7 @@ var items = [
       key: UniqueKey(),
       image: information["Tonno e Cipolla"]![2],
       name: "Tonno e Cipolla",
-      ingredients: [
-        Ingredients.pomodoro,
-        Ingredients.mozzarella,
-        Ingredients.tonno,
-        Ingredients.cipolla
-      ],
+      ingredients: information["Tonno e Cipolla"]![3],
       initialPrice: information["Tonno e Cipolla"]![0],
       category: information["Tonno e Cipolla"]![1],
     ),
@@ -123,11 +95,7 @@ var items = [
       key: UniqueKey(),
       image: information["Wurstel"]![2],
       name: "Wurstel",
-      ingredients: [
-        Ingredients.pomodoro,
-        Ingredients.mozzarella,
-        Ingredients.wustel
-      ],
+      ingredients: information["Wurstel"]![3],
       initialPrice: information["Wurstel"]![0],
       category: information["Wurstel"]![1],
     ),
@@ -141,13 +109,7 @@ var items = [
       key: UniqueKey(),
       image: information["A4"]![2],
       name: "A4",
-      ingredients: [
-        Ingredients.mozzarella,
-        Ingredients.salsiccia,
-        Ingredients.cipolla,
-        Ingredients.gorgonzola,
-        Ingredients.funghi
-      ],
+      ingredients: information["A4"]![3],
       initialPrice: information["A4"]![0],
       category: information["A4"]![1],
     ),
@@ -210,20 +172,86 @@ String toStringIngredients(Ingredients ingredient) {
 }
 
 Map<String, List<dynamic>> information = {
-  "Margherita": [6.99, Categories.pizza, "assets/images/classic.png"],
-  "Diavola": [7.99, Categories.pizza, "assets/images/americana.png"],
-  "Vegetariana": [4.99, Categories.pizza, "assets/images/veg.png"],
+  "Margherita": [
+    6.99,
+    Categories.pizza,
+    "assets/images/classic.png",
+    [Ingredients.pomodoro, Ingredients.mozzarella]
+  ],
+  "Diavola": [
+    7.99,
+    Categories.pizza,
+    "assets/images/americana.png",
+    [
+      Ingredients.pomodoro,
+      Ingredients.mozzarella,
+      Ingredients.salamino_piccante
+    ]
+  ],
+  "Vegetariana": [
+    4.99,
+    Categories.pizza,
+    "assets/images/veg.png",
+    [Ingredients.pomodoro, Ingredients.mozzarella, Ingredients.verdure_al_forno]
+  ],
   "Prosciutto e Funghi": [
     6.99,
     Categories.pizza,
-    "assets/images/mexicanPizza.png"
+    "assets/images/mexicanPizza.png",
+    [
+      Ingredients.pomodoro,
+      Ingredients.mozzarella,
+      Ingredients.cotto,
+      Ingredients.funghi
+    ]
   ],
-  "Bea": [9.0, Categories.pizza, "assets/images/mexicanPizza.png"],
-  "Tonno e Cipolla": [6.99, Categories.pizza, "assets/images/mexicanPizza.png"],
-  "Wurstel": [14.0, Categories.kebab, "assets/images/pizza.png"],
-  "A4": [6.5, Categories.panini, "assets/images/burger.png"],
-  "Coca Cola": [2.0, Categories.bibite, "assets/images/drink.png"],
-  "Acqua": [1.0, Categories.bibite, "assets/images/drink.png"],
+  "Bea": [
+    9.0,
+    Categories.pizza,
+    "assets/images/mexicanPizza.png",
+    [
+      Ingredients.pomodoro,
+      Ingredients.mozzarella,
+      Ingredients.cotto,
+      Ingredients.salsiccia,
+      Ingredients.salamino,
+      Ingredients.piselli,
+      Ingredients.peperoni,
+      Ingredients.gorgonzola,
+      Ingredients.grana
+    ]
+  ],
+  "Tonno e Cipolla": [
+    6.99,
+    Categories.pizza,
+    "assets/images/mexicanPizza.png",
+    [
+      Ingredients.pomodoro,
+      Ingredients.mozzarella,
+      Ingredients.tonno,
+      Ingredients.cipolla
+    ]
+  ],
+  "Wurstel": [
+    14.0,
+    Categories.kebab,
+    "assets/images/pizza.png",
+    [Ingredients.pomodoro, Ingredients.mozzarella, Ingredients.wustel]
+  ],
+  "A4": [
+    6.5,
+    Categories.panini,
+    "assets/images/burger.png",
+    [
+      Ingredients.mozzarella,
+      Ingredients.salsiccia,
+      Ingredients.cipolla,
+      Ingredients.gorgonzola,
+      Ingredients.funghi
+    ]
+  ],
+  "Coca Cola": [2.0, Categories.bibite, "assets/images/drink.png", []],
+  "Acqua": [1.0, Categories.bibite, "assets/images/drink.png", []],
 };
 
 Map<Ingredients, double> costIngredients = {

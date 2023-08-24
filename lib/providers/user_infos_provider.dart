@@ -7,13 +7,16 @@ class UserInfoProvider with ChangeNotifier {
   String number = "";
   String address = "";
   String token = "";
+  String name = "";
   bool isLoggedin = FirebaseAuth.instance.currentUser != null;
 
-  void submitInfos({required String number, required String address}) {
-    if (number != this.number || address != this.address) {
+  void submitInfos(
+      {required String number, required String address, required String name}) {
+    if (number != this.number || address != this.address || name != this.name) {
       this.number = number;
       this.address = address;
-      saveUserInfos(address: address, phone: number);
+      this.name = name;
+      saveUserInfos(address: address, phone: number, name: name);
     }
   }
 
@@ -22,6 +25,7 @@ class UserInfoProvider with ChangeNotifier {
     number = information["phone"] ?? "";
     address = information["address"] ?? "";
     token = information["token"] ?? "";
+    name = information["name"] ?? "";
 
     if (ctx.mounted) {
       setLogInType(information["type"] ?? "email", ctx);
