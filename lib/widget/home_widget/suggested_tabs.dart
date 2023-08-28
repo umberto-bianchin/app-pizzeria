@@ -23,11 +23,10 @@ class SuggestedTabs extends StatelessWidget {
           SuggestedCard(
             DataItem(
               key: UniqueKey(),
-              image: "assets/images/classic.png",
+              image: const NetworkImage(
+                  "https://i.postimg.cc/kB9D3nv1/americana.png"),
               name: "Margherita",
-              ingredients: [
-                
-              ],
+              ingredients: [],
               initialPrice: 6.5,
               category: Categories.panini,
             ),
@@ -35,11 +34,10 @@ class SuggestedTabs extends StatelessWidget {
           SuggestedCard(
             DataItem(
               key: UniqueKey(),
-              image: "assets/images/burger.png",
+              image: const NetworkImage(
+                  "https://i.postimg.cc/kB9D3nv1/americana.png"),
               name: "A4",
-              ingredients: [
-                
-              ],
+              ingredients: [],
               initialPrice: 6.5,
               category: Categories.panini,
             ),
@@ -47,11 +45,10 @@ class SuggestedTabs extends StatelessWidget {
           SuggestedCard(
             DataItem(
               key: UniqueKey(),
-              image: "assets/images/burger.png",
+              image: const NetworkImage(
+                  "https://i.postimg.cc/kB9D3nv1/americana.png"),
               name: "A4",
-              ingredients: [
-                
-              ],
+              ingredients: [],
               initialPrice: 6.5,
               category: Categories.panini,
             ),

@@ -150,10 +150,10 @@ class MenuItem extends StatelessWidget {
                 ],
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 0.0,
               child: Image(
-                image: AssetImage("assets/images/classic.png"),
+                image: dataItem.image,
                 height: 100.0,
                 width: 100.0,
               ),

@@ -265,7 +265,7 @@ Future<List<DataItem>> getMenu() async {
             ingredients: menuData[element]["ingredients"].split(", "),
             initialPrice: menuData[element]["price"],
             category: category,
-            image: "assets/images/$element.png"),
+            image: NetworkImage(menuData[element]["imageUrl"])),
       );
     }
   }

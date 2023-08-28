@@ -20,7 +20,7 @@ class DataItem {
     isSelected.addAll(List.filled(ingredients.length, true));
   }
 
-  final String image;
+  final NetworkImage image;
   final String name;
   List<String> ingredients;
   final double initialPrice;

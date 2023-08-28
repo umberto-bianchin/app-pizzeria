@@ -22,7 +22,7 @@ class SuggestedCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image(
-                  image: AssetImage(item.image),
+                  image: item.image,
                   height: 80.0,
                 ),
                 const SizedBox(
