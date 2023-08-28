@@ -13,7 +13,6 @@ class FacebookSignInProvider extends ChangeNotifier {
 
   void setIsLogged(bool logged) {
     _isLogged = logged;
-    //TODO guarda se reload app l'immagine
   }
 
   Future facebookLogout() async {

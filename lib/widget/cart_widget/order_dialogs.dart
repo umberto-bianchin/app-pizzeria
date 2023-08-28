@@ -118,17 +118,17 @@ class OrderDialogs {
     final info = Provider.of<UserInfoProvider>(context, listen: false);
 
     if (deliveryMethod == "Asporto") {
-      if (info.number == "") {
+      if (info.number == "" || info.name == "") {
         MySnackBar.showMySnackBar(
-            context, "Devi impostare il numero di telefono");
+            context, "Devi impostare il nome e numero di telefono");
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const UserAccountScreen()));
         return;
       }
     } else {
-      if (info.number == "" || info.address == "") {
-        MySnackBar.showMySnackBar(
-            context, "Devi impostare il numero di telefono e l'indirizzo");
+      if (info.number == "" || info.address == "" || info.name == "") {
+        MySnackBar.showMySnackBar(context,
+            "Devi impostare il nome, il numero di telefono e l'indirizzo");
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const UserAccountScreen()));
         return;

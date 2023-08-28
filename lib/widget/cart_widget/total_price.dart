@@ -11,7 +11,7 @@ class TotalPrice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool ordered = Provider.of<CartItemsProvider>(context).ordered;
+    final cart = Provider.of<CartItemsProvider>(context);
 
     return Container(
       height: 50,
@@ -25,50 +25,55 @@ class TotalPrice extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            ordered
-                ? 'Differenza: €${Provider.of<CartItemsProvider>(context).difference().toStringAsFixed(2)}'
-                : 'Totale:  €${context.watch<CartItemsProvider>().getTotal().toStringAsFixed(2)}',
+            cart.ordered
+                ? (cart.confirmed
+                    ? 'Totale da pagare €${cart.orderTotalPrice}'
+                    : 'Differenza: €${cart.difference(context).toStringAsFixed(2)}')
+                : 'Totale:  €${cart.getTotal(context).toStringAsFixed(2)}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 17,
               fontWeight: FontWeight.bold,
             ),
           ),
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0)),
-              side: const BorderSide(
-                color: Colors.white,
-                width: 1.0,
-                style: BorderStyle.solid,
+          if (!cart.confirmed &&
+              ((cart.cartList.isNotEmpty && !cart.ordered) || cart.modified))
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0)),
+                side: const BorderSide(
+                  color: Colors.white,
+                  width: 1.0,
+                  style: BorderStyle.solid,
+                ),
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.black,
+                shadowColor: Colors.transparent,
               ),
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.black,
-              shadowColor: Colors.transparent,
-            ),
-            onPressed: () async {
-              if (!Provider.of<UserInfoProvider>(context, listen: false)
-                  .isLoggedin) {
-                MySnackBar.showMySnackBar(
-                    context, "Devi essere registrato per ordinare");
-                Provider.of<PageProvider>(context, listen: false).changePage(3);
-                return;
-              }
+              onPressed: () async {
+                if (!Provider.of<UserInfoProvider>(context, listen: false)
+                    .isLoggedin) {
+                  MySnackBar.showMySnackBar(
+                      context, "Devi essere registrato per ordinare");
+                  Provider.of<PageProvider>(context, listen: false)
+                      .changePage(3);
+                  return;
+                }
 
-              OrderDialogs(
-                context: context,
-              ).initializeCheckOut();
-            },
-            child: Text(
-              ordered ? 'Modifica' : 'Ordina',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+                OrderDialogs(
+                  context: context,
+                ).initializeCheckOut();
+              },
+              child: Text(
+                cart.ordered ? 'Modifica' : 'Ordina',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

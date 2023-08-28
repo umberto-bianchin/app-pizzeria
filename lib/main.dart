@@ -2,6 +2,7 @@ import 'package:app_pizzeria/helper.dart';
 import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/providers/page_provider.dart';
 import 'package:app_pizzeria/providers/user_infos_provider.dart';
 import 'package:app_pizzeria/screen/cart.dart';
@@ -33,6 +34,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
       ChangeNotifierProvider(create: (_) => FacebookSignInProvider()),
       ChangeNotifierProvider(create: (_) => PageProvider()),
+      ChangeNotifierProvider(create: (_) => MenuProvider()),
     ],
     child: MyApp(),
   ));
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<MenuProvider>(context, listen: false).updateMenu();
     selectedPage.value = Provider.of<PageProvider>(context).selectedPage;
 
     selectedPage.addListener(() {

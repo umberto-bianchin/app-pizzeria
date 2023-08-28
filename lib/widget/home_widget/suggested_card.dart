@@ -36,7 +36,7 @@ class SuggestedCard extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "€${item.calculatePrice().toStringAsFixed(2)}",
+                      "€${item.calculatePrice(context).toStringAsFixed(2)}",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.red,

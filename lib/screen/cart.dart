@@ -92,12 +92,10 @@ class CartScreen extends StatelessWidget {
                   }),
             ),
           ),
-          if (!cart.confirmed &&
-              ((cart.cartList.isNotEmpty && !cart.ordered) || cart.modified))
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: TotalPrice(),
-            )
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: TotalPrice(),
+          )
         ],
       ),
     );

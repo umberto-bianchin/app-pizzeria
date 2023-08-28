@@ -11,7 +11,11 @@ class CartItemsProvider with ChangeNotifier {
   bool ordered = false;
   bool modified = false;
   bool confirmed = false;
+  // without delivery / correction by the restourant
   double orderPrice = 0;
+  // final price
+  double orderTotalPrice = 0;
+
   String time = "";
   String deliveryMethod = "";
 
@@ -90,21 +94,21 @@ class CartItemsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  double getTotal() {
+  double getTotal(BuildContext context) {
     double amount = 0.0;
 
     for (DataItem item in cartList) {
-      amount += item.calculatePrice();
+      amount += item.calculatePrice(context);
     }
     return amount;
   }
 
-  double difference() {
-    return getTotal() - orderPrice;
+  double difference(BuildContext context) {
+    return getTotal(context) - orderPrice;
   }
 
-  void submitOrder() {
-    orderPrice = getTotal();
+  void submitOrder(BuildContext context) {
+    orderPrice = getTotal(context);
     modified = false;
     ordered = cartList.isNotEmpty;
     List<DataItem> tempList = [];
@@ -114,11 +118,11 @@ class CartItemsProvider with ChangeNotifier {
     }
 
     orderList = tempList;
-    updateState();
+    updateOrder();
     notifyListeners();
   }
 
-  void updateState() {
+  void updateOrder() {
     var firebaseUser = FirebaseAuth.instance.currentUser;
 
     DocumentReference reference = FirebaseFirestore.instance
@@ -129,12 +133,15 @@ class CartItemsProvider with ChangeNotifier {
 
     reference.snapshots().listen((querySnapshot) {
       confirmed = querySnapshot.get("accepted") == "True" ? true : false;
+
       if (confirmed) {
         time = querySnapshot.get("time-interval");
+        orderTotalPrice = querySnapshot.get("total");
         orderList = [];
       }
 
       notifyListeners();
     });
   }
+
 }

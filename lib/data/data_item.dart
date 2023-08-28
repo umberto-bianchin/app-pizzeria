@@ -1,7 +1,8 @@
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widget/menu_widget/categories_buttons_tab.dart';
-import 'menu_items_list.dart';
 
 
 class DataItem {
@@ -21,7 +22,7 @@ class DataItem {
 
   final String image;
   final String name;
-  List<Ingredients> ingredients;
+  List<String> ingredients;
   final double initialPrice;
   final Categories category;
   List<bool> addedIngredients = [];
@@ -30,18 +31,18 @@ class DataItem {
   int quantity;
   bool menuDefault;
 
-  void addIngredients(Ingredients ingredient) {
+  void addIngredients(String ingredient) {
     ingredients.add(ingredient);
     addedIngredients.add(true);
     isSelected.add(true);
   }
 
-  double calculatePrice() {
+  double calculatePrice(BuildContext context) {
     double price = initialPrice;
-    for (Ingredients ingredient in ingredients) {
+    for (String ingredient in ingredients) {
       if (addedIngredients[ingredients.indexOf(ingredient)] &&
           isSelected[ingredients.indexOf(ingredient)]) {
-        price = price + costIngredients[ingredient]!;
+        price = price + Provider.of<MenuProvider>(context, listen: false).ingredients[ingredient]!;
       }
     }
     return price * quantity;
@@ -62,7 +63,7 @@ class DataItem {
 
   void clearList() {
     final indexes = [];
-    for (Ingredients ingredient in ingredients) {
+    for (String ingredient in ingredients) {
       if (!isSelected[ingredients.indexOf(ingredient)]) {
         indexes.add(ingredients.indexOf(ingredient));
       }

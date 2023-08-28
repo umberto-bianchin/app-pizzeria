@@ -1,7 +1,9 @@
+import 'package:app_pizzeria/providers/menu_provider.dart';
+import 'package:app_pizzeria/widget/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
-import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/menu_widget/search_result.dart';
+import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key, required this.selectedCategory});
@@ -87,14 +89,22 @@ class _MenuPageState extends State<MenuPage> {
               Positioned.fill(
                 top: 0,
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(10.0, 25.0, 20.0, 0.0),
-                  child: ListView(
-                    children: items
-                        .where((element) =>
-                            element.dataItem.category == currentCategory)
-                        .toList(),
-                  ),
-                ),
+                    padding: const EdgeInsets.fromLTRB(10.0, 25.0, 20.0, 0.0),
+                    child: ListView(
+                        children: Provider.of<MenuProvider>(context)
+                            .menu
+                            .where((element) =>
+                                element.category == currentCategory)
+                            .map(
+                              (e) => MenuItem(
+                                dataItem: e,
+                                icon: Icon(
+                                  Icons.add_shopping_cart,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            )
+                            .toList())),
               ),
               CategoriesButton(currentCategory, changeCategory),
             ],

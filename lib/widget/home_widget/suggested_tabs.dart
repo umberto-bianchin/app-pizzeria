@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/home_widget/suggested_card.dart';
 
 import '../../data/data_item.dart';
-import '../../data/menu_items_list.dart';
 
 class SuggestedTabs extends StatelessWidget {
   const SuggestedTabs({
@@ -27,8 +26,7 @@ class SuggestedTabs extends StatelessWidget {
               image: "assets/images/classic.png",
               name: "Margherita",
               ingredients: [
-                Ingredients.mozzarella,
-                Ingredients.pomodoro,
+                
               ],
               initialPrice: 6.5,
               category: Categories.panini,
@@ -40,11 +38,7 @@ class SuggestedTabs extends StatelessWidget {
               image: "assets/images/burger.png",
               name: "A4",
               ingredients: [
-                Ingredients.mozzarella,
-                Ingredients.salsiccia,
-                Ingredients.cipolla,
-                Ingredients.gorgonzola,
-                Ingredients.funghi
+                
               ],
               initialPrice: 6.5,
               category: Categories.panini,
@@ -56,11 +50,7 @@ class SuggestedTabs extends StatelessWidget {
               image: "assets/images/burger.png",
               name: "A4",
               ingredients: [
-                Ingredients.mozzarella,
-                Ingredients.salsiccia,
-                Ingredients.cipolla,
-                Ingredients.gorgonzola,
-                Ingredients.funghi
+                
               ],
               initialPrice: 6.5,
               category: Categories.panini,

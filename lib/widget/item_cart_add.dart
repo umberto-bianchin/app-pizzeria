@@ -1,4 +1,4 @@
-import 'package:app_pizzeria/data/menu_items_list.dart';
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:app_pizzeria/widget/user_widget/my_snackbar.dart';
 import 'package:app_pizzeria/widget/quantity_selector.dart';
@@ -38,7 +38,7 @@ class _ItemCartState extends State<ItemCart> {
     });
   }
 
-  void addIngredients(Ingredients ingredient) {
+  void addIngredients(String ingredient) {
     setState(() {
       customItem!.addIngredients(ingredient);
     });
@@ -127,8 +127,8 @@ class _ItemCartState extends State<ItemCart> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image(
-                      image: AssetImage(customItem!.image),
+                    const Image(
+                      image: AssetImage("assets/images/classic.png"),
                       height: 80.0,
                     ),
                     NumericStepButton(
@@ -142,6 +142,7 @@ class _ItemCartState extends State<ItemCart> {
                 if (customItem!.category != Categories.bibite)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text(
                         "Ingredienti:",
@@ -149,7 +150,7 @@ class _ItemCartState extends State<ItemCart> {
                             fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width / 2.5,
+                        height: MediaQuery.of(context).size.height / 5,
                         width: MediaQuery.of(context).size.width / 1.2,
                         child: Container(
                           padding: const EdgeInsets.all(16),
@@ -171,8 +172,7 @@ class _ItemCartState extends State<ItemCart> {
                                       children: [
                                         Text(
                                           capitalize(
-                                            toStringIngredients(
-                                                customItem!.ingredients[i]),
+                                            customItem!.ingredients[i],
                                           ),
                                           style: Theme.of(context)
                                               .textTheme
@@ -207,7 +207,7 @@ class _ItemCartState extends State<ItemCart> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     Text(
-                      "€${(customItem!.calculatePrice()).toStringAsFixed(2)}",
+                      "€${(customItem!.calculatePrice(context)).toStringAsFixed(2)}",
                       style: const TextStyle(fontSize: 15, color: Colors.red),
                     ),
                   ],
@@ -228,13 +228,14 @@ class _ItemCartState extends State<ItemCart> {
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.only(right: 10),
                           children: [
-                            for (Ingredients ingredient in Ingredients.values)
+                            for (String ingredient
+                                in Provider.of<MenuProvider>(context)
+                                    .ingredients
+                                    .keys)
                               if (!customItem!.ingredients
                                       .contains(ingredient) &&
-                                  toStringIngredients(ingredient)
-                                      .contains(searchedValue))
-                                ingredientButton(ingredient,
-                                    Ingredients.values.indexOf(ingredient)),
+                                  ingredient.contains(searchedValue))
+                                ingredientButton(ingredient),
                           ],
                         ),
                       ),
@@ -307,7 +308,7 @@ class _ItemCartState extends State<ItemCart> {
         ]);
   }
 
-  Widget ingredientButton(Ingredients ingredient, int index) {
+  Widget ingredientButton(String ingredient) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: OutlinedButton(
@@ -322,12 +323,12 @@ class _ItemCartState extends State<ItemCart> {
         child: Row(
           children: [
             Text(
-              capitalize(toStringIngredients(ingredient)),
+              capitalize(ingredient),
               style: TextStyle(color: Colors.grey[800]),
             ),
             const SizedBox(width: 8),
             Text(
-              "+€${costIngredients[ingredient]}",
+              "+€${Provider.of<MenuProvider>(context).ingredients[ingredient]}",
               style: TextStyle(color: Colors.grey[600], fontSize: 10),
             ),
           ],

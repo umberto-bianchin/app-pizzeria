@@ -1,14 +1,15 @@
 import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
 import 'package:app_pizzeria/providers/google_sign_in.dart';
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/providers/user_infos_provider.dart';
+import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import 'data/data_item.dart';
-import 'data/menu_items_list.dart';
 
 enum LoginType { google, facebook, apple, email }
 
@@ -160,23 +161,31 @@ void retrieveOrder(BuildContext context) async {
     Provider.of<CartItemsProvider>(context, listen: false).deliveryMethod =
         data["delivery-method"];
     Provider.of<CartItemsProvider>(context, listen: false).orderPrice =
-        double.parse(data["total"]);
+        data["total"].toDouble();
+    Provider.of<CartItemsProvider>(context, listen: false).orderTotalPrice =
+        data["price"].toDouble();
+
     Provider.of<CartItemsProvider>(context, listen: false).time =
         data["time-interval"];
-    Provider.of<CartItemsProvider>(context, listen: false).updateState();
+    Provider.of<CartItemsProvider>(context, listen: false).updateOrder();
     Provider.of<CartItemsProvider>(context, listen: false).ordered = true;
 
     // Iterate through fields with "ordine" prefix
     int orderIndex = 0;
     while (data.containsKey('ordine$orderIndex')) {
       final Map<String, dynamic> field = data['ordine$orderIndex'];
+
+      DataItem baseItem = Provider.of<MenuProvider>(context, listen: false)
+          .menu
+          .firstWhere((element) => element.name == field["name"]);
+
       list.add(DataItem(
           key: UniqueKey(),
-          image: information[field["name"]]![2],
-          name: field["name"],
-          ingredients: getIngredients(field["ingredients"]),
-          initialPrice: information[field["name"]]![0],
-          category: information[field["name"]]![1],
+          image: baseItem.image,
+          name: baseItem.name,
+          ingredients: field["ingredients"].split(", "),
+          initialPrice: baseItem.initialPrice,
+          category: baseItem.category,
           quantity: field["quantity"]));
 
       orderIndex++;
@@ -187,14 +196,6 @@ void retrieveOrder(BuildContext context) async {
 
   Provider.of<CartItemsProvider>(context, listen: false).cartList = list;
   Provider.of<CartItemsProvider>(context, listen: false).orderList = list;
-}
-
-List<Ingredients> getIngredients(String ingredients) {
-  List<String> ingr = ingredients.split(', ');
-  return ingr
-      .map((ingred) => Ingredients.values
-          .firstWhere((e) => e.toString() == 'Ingredients.$ingred'))
-      .toList();
 }
 
 void submitOrder(
@@ -208,14 +209,14 @@ void submitOrder(
 
   jsonOrder["accepted"] = "False";
   jsonOrder["time-interval"] = timeInterval;
-  jsonOrder["total"] = order.getTotal().toStringAsFixed(2);
+  jsonOrder["total"] = order.getTotal(ctx);
   jsonOrder["delivery-method"] = order.deliveryMethod;
 
   for (DataItem item in order.cartList) {
     jsonOrder["ordine$index"] = {
       "name": item.name,
       "quantity": item.quantity,
-      "ingredients": item.ingredients.map((ingr) => ingr.name).join(', '),
+      "ingredients": item.ingredients.map((ingr) => ingr).join(', '),
     };
     index++;
   }
@@ -227,7 +228,7 @@ void submitOrder(
       .doc("order")
       .set(jsonOrder);
 
-  order.submitOrder();
+  order.submitOrder(ctx);
 }
 
 Future<void> deleteOrder(BuildContext context) async {
@@ -242,4 +243,50 @@ Future<void> deleteOrder(BuildContext context) async {
   if (context.mounted) {
     Provider.of<CartItemsProvider>(context, listen: false).clearCart();
   }
+}
+
+Future<List<DataItem>> getMenu() async {
+  final List<DataItem> menu = [];
+
+  final snapshot =
+      await FirebaseFirestore.instance.collection('menu').doc("elements").get();
+
+  final menuData = snapshot.data();
+
+  if (menuData != null) {
+    for (String element in menuData.keys) {
+      Categories category = Categories.values
+          .firstWhere((value) => value.name == menuData[element]["category"]);
+
+      menu.add(
+        DataItem(
+            key: UniqueKey(),
+            name: element,
+            ingredients: menuData[element]["ingredients"].split(", "),
+            initialPrice: menuData[element]["price"],
+            category: category,
+            image: "assets/images/$element.png"),
+      );
+    }
+  }
+
+  return menu;
+}
+
+Future<Map<String, double>> getSavedIngredients() async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection('menu')
+      .doc("ingredients")
+      .get();
+
+  Map<String, double> ingredientsMap = {};
+  if (snapshot.data() != null) {
+    snapshot.data()!.forEach((key, value) {
+      if (value is num) {
+        ingredientsMap[key] = value.toDouble();
+      }
+    });
+  }
+
+  return ingredientsMap;
 }

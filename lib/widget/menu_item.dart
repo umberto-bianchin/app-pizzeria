@@ -1,4 +1,3 @@
-import 'package:app_pizzeria/data/menu_items_list.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/item_cart_add.dart';
@@ -60,13 +59,12 @@ class MenuItem extends StatelessWidget {
                                               dataItem.isSelected[dataItem
                                                   .ingredients
                                                   .indexOf(ingredient)])
-                                          .map((ingr) =>
-                                              toStringIngredients(ingr))
+                                          .map((ingr) => ingr)
                                           .join(', '),
                                     ),
                                     TextSpan(
                                       text:
-                                          ", ${dataItem.ingredients.where((ingredient) => dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => toStringIngredients(ingr)).join(', ')}",
+                                          ", ${dataItem.ingredients.where((ingredient) => dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => ingr).join(', ')}",
                                       style: const TextStyle(
                                         color: Color(0xFF1F91E7),
                                       ),
@@ -107,8 +105,7 @@ class MenuItem extends StatelessWidget {
                                           left: 25, right: 20, bottom: 20),
                                       child: Text(
                                         dataItem.ingredients
-                                            .map((ingr) =>
-                                                toStringIngredients(ingr))
+                                            .map((ingr) => ingr)
                                             .join(', '),
                                         style: Theme.of(context)
                                             .textTheme
@@ -126,7 +123,7 @@ class MenuItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "€${dataItem.calculatePrice().toStringAsFixed(2)}",
+                        "€${dataItem.calculatePrice(context).toStringAsFixed(2)}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -153,10 +150,10 @@ class MenuItem extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 0.0,
               child: Image(
-                image: AssetImage(dataItem.image),
+                image: AssetImage("assets/images/classic.png"),
                 height: 100.0,
                 width: 100.0,
               ),

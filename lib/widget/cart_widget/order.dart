@@ -26,7 +26,9 @@ class Order extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Puoi modifcare l'ordine fino a che non viene accettato.",
+                  confirmed
+                      ? "Il tuo ordine è stato accettato, se vuoi modificarlo contatta la pizzeria"
+                      : "Puoi modificare l'ordine fino a che non viene accettato.",
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
