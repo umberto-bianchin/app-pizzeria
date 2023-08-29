@@ -1,4 +1,3 @@
-
 import 'package:app_pizzeria/widget/home_widget/suggested_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/home_widget/categories_cards_tab.dart';
@@ -39,7 +38,7 @@ class Home extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text(
-              "Suggeriti",
+              "Pizze consigliate",
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),

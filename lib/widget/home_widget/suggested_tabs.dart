@@ -1,8 +1,7 @@
-import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/home_widget/suggested_card.dart';
-
-import '../../data/data_item.dart';
+import 'package:provider/provider.dart';
 
 class SuggestedTabs extends StatelessWidget {
   const SuggestedTabs({
@@ -12,49 +11,32 @@ class SuggestedTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final suggested = Provider.of<MenuProvider>(context)
+        .menu
+        .where((element) => element.important)
+        .toList();
 
-    return SizedBox(
-      height: 140.0,
-      width: width,
-      child: ListView(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        scrollDirection: Axis.horizontal,
-        children: [
-          SuggestedCard(
-            DataItem(
-              key: UniqueKey(),
-              image: const NetworkImage(
-                  "https://i.postimg.cc/kB9D3nv1/americana.png"),
-              name: "Margherita",
-              ingredients: [],
-              initialPrice: 6.5,
-              category: Categories.panini,
-            ),
-          ),
-          SuggestedCard(
-            DataItem(
-              key: UniqueKey(),
-              image: const NetworkImage(
-                  "https://i.postimg.cc/kB9D3nv1/americana.png"),
-              name: "A4",
-              ingredients: [],
-              initialPrice: 6.5,
-              category: Categories.panini,
-            ),
-          ),
-          SuggestedCard(
-            DataItem(
-              key: UniqueKey(),
-              image: const NetworkImage(
-                  "https://i.postimg.cc/kB9D3nv1/americana.png"),
-              name: "A4",
-              ingredients: [],
-              initialPrice: 6.5,
-              category: Categories.panini,
-            ),
-          ),
-        ],
-      ),
-    );
+    if (suggested.isNotEmpty) {
+      return SizedBox(
+        height: 140.0,
+        width: width,
+        child: ListView.builder(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          scrollDirection: Axis.horizontal,
+          itemCount: suggested.length,
+          itemBuilder: (context, index) {
+            return SuggestedCard(suggested[index]);
+          },
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Text(
+          "Non ci sono pizze suggerite oggi!",
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      );
+    }
   }
 }

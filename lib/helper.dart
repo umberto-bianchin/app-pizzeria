@@ -164,6 +164,8 @@ void retrieveOrder(BuildContext context) async {
         data["total"].toDouble();
     Provider.of<CartItemsProvider>(context, listen: false).orderTotalPrice =
         data["price"].toDouble();
+    Provider.of<CartItemsProvider>(context, listen: false).deliveryPrice =
+        data["delivery-price"].toDouble();
 
     Provider.of<CartItemsProvider>(context, listen: false).time =
         data["time-interval"];
@@ -232,6 +234,9 @@ void submitOrder(
 }
 
 Future<void> deleteOrder(BuildContext context) async {
+
+  Provider.of<CartItemsProvider>(context, listen: false).clearCart();
+
   final firebaseUser = FirebaseAuth.instance.currentUser;
   await FirebaseFirestore.instance
       .collection("users")
@@ -240,9 +245,6 @@ Future<void> deleteOrder(BuildContext context) async {
       .doc("order")
       .delete();
 
-  if (context.mounted) {
-    Provider.of<CartItemsProvider>(context, listen: false).clearCart();
-  }
 }
 
 Future<List<DataItem>> getMenu() async {
@@ -265,7 +267,8 @@ Future<List<DataItem>> getMenu() async {
             ingredients: menuData[element]["ingredients"].split(", "),
             initialPrice: menuData[element]["price"],
             category: category,
-            image: NetworkImage(menuData[element]["imageUrl"])),
+            image: NetworkImage(menuData[element]["imageUrl"]),
+            important: menuData[element]["important"]),
       );
     }
   }

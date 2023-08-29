@@ -11,6 +11,7 @@ class Order extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool confirmed = Provider.of<CartItemsProvider>(context).confirmed;
     final String time = Provider.of<CartItemsProvider>(context).time;
+    final deliveryPrice = Provider.of<CartItemsProvider>(context).deliveryPrice;
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -57,6 +58,18 @@ class Order extends StatelessWidget {
                       .bodyLarge!
                       .copyWith(fontSize: 16),
                 ),
+                const SizedBox(height: 10),
+                Text(
+                  'Costo consegna: ',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                Text(
+                    confirmed
+                        ? '€ $deliveryPrice'
+                        : 'Riceverai presto aggiornamenti',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 16,
+                        )),
                 const SizedBox(height: 10),
                 if (!confirmed)
                   Align(

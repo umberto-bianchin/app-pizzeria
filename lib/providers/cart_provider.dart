@@ -15,9 +15,11 @@ class CartItemsProvider with ChangeNotifier {
   double orderPrice = 0;
   // final price
   double orderTotalPrice = 0;
+  double deliveryPrice = 0;
 
   String time = "";
   String deliveryMethod = "";
+  bool rejected = false;
 
   List<DataItem> get cart => cartList;
   int get element {
@@ -39,6 +41,11 @@ class CartItemsProvider with ChangeNotifier {
     time = "";
     deliveryMethod = "";
 
+    notifyListeners();
+  }
+
+  void clearRejection() {
+    rejected = false;
     notifyListeners();
   }
 
@@ -132,16 +139,22 @@ class CartItemsProvider with ChangeNotifier {
         .doc("order");
 
     reference.snapshots().listen((querySnapshot) {
-      confirmed = querySnapshot.get("accepted") == "True" ? true : false;
+      if (querySnapshot.data() == null) {
+        if (cartList.isNotEmpty) {
+          rejected = true;
+          clearCart();
+        }
+      } else {
+        confirmed = querySnapshot.get("accepted") == "True" ? true : false;
 
-      if (confirmed) {
-        time = querySnapshot.get("time-interval");
-        orderTotalPrice = querySnapshot.get("total");
-        orderList = [];
+        if (confirmed) {
+          time = querySnapshot.get("time-interval");
+          orderTotalPrice = querySnapshot.get("total");
+          orderList = [];
+        }
       }
 
       notifyListeners();
     });
   }
-
 }

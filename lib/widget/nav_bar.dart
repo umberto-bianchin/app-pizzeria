@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class NavBar extends StatelessWidget {
     final bool ordered = Provider.of<CartItemsProvider>(context).ordered;
     final int cartItemCount = Provider.of<CartItemsProvider>(context).element;
     final int selectedIndex = Provider.of<PageProvider>(context).selectedPage;
+    Provider.of<MenuProvider>(context);
 
     final List<Pair> pairList = [
       Pair(Icons.home, "Home"),

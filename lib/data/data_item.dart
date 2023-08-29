@@ -15,7 +15,8 @@ class DataItem {
     required this.category,
     this.menuDefault = true,
     this.quantity = 1,
-  }) {
+    this.important = false,  
+    }) {
     addedIngredients.addAll(List.filled(ingredients.length, false));
     isSelected.addAll(List.filled(ingredients.length, true));
   }
@@ -30,6 +31,8 @@ class DataItem {
   final UniqueKey key;
   int quantity;
   bool menuDefault;
+  bool important;
+
 
   void addIngredients(String ingredient) {
     ingredients.add(ingredient);

@@ -1,3 +1,4 @@
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/widget/cart_widget/order.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
 import 'package:app_pizzeria/widget/menu_item.dart';
@@ -14,6 +15,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartItemsProvider>(context);
+    Provider.of<MenuProvider>(context);
 
     Widget displayed =
         (cart.cartList.isNotEmpty && !cart.ordered) || cart.ordered
@@ -105,13 +107,33 @@ class CartScreen extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 50),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text(
-            "Aggiungi qualcosa al carrello per poterlo visualizzare in questa pagina.",
-            style: Theme.of(context).textTheme.titleMedium,
+        if (Provider.of<CartItemsProvider>(context, listen: false).rejected)
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Text(
+                  "Il tuo ordine è stato rifiutato a causa dell'elevata richiesta",
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 20),
+                OutlinedButton(
+                    onPressed: () {
+                      Provider.of<CartItemsProvider>(context, listen: false)
+                          .clearRejection();
+                    },
+                    child: const Text("OK"))
+              ],
+            ),
           ),
-        )
+        if (!Provider.of<CartItemsProvider>(context, listen: false).rejected)
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              "Aggiungi qualcosa al carrello per poterlo visualizzare in questa pagina.",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          )
       ],
     );
   }

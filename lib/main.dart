@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<MenuProvider>(context, listen: false).updateMenu();
+    Provider.of<MenuProvider>(context, listen: false).updateMenu(context);
     selectedPage.value = Provider.of<PageProvider>(context).selectedPage;
 
     selectedPage.addListener(() {
