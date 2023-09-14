@@ -9,11 +9,11 @@ class MenuProvider with ChangeNotifier {
   List<DataItem> menu = [];
   Map<String, double> ingredients = {};
 
-  void retrieveMenu() async {
+  Future<void> retrieveMenu() async {
     menu = await getMenu();
   }
 
-  void retrieveIngredients() async {
+  Future<void> retrieveIngredients() async {
     ingredients = await getSavedIngredients();
   }
 
@@ -23,31 +23,47 @@ class MenuProvider with ChangeNotifier {
     final ingredients =
         FirebaseFirestore.instance.collection('menu').doc("ingredients");
 
-    menu.snapshots().listen((querySnapshot) {
-      retrieveMenu();
-      checkCart(context);
+    menu.snapshots().listen((querySnapshot) async {
+      await retrieveMenu();
+      if (context.mounted) {
+        validateCartMenu(context);
+      }
       notifyListeners();
     });
 
-    ingredients.snapshots().listen((querySnapshot) {
-      retrieveIngredients();
-      checkCart(context);
+    ingredients.snapshots().listen((querySnapshot) async {
+      await retrieveIngredients();
+
+      if (context.mounted) {
+        validateCartIngredients(context);
+      }
       notifyListeners();
     });
   }
 
-  checkCart(BuildContext context) {
+  validateCartIngredients(BuildContext context) {
     List<DataItem> items = [];
 
     items.addAll(
         Provider.of<CartItemsProvider>(context, listen: false).cartList);
 
     for (DataItem item in items) {
-      if (!menu.any((element) => element.name == item.name) ||
-          !item.ingredients.any(((ingr) => ingredients.containsKey(ingr)))) {
-        Provider.of<CartItemsProvider>(context, listen: false)
-            .cartList
-            .removeWhere((element) => element.name == item.name);
+      if (!item.ingredients
+          .every((ingr) => ingredients.containsKey(ingr.toLowerCase()))) {
+        Provider.of<CartItemsProvider>(context, listen: false).removeItem(item);
+      }
+    }
+  }
+
+  validateCartMenu(BuildContext context) {
+    List<DataItem> items = [];
+
+    items.addAll(
+        Provider.of<CartItemsProvider>(context, listen: false).cartList);
+
+    for (DataItem item in items) {
+      if (!menu.any((element) => item.name == element.name)) {
+        Provider.of<CartItemsProvider>(context, listen: false).removeItem(item);
       }
     }
   }

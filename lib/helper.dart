@@ -162,10 +162,16 @@ void retrieveOrder(BuildContext context) async {
         data["delivery-method"];
     Provider.of<CartItemsProvider>(context, listen: false).orderPrice =
         data["total"].toDouble();
-    Provider.of<CartItemsProvider>(context, listen: false).orderTotalPrice =
-        data["price"].toDouble();
-    Provider.of<CartItemsProvider>(context, listen: false).deliveryPrice =
-        data["delivery-price"].toDouble();
+    if (Provider.of<CartItemsProvider>(context, listen: false).confirmed) {
+      Provider.of<CartItemsProvider>(context, listen: false).orderTotalPrice =
+          data["price"].toDouble();
+    }
+    if (Provider.of<CartItemsProvider>(context, listen: false).confirmed &&
+        Provider.of<CartItemsProvider>(context, listen: false).deliveryMethod ==
+            "Domicilio") {
+      Provider.of<CartItemsProvider>(context, listen: false).deliveryPrice =
+          data["delivery-price"].toDouble();
+    }
 
     Provider.of<CartItemsProvider>(context, listen: false).time =
         data["time-interval"];
@@ -234,7 +240,6 @@ void submitOrder(
 }
 
 Future<void> deleteOrder(BuildContext context) async {
-
   Provider.of<CartItemsProvider>(context, listen: false).clearCart();
 
   final firebaseUser = FirebaseAuth.instance.currentUser;
@@ -244,7 +249,6 @@ Future<void> deleteOrder(BuildContext context) async {
       .collection("orders")
       .doc("order")
       .delete();
-
 }
 
 Future<List<DataItem>> getMenu() async {

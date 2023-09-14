@@ -59,18 +59,27 @@ class Order extends StatelessWidget {
                       .copyWith(fontSize: 16),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  'Costo consegna: ',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                Text(
-                    confirmed
-                        ? '€ $deliveryPrice'
-                        : 'Riceverai presto aggiornamenti',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 16,
-                        )),
-                const SizedBox(height: 10),
+                if (Provider.of<CartItemsProvider>(context, listen: false)
+                        .deliveryMethod ==
+                    "Domicilio")
+                  Text(
+                    'Costo consegna: ',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                if (Provider.of<CartItemsProvider>(context, listen: false)
+                        .deliveryMethod ==
+                    "Domicilio")
+                  Text(
+                      confirmed
+                          ? '€ $deliveryPrice'
+                          : 'Riceverai presto aggiornamenti',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 16,
+                          )),
+                if (Provider.of<CartItemsProvider>(context, listen: false)
+                        .deliveryMethod ==
+                    "Domicilio")
+                  const SizedBox(height: 10),
                 if (!confirmed)
                   Align(
                     alignment: Alignment.centerRight,
