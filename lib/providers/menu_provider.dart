@@ -11,6 +11,7 @@ class MenuProvider with ChangeNotifier {
 
   Future<void> retrieveMenu() async {
     menu = await getMenu();
+    
   }
 
   Future<void> retrieveIngredients() async {

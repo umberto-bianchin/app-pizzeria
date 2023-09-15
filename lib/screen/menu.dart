@@ -117,59 +117,68 @@ class _MenuPageState extends State<MenuPage> {
   void _showModal(context) {
     showModalBottomSheet(
       isScrollControlled: true,
+      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
       ),
       context: context,
       builder: (context) {
         //3
-        return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return DraggableScrollableSheet(
-              expand: false,
-              builder:
-                  (BuildContext context, ScrollController scrollController) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                  child: Column(
-                    children: [
-                      Row(
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return DraggableScrollableSheet(
+                  expand: false,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: SearchBar(
-                              leading: const Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Icon(Icons.search),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SearchBar(
+                                  leading: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Icon(Icons.search),
+                                  ),
+                                  hintText: "Cerca quello che vuoi ordinare",
+                                  onChanged: (value) {
+                                    setState(() {
+                                      result = SearchResult(
+                                        name: value,
+                                        category: currentCategory,
+                                      );
+                                    });
+                                  },
+                                ),
                               ),
-                              hintText: "Cerca quello che vuoi ordinare",
-                              onChanged: (value) {
-                                setState(() {
-                                  result = SearchResult(
-                                    name: value,
-                                    category: currentCategory,
-                                  );
-                                });
-                              },
-                            ),
+                              IconButton(
+                                  icon: const Icon(Icons.close),
+                                  color: const Color(0xFF1F91E7),
+                                  onPressed: () {
+                                    setState(() {
+                                      Navigator.of(context).pop();
+                                    });
+                                  }),
+                            ],
                           ),
-                          IconButton(
-                              icon: const Icon(Icons.close),
-                              color: const Color(0xFF1F91E7),
-                              onPressed: () {
-                                setState(() {
-                                  Navigator.of(context).pop();
-                                });
-                              }),
+                          Expanded(
+                            child: result!,
+                          ),
                         ],
                       ),
-                      Expanded(
-                        child: result!,
-                      ),
-                    ],
-                  ),
-                );
-              });
-        });
+                    );
+                  });
+            }),
+          ),
+        );
       },
     ).whenComplete(() {
       setState(() {

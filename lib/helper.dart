@@ -264,16 +264,19 @@ Future<List<DataItem>> getMenu() async {
       Categories category = Categories.values
           .firstWhere((value) => value.name == menuData[element]["category"]);
 
-      menu.add(
-        DataItem(
-            key: UniqueKey(),
-            name: element,
-            ingredients: menuData[element]["ingredients"].split(", "),
-            initialPrice: menuData[element]["price"],
-            category: category,
-            image: NetworkImage(menuData[element]["imageUrl"]),
-            important: menuData[element]["important"]),
-      );
+      if (menuData[element]["available"]) {
+        menu.add(
+          DataItem(
+              key: UniqueKey(),
+              name:
+                  element.substring(0, 1).toUpperCase() + element.substring(1),
+              ingredients: menuData[element]["ingredients"].split(", "),
+              initialPrice: menuData[element]["price"],
+              category: category,
+              image: NetworkImage(menuData[element]["imageUrl"]),
+              important: menuData[element]["important"]),
+        );
+      }
     }
   }
 
@@ -289,8 +292,9 @@ Future<Map<String, double>> getSavedIngredients() async {
   Map<String, double> ingredientsMap = {};
   if (snapshot.data() != null) {
     snapshot.data()!.forEach((key, value) {
-      if (value is num) {
-        ingredientsMap[key] = value.toDouble();
+      if (value[1]) {
+        ingredientsMap[key.substring(0, 1).toUpperCase() + key.substring(1)] =
+            value[0].toDouble();
       }
     });
   }
