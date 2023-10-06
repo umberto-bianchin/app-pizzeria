@@ -68,7 +68,6 @@ class CartItemsProvider with ChangeNotifier {
     if (ordered) {
       modified = true;
     }
-
     notifyListeners();
   }
 

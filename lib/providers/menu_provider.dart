@@ -11,7 +11,6 @@ class MenuProvider with ChangeNotifier {
 
   Future<void> retrieveMenu() async {
     menu = await getMenu();
-    
   }
 
   Future<void> retrieveIngredients() async {
@@ -47,9 +46,9 @@ class MenuProvider with ChangeNotifier {
 
     items.addAll(
         Provider.of<CartItemsProvider>(context, listen: false).cartList);
-
+//TODO controllare if (prima era con !)
     for (DataItem item in items) {
-      if (!item.ingredients
+      if (item.ingredients
           .every((ingr) => ingredients.containsKey(ingr.toLowerCase()))) {
         Provider.of<CartItemsProvider>(context, listen: false).removeItem(item);
       }
