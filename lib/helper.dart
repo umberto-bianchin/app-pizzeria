@@ -222,7 +222,7 @@ void submitOrder(
 
   for (DataItem item in order.cartList) {
     jsonOrder["ordine$index"] = {
-      "name": item.name,
+      "name": item.name.toLowerCase(),
       "quantity": item.quantity,
       "ingredients": item.ingredients.map((ingr) => ingr).join(', '),
     };
