@@ -233,8 +233,10 @@ class _ItemCartState extends State<ItemCart> {
                                     .ingredients
                                     .keys)
                               if (!customItem!.ingredients
-                                      .contains(ingredient) &&
-                                  ingredient.contains(searchedValue))
+                                      .contains(ingredient.toLowerCase()) &&
+                                  ingredient
+                                      .toLowerCase()
+                                      .contains(searchedValue.toLowerCase()))
                                 ingredientButton(ingredient),
                           ],
                         ),

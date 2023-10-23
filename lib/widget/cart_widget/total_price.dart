@@ -27,7 +27,7 @@ class TotalPrice extends StatelessWidget {
           Text(
             cart.ordered
                 ? (cart.confirmed
-                    ? 'Totale da pagare €${cart.orderTotalPrice}'
+                    ? 'Totale da pagare €${cart.orderTotalPrice.toStringAsFixed(2)}'
                     : 'Differenza: €${cart.difference(context).toStringAsFixed(2)}')
                 : 'Totale:  €${cart.getTotal(context).toStringAsFixed(2)}',
             style: const TextStyle(

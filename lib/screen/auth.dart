@@ -1,3 +1,17 @@
+/// This file contains the code for the authentication screen of the Flutter app.
+///
+/// The [AuthScreen] class is a stateful widget that provides UI elements for user
+/// authentication including login, password reset, and social sign-ins.
+///
+/// It imports necessary packages and files, and defines various text fields and buttons.
+///
+/// The [signIn] function handles the sign in process using Firebase Authentication.
+/// The [resetPassword] function handles the password reset process using Firebase Authentication.
+///
+/// The [squareTile] function defines a widget for displaying square tiles with an image.
+/// The [textField] function defines a widget for displaying text input fields.
+///
+
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/registration.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';
@@ -19,9 +33,11 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  // Controllers for text fields.
   final emailController = TextEditingController();
   final backupEmailController = TextEditingController();
   final passwordController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
   final resetKey = GlobalKey<FormState>();
 
@@ -51,7 +67,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                 const SizedBox(height: 25),
 
-                // username textfield
+                // Username text field.
                 textField(
                   emailController,
                   'Email',
@@ -60,7 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                 const SizedBox(height: 10),
 
-                // password textfield
+                // Password text field.
                 textField(
                   passwordController,
                   'Password',
@@ -69,7 +85,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                 const SizedBox(height: 10),
 
-                // forgot password?
+                // Forgot password link.
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -80,6 +96,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             foregroundColor:
                                 MaterialStatePropertyAll<Color>(Colors.grey)),
                         onPressed: () {
+                          // Show reset password dialog.
                           showDialog(
                               context: context,
                               builder: (context) {
@@ -165,7 +182,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
 
                 const SizedBox(height: 15),
-                // sign in button
+                // Sign in button.
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   height: 60,
@@ -227,11 +244,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
                 const SizedBox(height: 20),
 
-                // google + apple sign in buttons
+                // Google and Facebook sign in buttons.
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // google button
+                    // Google button.
                     IconButton(
                       onPressed: () {
                         final provider = Provider.of<GoogleSignInProvider>(
@@ -248,7 +265,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                     const SizedBox(width: 25),
 
-                    // facebook button
+                    // Facebook button.
                     IconButton(
                       onPressed: () {
                         final provider = Provider.of<FacebookSignInProvider>(
@@ -267,7 +284,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                 const SizedBox(height: 20),
 
-                // not a member? register now
+                // Registration button.
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
                     'Non sei ancora registrato?',
@@ -296,6 +313,7 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  // Function to handle sign in process.
   Future signIn() async {
     if (!formKey.currentState!.validate()) {
       MySnackBar.showMySnackBar(context, "Credenziali in forma errata");
@@ -337,6 +355,7 @@ class _AuthScreenState extends State<AuthScreen> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
+  // Function to handle password reset process.
   Future resetPassword() async {
     if (!resetKey.currentState!.validate()) {
       MySnackBar.showMySnackBar(context, "Credenziali in forma errata");
@@ -377,6 +396,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 }
 
+// Widget for square tiles used in the authentication screen.
 Widget squareTile(final String imagePath) {
   return Container(
     padding: const EdgeInsets.all(20),
@@ -392,6 +412,7 @@ Widget squareTile(final String imagePath) {
   );
 }
 
+// Widget for text fields used in the authentication screen.
 Widget textField(controller, final String hintText, final bool obscureText) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0),

@@ -191,7 +191,7 @@ void retrieveOrder(BuildContext context) async {
           key: UniqueKey(),
           image: baseItem.image,
           name: baseItem.name,
-          ingredients: field["ingredients"].split(", "),
+          ingredients: field["ingredients"].toLowerCase().split(", "),
           initialPrice: baseItem.initialPrice,
           category: baseItem.category,
           quantity: field["quantity"]));
@@ -224,7 +224,8 @@ void submitOrder(
     jsonOrder["ordine$index"] = {
       "name": item.name.toLowerCase(),
       "quantity": item.quantity,
-      "ingredients": item.ingredients.map((ingr) => ingr).join(', '),
+      "ingredients":
+          item.ingredients.map((ingr) => ingr.toLowerCase()).join(', '),
     };
     index++;
   }

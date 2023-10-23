@@ -149,6 +149,7 @@ class CartItemsProvider with ChangeNotifier {
         if (confirmed) {
           time = querySnapshot.get("time-interval");
           orderTotalPrice = querySnapshot.get("total");
+          deliveryPrice = querySnapshot.get("delivery-price");
           orderList = [];
         }
       }

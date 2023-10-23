@@ -1,3 +1,21 @@
+/// This file contains the code for the Cart Screen of the Flutter app.
+///
+/// The [CartScreen] class is a stateless widget that displays the user's cart
+/// with items they have added for ordering. It also allows users to remove items
+/// from the cart.
+///
+///
+/// The [build] method returns a Column widget with a [TopBanner], an [Order] widget
+/// (if the order is confirmed), and the cart elements (items in the cart).
+///
+/// The [cartElements] method builds the UI for the items in the cart. It uses a
+/// ListView.builder to display each item. It also includes functionality to allow
+/// the user to remove items from the cart.
+///
+/// The [emptyMessage] method provides a message to be displayed when the cart is empty.
+///
+///
+
 import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/widget/cart_widget/order.dart';
 import 'package:app_pizzeria/widget/user_widget/top_screen.dart';

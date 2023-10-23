@@ -46,7 +46,6 @@ class MenuProvider with ChangeNotifier {
 
     items.addAll(
         Provider.of<CartItemsProvider>(context, listen: false).cartList);
-//TODO controllare if (prima era con !)
     for (DataItem item in items) {
       if (item.ingredients
           .every((ingr) => ingredients.containsKey(ingr.toLowerCase()))) {

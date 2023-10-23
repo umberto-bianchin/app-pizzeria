@@ -1,3 +1,18 @@
+/// This file serves as the entry point for the Flutter application.
+///
+/// It imports necessary packages and files, including providers, screens, and widgets.
+/// It initializes Firebase, sets preferred device orientations, and establishes the
+/// root widget for the application.
+///
+/// The [MyApp] class is the root widget of the application. It configures theme data,
+/// sets up providers for various features like user information, cart items, and more.
+///
+/// The [signIn] function handles user authentication using Firebase Authentication.
+/// The [resetPassword] function handles the password reset process.
+///
+///
+
+
 import 'package:app_pizzeria/helper.dart';
 import 'package:app_pizzeria/providers/cart_provider.dart';
 import 'package:app_pizzeria/providers/facebook_provider.dart';
@@ -19,6 +34,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+// A global key for the navigator to be used for navigation outside of widgets.
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
@@ -48,7 +64,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
+  // Page controller for managing pages.
   final PageController _pageController = PageController();
+  // Value notifier to keep track of the selected page.
   final ValueNotifier<int> selectedPage = ValueNotifier(0);
 
   @override
@@ -56,6 +74,7 @@ class MyApp extends StatelessWidget {
     Provider.of<MenuProvider>(context, listen: false).updateMenu(context);
     selectedPage.value = Provider.of<PageProvider>(context).selectedPage;
 
+    // Listener to update the page when the selected page changes.
     selectedPage.addListener(() {
       _pageController.jumpToPage(selectedPage.value);
     });
@@ -63,6 +82,7 @@ class MyApp extends StatelessWidget {
     MenuPage menuPage = MenuPage(
         selectedCategory: Provider.of<PageProvider>(context).selectedCategory);
 
+    // Listening for changes in the authentication state.
     FirebaseAuth.instance.authStateChanges().listen((user) async {
       if (FirebaseAuth.instance.currentUser != null) {
         Provider.of<UserInfoProvider>(context, listen: false).getUser(context);

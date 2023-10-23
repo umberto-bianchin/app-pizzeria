@@ -71,7 +71,7 @@ class Order extends StatelessWidget {
                     "Domicilio")
                   Text(
                       confirmed
-                          ? '€ $deliveryPrice'
+                          ? '€${deliveryPrice.toStringAsFixed(2)}'
                           : 'Riceverai presto aggiornamenti',
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: 16,

@@ -1,6 +1,8 @@
+import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/widget/menu_widget/categories_buttons_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pizzeria/widget/item_cart_add.dart';
+import 'package:provider/provider.dart';
 
 import '../data/data_item.dart';
 
@@ -62,13 +64,20 @@ class MenuItem extends StatelessWidget {
                                           .map((ingr) => ingr)
                                           .join(', '),
                                     ),
-                                    TextSpan(
-                                      text:
-                                          ", ${dataItem.ingredients.where((ingredient) => dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => ingr).join(', ')}",
-                                      style: const TextStyle(
-                                        color: Color(0xFF1F91E7),
-                                      ),
-                                    )
+                                    if (dataItem.ingredients.length !=
+                                        Provider.of<MenuProvider>(context)
+                                            .menu
+                                            .firstWhere((element) =>
+                                                element.name == dataItem.name)
+                                            .ingredients
+                                            .length)
+                                      TextSpan(
+                                        text:
+                                            ", ${dataItem.ingredients.where((ingredient) => dataItem.addedIngredients[dataItem.ingredients.indexOf(ingredient)] && dataItem.isSelected[dataItem.ingredients.indexOf(ingredient)]).map((ingr) => ingr.toLowerCase()).join(', ')}",
+                                        style: const TextStyle(
+                                          color: Color(0xFF1F91E7),
+                                        ),
+                                      )
                                   ]),
                             ),
                         ],
