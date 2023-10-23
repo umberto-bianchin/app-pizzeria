@@ -12,6 +12,9 @@ class TotalPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartItemsProvider>(context);
+    final price = cart.orderTotalPrice != 0
+        ? cart.orderTotalPrice.toStringAsFixed(2)
+        : cart.orderPrice.toStringAsFixed(2);
 
     return Container(
       height: 50,
@@ -27,7 +30,7 @@ class TotalPrice extends StatelessWidget {
           Text(
             cart.ordered
                 ? (cart.confirmed
-                    ? 'Totale da pagare €${cart.orderTotalPrice.toStringAsFixed(2)}'
+                    ? 'Totale da pagare €$price'
                     : 'Differenza: €${cart.difference(context).toStringAsFixed(2)}')
                 : 'Totale:  €${cart.getTotal(context).toStringAsFixed(2)}',
             style: const TextStyle(
