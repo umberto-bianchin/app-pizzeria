@@ -41,32 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb1231652314896785</string>
-				<string>com.googleusercontent.apps.919432796323-t4b1hucmgetccsb2snff7bov3m03nrea</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>1231652314896785</string>
-	<key>FacebookClientToken</key>
-	<string>aa6e6af2ea0b95ccc9f2cb9ae3011c14</string>
-	<key>FacebookDisplayName</key>
-	<string>App Pizzeria</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-	</array>
 </dict>
 </plist>
