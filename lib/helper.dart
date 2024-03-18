@@ -272,7 +272,7 @@ Future<List<DataItem>> getMenu() async {
               name:
                   element.substring(0, 1).toUpperCase() + element.substring(1),
               ingredients: menuData[element]["ingredients"].split(", "),
-              initialPrice: menuData[element]["price"],
+              initialPrice: menuData[element]["price"].toDouble(),
               category: category,
               image: NetworkImage(menuData[element]["imageUrl"]),
               important: menuData[element]["important"]),
