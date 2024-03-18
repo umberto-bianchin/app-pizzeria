@@ -38,7 +38,7 @@ dependencies:
   firebase_core: ^2.15.0
   firebase_auth: ^4.7.2
   email_validator: ^2.1.17
-  google_sign_in: ^6.1.4
+  google_sign_in: ^6.2.1
   flutter_svg: ^2.0.7
   collection: any
   flutter_facebook_auth: 
