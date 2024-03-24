@@ -11,6 +11,7 @@
 /// The [squareTile] function defines a widget for displaying square tiles with an image.
 /// The [textField] function defines a widget for displaying text input fields.
 ///
+library;
 
 import 'package:app_pizzeria/providers/google_sign_in.dart';
 import 'package:app_pizzeria/screen/registration.dart';

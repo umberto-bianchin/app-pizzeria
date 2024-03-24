@@ -25,7 +25,7 @@ class IntroductionPizzeria extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Pizzeria\n\tAntonino",
+                  "Pizzeria\n\tFlutter",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'category_card.dart';
 
 class CategoriesTabs extends StatelessWidget {
-  const CategoriesTabs({
-    super.key });
+  const CategoriesTabs({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +18,9 @@ class CategoriesTabs extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15, right: 15),
         scrollDirection: Axis.horizontal,
         children: [
-          CategoryCard(width, capitalize(Categories.pizza.name),
+          CategoryCard(width, capitalize(Categories.pizze.name),
               "assets/images/pizza.png",
-              category: Categories.pizza),
+              category: Categories.pizze),
           CategoryCard(width, capitalize(Categories.panari.name),
               "assets/images/mexican.png",
               category: Categories.panari),

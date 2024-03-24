@@ -14,7 +14,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  Categories currentCategory = Categories.pizza;
+  Categories currentCategory = Categories.pizze;
   SearchResult? result;
 
   @override

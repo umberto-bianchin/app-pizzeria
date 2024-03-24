@@ -15,6 +15,7 @@
 /// The [emptyMessage] method provides a message to be displayed when the cart is empty.
 ///
 ///
+library;
 
 import 'package:app_pizzeria/providers/menu_provider.dart';
 import 'package:app_pizzeria/widget/cart_widget/order.dart';

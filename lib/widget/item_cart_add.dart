@@ -127,8 +127,8 @@ class _ItemCartState extends State<ItemCart> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Image(
-                      image: AssetImage("assets/images/classic.png"),
+                    Image(
+                      image: customItem!.image,
                       height: 80.0,
                     ),
                     NumericStepButton(

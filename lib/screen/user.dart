@@ -28,6 +28,7 @@ class _UserScreenState extends State<UserScreen> {
                 AuthorizationStatus.notDetermined) &&
         context.mounted) {
       await showCupertinoDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(

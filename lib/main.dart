@@ -11,6 +11,7 @@
 /// The [resetPassword] function handles the password reset process.
 ///
 ///
+library;
 
 
 import 'package:app_pizzeria/helper.dart';

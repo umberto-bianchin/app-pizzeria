@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum Categories {
-  pizza,
+  pizze,
   bibite,
   panini,
   panari,
@@ -20,7 +20,7 @@ class CategoriesButton extends StatefulWidget {
 
 class _CategoriesButtonState extends State<CategoriesButton> {
   List<Pair> listCategories = [
-    Pair("pizza.png", Categories.pizza),
+    Pair("pizza.png", Categories.pizze),
     Pair("mexican.png", Categories.panari),
     Pair("burger.png", Categories.panini),
     Pair("drink.png", Categories.bibite),
