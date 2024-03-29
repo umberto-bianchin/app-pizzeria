@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
-const double klatitude = 45.406435;
-const double klongitude = 11.876761;
+const double klatitude = 45.40799448013583;
+const double klongitude = 11.893889699335174;
 
 class LocationPicker extends StatefulWidget {
   const LocationPicker(this.onChanged, {super.key});

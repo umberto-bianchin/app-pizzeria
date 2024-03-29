@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "919432796323-gdu1on0aeaab9vd1rgm921p05cjvuqjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_pizzeria",
+            "certificate_hash": "611961c5aec2f9b0d68259fe36e89e2b63d850f1"
+          }
+        },
+        {
           "client_id": "919432796323-1asuqjvtdpt9v4cekqq16l7ks427deu3.apps.googleusercontent.com",
           "client_type": 3
         }
