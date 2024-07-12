@@ -16,6 +16,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+			<string>919432796323-t4b1hucmgetccsb2snff7bov3m03nrea.apps.googleusercontent.com</string>
 	<!-- End of the Google Sign-in Section -->
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
